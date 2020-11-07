@@ -44,12 +44,6 @@ include_once('routes.php');
                     <ul class="nav pull-right">
 
                         <li><a href="#">
-                                Iniciar sesión
-                            </a></li>
-
-
-
-                        <li><a href="#">
                                 Registrarse
                             </a></li>
                     </ul>
@@ -64,32 +58,31 @@ include_once('routes.php');
         <div class="container">
             <div style="background: url(a.jpg) no-repeat fixed center; ">
                 <div class="container">
-                    <br><br><br><br><br>
                     <div class="row" ">
                         <div class=" module module-login span4 offset4">
-                        <form class="form-vertical">
+                        <form class="form-vertical" action="./presentation/template.php">
                             <div class="module-head">
-                                <h3>Sign In</h3>
+                                <h3>Iniciar sesión</h3>
                             </div>
                             <div class="module-body">
                                 <div class="control-group">
                                     <div class="controls row-fluid">
-                                        <input class="span12" type="text" id="inputEmail" placeholder="Username">
+                                        <input class="span12" type="text" id="inputEmail" placeholder="Usuario">
                                     </div>
                                 </div>
                                 <div class="control-group">
                                     <div class="controls row-fluid">
-                                        <input class="span12" type="password" id="inputPassword" placeholder="Password">
+                                        <input class="span12" type="password" id="inputPassword"
+                                            placeholder="Contraseña">
                                     </div>
                                 </div>
                             </div>
                             <div class="module-foot">
                                 <div class="control-group">
-                                    <div class="controls clearfix">
-                                        <button type="submit" class="btn btn-primary pull-right">Login</button>
-                                        <label class="checkbox">
-                                            <input type="checkbox"> Remember me
-                                        </label>
+                                    <div class="controls clearfix align-center">
+                                        <button type="submit" class="btn btn-primary ">Iniciar
+                                            sesión</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -97,14 +90,13 @@ include_once('routes.php');
                     </div>
 
                 </div>
-                <br><br><br><br><br>
+                <br>
             </div>
         </div>
 
         <br><br>
         <div class="align-center">
-            <button onclick="" class="btn btn-large">Iniciar sesión</button>
-            <button class="btn btn-large">Registrar</button>
+            <button class="btn btn-large">¿No te has registrado?<br>Registrate</button>
         </div>
 
         <br><br>
