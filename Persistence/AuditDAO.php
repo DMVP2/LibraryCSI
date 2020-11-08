@@ -1,12 +1,16 @@
 <?php
 
-require_once "DAO.php";
+require_once 'DAO.php';
+
+include_once("../Business/Entities/Audit.php");
+
+
 
 /**
  * Represents the DAO of the entity "Audit"
  */
 
-class Audit extends DAO
+class AuditDAO extends DAO
 {
 
     //----------------------------------
@@ -15,7 +19,7 @@ class Audit extends DAO
 
     private $connection;
 
-    private static $ DAO;
+    private static $auditDAO;
 
     //----------------------------------
     // Builder
@@ -27,7 +31,7 @@ class Audit extends DAO
     private function _construct($connection)
     {
         $this->connection = $connection;
-        mysqli_set_charset($this->conexion, "utf8");
+        mysqli_set_charset($this->connection, "utf8");
     }
 
     //----------------------------------
@@ -40,7 +44,7 @@ class Audit extends DAO
     public function create($ )
     {
         $sql = "INSERT INTO ";
-		mysqli_query($this->conexion, $sql);
+		mysqli_query($this->connection, $sql);
     }
 
     /**
@@ -49,7 +53,7 @@ class Audit extends DAO
     public function update($ )
     {
         $sql = "UPDATE - SET";
-		mysqli_query($this->conexion, $sql);
+		mysqli_query($this->connection, $sql);
     }
 
     /**
@@ -61,7 +65,7 @@ class Audit extends DAO
 	{
 		$sql = "SELECT * FROM ";
 
-		if (!$result = mysqli_query($this->conexion, $sql)) die();
+		if (!$result = mysqli_query($this->connection, $sql)) die();
 
 		$data = array();
 
@@ -74,5 +78,14 @@ class Audit extends DAO
 		}
 
 		return $data;
+    }
+    
+    public static function getAuditDAO($connection)
+	{
+		if (self::$auditDAO == null) {
+			self::$auditDAO = new AuditDAO($connection);
+		}
+
+		return self::$auditDAO;
 	}
 }
