@@ -41,51 +41,60 @@ class AuditDAO extends DAO
     /**
      * 
      */
-    public function create($ )
+    public function create($pAudit)
     {
-        $sql = "INSERT INTO ";
-		mysqli_query($this->connection, $sql);
+        $sql = "INSERT INTO AUDIT VALUES(null,'" . $pAudit->getUser() . "','" . $pAudit->getTable() . "', '" . $pAudit->getIp() . "','" . $pAudit->getOperation() . "','" . $pAudit->getDate() . "','" . $pAudit->getOldData() . "', '" . $pAudit->getNewData() . "')";
+        mysqli_query($this->connection, $sql);
     }
 
     /**
      * 
      */
-    public function update($ )
+    public function update()
     {
         $sql = "UPDATE - SET";
-		mysqli_query($this->connection, $sql);
+        mysqli_query($this->connection, $sql);
     }
 
     /**
-	 * 
-	 *
-	 * @return -[]
-	 */
-	public function list()
-	{
-		$sql = "SELECT * FROM ";
+     * 
+     *
+     * @return -[]
+     */
+    public function list()
+    {
+        $sql = "SELECT * FROM AUDIT";
 
-		if (!$result = mysqli_query($this->connection, $sql)) die();
+        if (!$result = mysqli_query($this->connection, $sql)) die();
 
-		$data = array();
+        $data = array();
 
-		while ($row = mysqli_fetch_array($result)) {
+        while ($row = mysqli_fetch_array($result)) {
 
-			$info = new Usuario();
+            $info = new Audit();
 
-            
-			$data[] = $info;
-		}
+            $info->setId($row['id']);
+            $info->setUser($row['user']);
+            $info->setTable($row['table']);
+            $info->setIp($row['ip']);
+            $info->setOperation($row['operation']);
+            $info->setDate($row['date']);
+            $info->setOldData($row['old_data']);
+            $info->setNewData($row['new_data']);
 
-		return $data;
+
+            $data[] = $info;
+        }
+
+        return $data;
     }
-    
-    public static function getAuditDAO($connection)
-	{
-		if (self::$auditDAO == null) {
-			self::$auditDAO = new AuditDAO($connection);
-		}
 
-		return self::$auditDAO;
-	}
+    public static function getAuditDAO($connection)
+    {
+        if (self::$auditDAO == null) {
+            self::$auditDAO = new AuditDAO($connection);
+        }
+
+        return self::$auditDAO;
+    }
 }

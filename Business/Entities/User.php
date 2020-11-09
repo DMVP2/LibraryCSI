@@ -12,10 +12,12 @@ class User
     //----------------------------------
 
     private $id;
+    private $typeDocument;
     private $name;
     private $lastName;
-    private $password;
     private $email;
+    private $phone;
+    private $password;
     private $role;
     private $status;
 
@@ -41,6 +43,16 @@ class User
         $this->id = $pId;
     }
 
+    public function getTypeDocument()
+    {
+        return $this->typeDocument;
+    }
+
+    public function setTypeDocument($pTypeDocument)
+    {
+        $this->typeDocument = $pTypeDocument;
+    }
+
     public function getName()
     {
         return $this->name;
@@ -59,6 +71,16 @@ class User
     public function setLastName($pLastName)
     {
         $this->lastName = $pLastName;
+    }
+
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    public function setPhone($pPhone)
+    {
+        $this->phone = $pPhone;
     }
 
     public function getPassword()
@@ -83,7 +105,7 @@ class User
 
     public function getRole()
     {
-        return $this->id;
+        return $this->role;
     }
 
     public function setRole($pRole)

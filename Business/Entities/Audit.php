@@ -87,7 +87,7 @@ class Audit
         return $this->date;
     }
 
-    public function seDate($pDate)
+    public function setDate($pDate)
     {
         $this->date = $pDate;
     }
