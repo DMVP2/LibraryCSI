@@ -13,6 +13,10 @@ $rol = 'employee';
 
             <li><a href="index.html"><i class="menu-icon fa fa-book"></i>Reservas
                 </a></li>
+            <li><a href="index.html"><i class="menu-icon fa fa-book"></i>Opcion 1
+                </a></li>
+            <li><a href="index.html"><i class="menu-icon fa fa-book"></i>Opcion 2
+                </a></li>
 
             <?php } else {  ?>
 

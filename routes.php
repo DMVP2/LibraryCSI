@@ -1,5 +1,7 @@
 <?php
 
+define('NAME_PROJECT', 'Book Bosque');
+
 define('ROOT_DIRECTORY', '/Library_CSI');
 
 define('ROUTE_ASSETS', '/Presentation/assets/');

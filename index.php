@@ -12,7 +12,7 @@ include_once('routes.php');
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Bosque</title>
+    <title><?php echo NAME_PROJECT ?></title>
     <link type="text/css" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'bootstrap/css/bootstrap.min.css' ?>"
         rel="stylesheet">
     <link type="text/css"
@@ -36,7 +36,7 @@ include_once('routes.php');
                 </a>
 
                 <a class="brand" href="index.html">
-                    Book Bosque
+                    <?php echo NAME_PROJECT ?>
                 </a>
 
                 <div class="nav-collapse collapse navbar-inverse-collapse">
