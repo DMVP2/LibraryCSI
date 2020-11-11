@@ -35,25 +35,21 @@ class BookingDAO extends DAO
     //----------------------------------
 
     /**
-     * 
+     * Método para crear una reserva 
      */
     public function create($pBooking)
     {
-        $sql = "INSERT INTO BOOKING VALUES(null,'" . $pBooking->getUser() . "','" . $pBooking->getTable() . "', '" . $pBooking->getIp() . "','" . $pBooking->getOperation() . "','" . $pBooking->getDate() . "','" . $pBooking->getOldData() . "', '" . $pBooking->getNewData() . "')";
+        $sql = "INSERT INTO BOOKING VALUES(null,'" . $pBooking->getIdDocument() . "','" . $pBooking->getIdUser() . "', '" . $pBooking->getBookingStatus() . "','" . $pBooking->getBookingDate() . "','" . $pBooking->getDeliveryDate() . "')";
         mysqli_query($this->connection, $sql);
     }
 
     /**
-     * 
+     * No se realizarán actuliazaciones de la reserva
      */
-    public function update()
-    {
-        $sql = "UPDATE - SET";
-        mysqli_query($this->connection, $sql);
-    }
-
+    public function update(){}
+    
     /**
-     * 
+     * Retorna una lista de todas las reservas del sistema
      *
      * @return -[]
      */
