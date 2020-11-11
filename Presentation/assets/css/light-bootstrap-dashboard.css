@@ -606,6 +606,23 @@ input:focus {
   background-size: 150% 150%;
 }
 
+.sidebar[data-color="yellow"]:after {
+  background: #f8d442;
+  background: -moz-linear-gradient(top, #f8d442 0%, #f8d442 100%);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #f8d442),
+    color-stop(100%, #f8d442)
+  );
+  background: -webkit-linear-gradient(top, #f8d442 0%, #f8d442 100%);
+  background: -o-linear-gradient(top, #f8d442 0%, #f8d442 100%);
+  background: -ms-linear-gradient(top, #f8d442 0%, #f8d442 100%);
+  background: linear-gradient(to bottom, #f8d442 0%, #f8d442 100%);
+  background-size: 150% 150%;
+}
+
 .main-panel {
   position: relative;
   z-index: 2;
@@ -637,6 +654,18 @@ input:focus {
   -webkit-transition-timing-function: linear, linear;
   transition-timing-function: linear, linear;
   -webkit-overflow-scrolling: touch;
+}
+
+.centerLarge {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.centerSmall {
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
 }
 
 .btn {
@@ -1149,6 +1178,73 @@ fieldset[disabled] .btn-neutral.active {
 .btn-neutral.btn-simple:active,
 .btn-neutral.btn-simple.active {
   background-color: transparent;
+}
+
+.btn-employee {
+  border-color: #fbee6e;
+  color: #fbee6e;
+}
+
+.btn-employee:hover,
+.btn-employee:focus,
+.btn-employee:active,
+.btn-employee.active,
+.open > .btn-employee.dropdown-toggle {
+  background-color: transparent;
+  color: #f8d442;
+  border-color: #f8d442;
+}
+
+.btn-employee.disabled,
+.btn-employee.disabled:hover,
+.btn-employee.disabled:focus,
+.btn-employee.disabled.focus,
+.btn-employee.disabled:active,
+.btn-employee.disabled.active,
+.btn-employee:disabled,
+.btn-employee:disabled:hover,
+.btn-employee:disabled:focus,
+.btn-employee:disabled.focus,
+.btn-employee:disabled:active,
+.btn-employee:disabled.active,
+.btn-employee[disabled],
+.btn-employee[disabled]:hover,
+.btn-employee[disabled]:focus,
+.btn-employee[disabled].focus,
+.btn-employee[disabled]:active,
+.btn-employee[disabled].active,
+fieldset[disabled] .btn-employee,
+fieldset[disabled] .btn-employee:hover,
+fieldset[disabled] .btn-employee:focus,
+fieldset[disabled] .btn-employee.focus,
+fieldset[disabled] .btn-employee:active,
+fieldset[disabled] .btn-employee.active {
+  background-color: transparent;
+  border-color: #fbee6e;
+}
+
+.btn-employee.btn-fill {
+  color: #000000;
+  background-color: #fbee6e;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+.btn-employee.btn-fill:hover,
+.btn-employee.btn-fill:focus,
+.btn-employee.btn-fill:active,
+.btn-employee.btn-fill.active,
+.open > .btn-employee.btn-fill.dropdown-toggle {
+  background-color: #f8d442;
+  color: #000000;
+}
+
+.btn-employee.btn-fill .caret {
+  border-top-color: #ffffff;
+}
+
+.btn-employee .caret {
+  border-top-color: #fbee6e;
 }
 
 .btn:disabled,
@@ -1721,14 +1817,25 @@ fieldset[disabled] .form-control {
   margin-top: 0;
 }
 
+.sidebar .nav > li.active-pro {
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+}
+.sidebar .nav > li.active-pro a {
+  background: rgba(255, 255, 255, 0.14);
+  opacity: 1;
+  color: #ffffff;
+}
+
 /**
-  * bootstrap-switch - Turn checkboxes and radio buttons into toggle switches.
-  *
-  * @version v3.3.4
-  * @homepage https://bttstrp.github.io/bootstrap-switch
-  * @author Mattia Larentis <mattia@larentis.eu> (http://larentis.eu)
-  * @license Apache-2.0
-  */
+    * bootstrap-switch - Turn checkboxes and radio buttons into toggle switches.
+    *
+    * @version v3.3.4
+    * @homepage https://bttstrp.github.io/bootstrap-switch
+    * @author Mattia Larentis <mattia@larentis.eu> (http://larentis.eu)
+    * @license Apache-2.0
+    */
 .bootstrap-switch {
   display: inline-block;
   direction: ltr;
