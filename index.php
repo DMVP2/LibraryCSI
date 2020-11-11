@@ -1,134 +1,183 @@
 <?php
 
-
 include_once('routes.php');
-
 
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'img/iconApp.png' ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
     <title><?php echo NAME_PROJECT ?></title>
-    <link type="text/css" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'bootstrap/css/bootstrap.min.css' ?>"
-        rel="stylesheet">
-    <link type="text/css"
-        href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'bootstrap/css/bootstrap-responsive.min.css' ?>"
-        rel="stylesheet">
-    <link type="text/css" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/theme.css' ?>" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
 
-    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
-        rel='stylesheet'>
+
+    <!-- Bootstrap core CSS     -->
+    <link href=<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/bootstrap.min.css' ?> rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/animate.min.css' ?>" rel="stylesheet" />
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/light-bootstrap-dashboard.css?v=1.4.0' ?>"
+        rel="stylesheet" />
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/pe-icon-7-stroke.css' ?>" rel="stylesheet" />
+
 </head>
 
 <body>
 
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-                    <i class="icon-reorder shaded"></i>
-                </a>
-
-                <a class="brand" href="index.html">
-                    <?php echo NAME_PROJECT ?>
-                </a>
-
-                <div class="nav-collapse collapse navbar-inverse-collapse">
-
-                    <ul class="nav pull-right">
-
-                        <li><a href="#">
-                                Registrarse
-                            </a></li>
-                    </ul>
-                </div><!-- /.nav-collapse -->
-            </div>
-        </div><!-- /navbar-inner -->
-    </div><!-- /navbar -->
-
-
-    <!--/.wrapper-->
     <div class="wrapper">
-        <div class="container">
-            <div style="background: url(a.jpg) no-repeat fixed center; ">
-                <div class="container">
-                    <div class="row" ">
-                        <div class=" module module-login span4 offset4">
-                        <form class="form-vertical" action="./presentation/template.php">
-                            <div class="module-head">
-                                <h3>Iniciar sesión</h3>
-                            </div>
-                            <div class="module-body">
-                                <div class="control-group">
-                                    <div class="controls row-fluid">
-                                        <input class="span12" type="text" id="inputEmail" placeholder="Usuario">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <div class="controls row-fluid">
-                                        <input class="span12" type="password" id="inputPassword"
-                                            placeholder="Contraseña">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="module-foot">
-                                <div class="control-group">
-                                    <div class="controls clearfix align-center">
-                                        <button type="submit" class="btn btn-primary ">Iniciar
-                                            sesión</button>
 
+        <div class="main-panel" data="index">
+
+            <!-- Navbar -->
+            <?php
+            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "navbar.php";
+            ?>
+            <!-- Navbar -->
+
+            <div class="content">
+                <div class="container-fluid ">
+
+
+                    <div class='row'>
+                        <div class='col-md-offset-2 col-md-8'>
+                            <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+
+                                <!-- Carousel Slides / Quotes -->
+                                <div class="carousel-inner">
+                                    <!-- Quote 1 -->
+                                    <div class="item active">
+                                        <blockquote>
+                                            <div class="row">
+                                                <div class="col-sm-3 text-center">
+                                                    <img class="img-circle"
+                                                        src="http://www.reactiongifs.com/r/overbite.gif"
+                                                        style="width: 100px;height:100px;">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
+                                                        consectetur, adipisci velit!</p>
+                                                    <small>Someone famous</small>
+                                                </div>
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <!-- Quote 2 -->
+                                    <div class="item">
+                                        <blockquote>
+                                            <div class="row">
+                                                <div class="col-sm-3 text-center">
+                                                    <img class="img-circle"
+                                                        src="https://s3.amazonaws.com/uifaces/faces/twitter/mijustin/128.jpg"
+                                                        style="width: 100px;height:100px;">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                                                        auctor nec lacus ut tempor. Mauris.</p>
+                                                    <small>Someone famous</small>
+                                                </div>
+                                            </div>
+                                        </blockquote>
+                                    </div>
+                                    <!-- Quote 3 -->
+                                    <div class="item">
+                                        <blockquote>
+                                            <div class="row">
+                                                <div class="col-sm-3 text-center">
+                                                    <img class="img-circle"
+                                                        src="https://s3.amazonaws.com/uifaces/faces/twitter/keizgoesboom/128.jpg"
+                                                        style="width: 100px;height:100px;">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                                                        rutrum elit in arcu blandit, eget pretium nisl accumsan. Sed
+                                                        ultricies commodo tortor, eu pretium mauris.</p>
+                                                    <small>Someone famous</small>
+                                                </div>
+                                            </div>
+                                        </blockquote>
                                     </div>
                                 </div>
+
+                                <!-- Carousel Buttons Next/Prev -->
+                                <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i
+                                        class="fa fa-chevron-left"></i></a>
+                                <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i
+                                        class="fa fa-chevron-right"></i></a>
                             </div>
-                        </form>
+                        </div>
+
+
+
                     </div>
+                </div>
+            </div>
+
+
+            <!-- Footer -->
+            <?php
+            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
+            ?>
+            <!-- Footer -->
+
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-employee btn-fill">Hacer reserva</button>
+                    <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
 
                 </div>
-                <br>
             </div>
         </div>
-
-        <br><br>
-        <div class="align-center">
-            <button class="btn btn-large">¿No te has registrado?<br>Registrate</button>
-        </div>
-
-        <br><br>
-
-        <div class="btn-box-row row-fluid">
-            <a href="#" class="btn-box big span4">
-                <i class="fa fa-book"></i>
-                <b>Libros</b>
-            </a>
-            <a href="#" class="btn-box big span4">
-                <i class="fa fa-file-pdf-o"></i>
-                <b>PDF</b>
-            </a>
-            <a href="#" class="btn-box big span4">
-                <i class="fa fa-handshake-o"></i>
-                <b>Reservas</b>
-            </a>
-        </div>
     </div>
-    </div>
-    <!--/.wrapper-->
 
-    <!-- Footer -->
-    <?php
-    include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-    ?>
-    <!-- Footer -->
-
-    <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'scripts/jquery-1.9.1.min.js' ?>" type="text/javascript">
-    </script>
-    <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'scripts/jquery-ui-1.10.1.custom.min.js' ?>"
-        type="text/javascript"></script>
-    <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'bootstrap/js/bootstrap.min.js' ?>" type="text/javascript">
-    </script>
 </body>
+
+<!--   Core JS Files   -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/jquery.3.2.1.min.js' ?>" type="text/javascript">
+</script>
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/bootstrap.min.js' ?>" type="text/javascript">
+</script>
+
+<!--  Charts Plugin -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/chartist.min.js' ?>"></script>
+
+<!--  Notifications Plugin    -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/bootstrap-notify.js' ?>"></script>
+
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/light-bootstrap-dashboard.js?v=1.4.0' ?>"></script>
+
+<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
+
+
+</html>

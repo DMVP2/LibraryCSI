@@ -31,7 +31,7 @@ class AuditDAO extends DAO
     private function _construct($connection)
     {
         $this->connection = $connection;
-        mysqli_set_charset($this->connection, "utf8");
+        pg_set_client_encoding($this->connection, "utf8");
     }
 
     //----------------------------------
@@ -44,7 +44,7 @@ class AuditDAO extends DAO
     public function create($pAudit)
     {
         $sql = "INSERT INTO AUDIT VALUES(null,'" . $pAudit->getUser() . "','" . $pAudit->getTable() . "', '" . $pAudit->getIp() . "','" . $pAudit->getOperation() . "','" . $pAudit->getDate() . "','" . $pAudit->getOldData() . "', '" . $pAudit->getNewData() . "')";
-        mysqli_query($this->connection, $sql);
+        pg_query($this->connection, $sql);
     }
 
     /**
@@ -53,7 +53,7 @@ class AuditDAO extends DAO
     public function update()
     {
         $sql = "UPDATE - SET";
-        mysqli_query($this->connection, $sql);
+        pg_query($this->connection, $sql);
     }
 
     /**
@@ -65,11 +65,11 @@ class AuditDAO extends DAO
     {
         $sql = "SELECT * FROM AUDIT";
 
-        if (!$result = mysqli_query($this->connection, $sql)) die();
+        if (!$result = pg_query($this->connection, $sql)) die();
 
         $data = array();
 
-        while ($row = mysqli_fetch_array($result)) {
+        while ($row = pg_fetch_array($result)) {
 
             $info = new Audit();
 
@@ -81,7 +81,6 @@ class AuditDAO extends DAO
             $info->setDate($row['date']);
             $info->setOldData($row['old_data']);
             $info->setNewData($row['new_data']);
-
 
             $data[] = $info;
         }

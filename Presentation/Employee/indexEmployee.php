@@ -9,7 +9,7 @@ include_once('../../routes.php');
 
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'img/favicon.ico' ?>">
+    <link rel="icon" type="image/png" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'img/iconApp.png' ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <title><?php echo NAME_PROJECT ?></title>

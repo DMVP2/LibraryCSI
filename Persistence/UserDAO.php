@@ -31,7 +31,7 @@ class UserDAO extends DAO
     private function _construct($connection)
     {
         $this->connection = $connection;
-        mysqli_set_charset($this->connection, "utf8");
+        pg_set_client_encoding($this->connection, "utf8");
     }
 
     //----------------------------------
@@ -44,10 +44,10 @@ class UserDAO extends DAO
     public function create($pUser)
     {
         $sql = "INSERT INTO USER VALUES('" . $pUser->getId() . "','" . $pUser->getTypeDocument() . "','" . $pUser->getName() . "','" . $pUser->getLastName() . "','" . $pUser->getMail() . "','" . $pUser->getPhone() . "','" . $pUser->getPassword() . "','" . $pUser->getStatus() . "')";
-        mysqli_query($this->connection, $sql);
+        pg_query($this->connection, $sql);
 
         $sql = "INSERT INTO USER_ROL VALUES('" . $pUser->getId() . "'," . $pUser->getRole() . " )";
-        mysqli_query($this->connection, $sql);
+        pg_query($this->connection, $sql);
     }
 
     /**
@@ -56,7 +56,7 @@ class UserDAO extends DAO
     public function update()
     {
         $sql = "UPDATE - SET";
-        mysqli_query($this->connection, $sql);
+        pg_query($this->connection, $sql);
     }
 
     /**
@@ -68,11 +68,11 @@ class UserDAO extends DAO
     {
         $sql = "SELECT * FROM USER";
 
-        if (!$result = mysqli_query($this->connection, $sql)) die();
+        if (!$result = pg_query($this->connection, $sql)) die();
 
         $data = array();
 
-        while ($row = mysqli_fetch_array($result)) {
+        while ($row = pg_fetch_array($result)) {
 
             $info = new User();
 
@@ -86,7 +86,7 @@ class UserDAO extends DAO
             $info->setStatus($row['status']);
 
             $sql = "SELECT name FROM ROL, USER_ROL where USER_ROL.document = " . $row['document'];
-            $nameRol = mysqli_fetch_array($result)[0];
+            $nameRol = pg_fetch_array($result)[0];
 
             $info->setRole($nameRol);
 

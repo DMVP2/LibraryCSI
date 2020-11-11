@@ -29,7 +29,7 @@ class Connection
         $bd = "";
         $port = "3306";
 
-        $connection = mysqli_connect($server, $user, $pass, $bd, $port)
+        $connection = pg_pconnect("host=$server port=$port dbname=$bd user=$user password=$pass ")
             or die("An unexpected error occurred in the database connection");
 
         return $connection;
@@ -37,7 +37,7 @@ class Connection
 
     public function disconnectBD($connection)
     {
-        $close = mysqli_close($connection)
+        $close = pg_close($connection)
             or die("An unexpected error occurred in the database disconnect");
         return $close;
     }
