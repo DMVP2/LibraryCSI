@@ -626,6 +626,11 @@ input:focus {
 .main-panel {
   position: relative;
   z-index: 2;
+}
+
+.main-panel:not([data="index"]) {
+  position: relative;
+  z-index: 2;
   float: right;
   width: calc(100% - 260px);
 }
@@ -646,6 +651,19 @@ input:focus {
 .sidebar,
 .main-panel {
   max-height: 100%;
+  height: 92%;
+  -webkit-transition-property: top, bottom;
+  transition-property: top, bottom;
+  -webkit-transition-duration: 0.2s, 0.2s;
+  transition-duration: 0.2s, 0.2s;
+  -webkit-transition-timing-function: linear, linear;
+  transition-timing-function: linear, linear;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar,
+.main-panel:not([data="index"]) {
+  max-height: 100%;
   height: 100%;
   -webkit-transition-property: top, bottom;
   transition-property: top, bottom;
@@ -660,6 +678,12 @@ input:focus {
   margin-left: auto;
   margin-right: auto;
   width: 90%;
+}
+
+.centerMedium {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
 }
 
 .centerSmall {
@@ -1181,8 +1205,8 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .btn-employee {
-  border-color: #fbee6e;
-  color: #fbee6e;
+  border-color: #f8d442;
+  color: #f8d442;
 }
 
 .btn-employee:hover,
@@ -1191,8 +1215,8 @@ fieldset[disabled] .btn-neutral.active {
 .btn-employee.active,
 .open > .btn-employee.dropdown-toggle {
   background-color: transparent;
-  color: #f8d442;
-  border-color: #f8d442;
+  color: #fbee6e;
+  border-color: #fbee6e;
 }
 
 .btn-employee.disabled,
@@ -1220,13 +1244,13 @@ fieldset[disabled] .btn-employee.focus,
 fieldset[disabled] .btn-employee:active,
 fieldset[disabled] .btn-employee.active {
   background-color: transparent;
-  border-color: #fbee6e;
+  border-color: #f8d442;
 }
 
 .btn-employee.btn-fill {
-  color: #000000;
-  background-color: #fbee6e;
-  opacity: 1;
+  color: #9a9a9a;
+  background-color: #f8d442;
+  opacity: f8d442;
   filter: alpha(opacity=100);
 }
 
@@ -1235,7 +1259,7 @@ fieldset[disabled] .btn-employee.active {
 .btn-employee.btn-fill:active,
 .btn-employee.btn-fill.active,
 .open > .btn-employee.btn-fill.dropdown-toggle {
-  background-color: #f8d442;
+  background-color: #fbee6e;
   color: #000000;
 }
 
@@ -1244,7 +1268,7 @@ fieldset[disabled] .btn-employee.active {
 }
 
 .btn-employee .caret {
-  border-top-color: #fbee6e;
+  border-top-color: #1;
 }
 
 .btn:disabled,
@@ -2249,7 +2273,7 @@ fieldset[disabled] .form-control {
 .navbar-default .navbar-nav > li > a:not(.btn):focus {
   background-color: transparent;
   border-radius: 3px;
-  color: #1dc7ea;
+  color: #000000;
   opacity: 1;
   filter: alpha(opacity=100);
 }

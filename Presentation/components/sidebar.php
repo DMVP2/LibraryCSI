@@ -9,9 +9,7 @@ if (strcasecmp($rol, 'employee') == 0) {
     $color = 'yellow';
 }
 
-
 ?>
-
 
 <div class="sidebar" data-color="<?php echo $color ?>"
     data-image="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'img/sidebar-5.jpg' ?>">
@@ -22,8 +20,8 @@ if (strcasecmp($rol, 'employee') == 0) {
             -->
     <div class="sidebar-wrapper">
         <div class="logo">
-            <a class="simple-text"><i class="fa fa-tree" aria-hidden="true"></i>
-                <?php echo NAME_PROJECT ?>
+            <a class="simple-text">
+                <img src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'img/banWhite.png' ?>" width="50%">
             </a>
         </div>
 
@@ -31,7 +29,6 @@ if (strcasecmp($rol, 'employee') == 0) {
 
             <?php if (strcasecmp($rol, 'employee') == 0) { ?>
 
-            <li class='active'>
             <li <?php echo strcasecmp($nameFile, 'indexemployee') == 0 ? "class='active'" : "" ?>>
                 <a href="<?php echo ROOT_DIRECTORY . ROUTE_EMPLOYEE . 'indexEmployee.php' ?>">
                     <i class="fa fa-book"></i>
