@@ -14,6 +14,7 @@ class Booking
     private $idUser;
     private $bookingStatus;
     private $bookingDate;
+    private $dateOfCollection;
     private $deliveryDate;
     //----------------------------------
     // Builder
@@ -77,6 +78,15 @@ class Booking
         $this->bookingDate = $pBookingDate;
     }
 
+    public function getDateOfCollection()
+    {
+        return $this->dateOfCollection;
+    }
+
+    public function setDateOfCollection($pDateOfCollection)
+    {
+        $this->dateOfCollection = $pDateOfCollection;
+    }
     public function getDeliveryDate()
     {
         return $this->deliveryDate;
@@ -84,6 +94,7 @@ class Booking
 
     public function setDeliveryDate($pDeliveryDate)
     {
-        $this->deliveryDate = $pDeliveryDate;
+        $this->deliveryDate = $peliveryDate;
     }
+}
 }
