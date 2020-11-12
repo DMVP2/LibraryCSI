@@ -39,7 +39,7 @@ class BookingDAO extends DAO
      */
     public function create($pBooking)
     {
-        $sql = "INSERT INTO BOOKING VALUES(null,'" . $pBooking->getIdDocument() . "','" . $pBooking->getIdUser() . "', '" . $pBooking->getBookingStatus() . "','" . $pBooking->getBookingDate() . "','" . $pBooking->getDeliveryDate() . "')";
+        $sql = "INSERT INTO BOOKING VALUES(null,'" . $pBooking->getIdDocument() . "','" . $pBooking->getIdUser() . "', '" . $pBooking->getBookingStatus() . "','" . $pBooking->getBookingDate() . "','" . $pBooking->getDateOfCollection() . "','" . $pBooking->getDeliveryDate() . "')";
         mysqli_query($this->connection, $sql);
     }
 
@@ -55,7 +55,7 @@ class BookingDAO extends DAO
      */
     public function list()
     {
-        $sql = "SELECT * FROM AUDIT";
+        $sql = "SELECT * FROM BOOKING";
 
         if (!$result = mysqli_query($this->connection, $sql)) die();
 
@@ -63,30 +63,26 @@ class BookingDAO extends DAO
 
         while ($row = mysqli_fetch_array($result)) {
 
-            $info = new Audit();
+            $info = new Booking();
 
             $info->setId($row['id']);
-            $info->setUser($row['user']);
-            $info->setTable($row['table']);
-            $info->setIp($row['ip']);
-            $info->setOperation($row['operation']);
-            $info->setDate($row['date']);
-            $info->setOldData($row['old_data']);
-            $info->setNewData($row['new_data']);
-
+            $info->setIdDocument($row['idDocument']);
+            $info->setIdUser($row['idUser']);
+            $info->setBookingStatus($row['bookingStatus']);
+            $info->setBookingDate($row['bookingDate']);
+            $info->setDateOfCollection($row['dateOfCollection']);
+            $info->setDeliveryDate($row['deliveryDate']);
 
             $data[] = $info;
         }
-
         return $data;
     }
-
-    public static function getAuditDAO($connection)
+    public static function getBookingDAO($connection)
     {
-        if (self::$auditDAO == null) {
-            self::$auditDAO = new AuditDAO($connection);
+        if (self::$bookingDAO == null) {
+            self::$bookingDAO = new BookingDAO($connection);
         }
 
-        return self::$auditDAO;
+        return self::$bookingDAO;
     }
 }
