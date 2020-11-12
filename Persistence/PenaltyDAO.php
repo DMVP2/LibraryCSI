@@ -84,6 +84,7 @@ class PenaltyDAO extends DAO
         }
         return $data;
     }
+    
     public static function getPublisherDAO($connection)
     {
         if (self::$publisherDAO == null) {
