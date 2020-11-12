@@ -59,20 +59,42 @@ include_once('routes.php');
                                 <div class="carousel-inner">
                                     <!-- Quote 1 -->
                                     <div class="item active">
-                                        <blockquote>
-                                            <div class="row">
-                                                <div class="col-sm-3 text-center">
-                                                    <img class="img-circle"
-                                                        src="http://www.reactiongifs.com/r/overbite.gif"
-                                                        style="width: 100px;height:100px;">
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-                                                        consectetur, adipisci velit!</p>
-                                                    <small>Someone famous</small>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </blockquote>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <!-- Quote 2 -->
                                     <div class="item">
