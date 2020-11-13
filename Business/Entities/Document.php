@@ -11,7 +11,7 @@ class Document
     // Attributes
     //----------------------------------
 
-    private $id;
+    private $document_id;
     private $code;
     private $title;
     private $state;
@@ -42,14 +42,14 @@ class Document
      * 
      */
 
-    public function getId()
+    public function getDocumentId()
     {
-        return $this->id;
+        return $this->document_id;
     }
 
     public function setId($pId)
     {
-        $this->id = $pId;
+        $this->document_id = $pId;
     }
 
     public function getCode()

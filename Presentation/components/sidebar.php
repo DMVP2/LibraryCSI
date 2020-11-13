@@ -1,12 +1,14 @@
 <?php
 
-$rol = 'employee';
+$rol = 'employe';
 $nameFile = basename($_SERVER['PHP_SELF'], '.php');
 
 
 
 if (strcasecmp($rol, 'employee') == 0) {
     $color = 'yellow';
+} elseif (strcasecmp($rol, 'admin') == 0) {
+    $color = 'red';
 }
 
 ?>
@@ -42,6 +44,24 @@ if (strcasecmp($rol, 'employee') == 0) {
                     <p>Registrar cliente</p>
                 </a>
             </li>
+
+            <?php } elseif (strcasecmp($rol, 'admin') == 0) { ?>
+
+
+            <li <?php echo strcasecmp($nameFile, 'indexAdministrator') == 0 ? "class='active'" : "" ?>>
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'indexAdministrator.php' ?>">
+                    <i class="fa fa-user"></i>
+                    <p>Usuarios</p>
+                </a>
+            </li>
+            <li <?php echo strcasecmp($nameFile, 'a') == 0 ? "class='active'" : "" ?>>
+                <a href="#">
+                    <i class="fa fa-bar-chart"></i>
+                    <p>Graficas</p>
+                </a>
+            </li>
+
+
 
             <?php } else { ?>
 
@@ -91,7 +111,7 @@ if (strcasecmp($rol, 'employee') == 0) {
             <?php } ?>
 
             <li class="active-pro">
-                <a href="">
+                <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <p>Salir</p>
                 </a>

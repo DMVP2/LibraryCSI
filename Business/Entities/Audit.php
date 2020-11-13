@@ -11,7 +11,7 @@ class Audit
     // Attributes
     //----------------------------------
 
-    private $id;
+    private $audit_id;
     private $user;
     private $table;
     private $ip;
@@ -32,14 +32,14 @@ class Audit
     // Methods
     //----------------------------------
 
-    public function getId()
+    public function getAuditId()
     {
-        return $this->id;
+        return $this->audit_id;
     }
 
-    public function setId($pId)
+    public function seAudittId($pAuditId)
     {
-        $this->id = $pId;
+        $this->audit_id = $pAuditId;
     }
 
     public function getUser()

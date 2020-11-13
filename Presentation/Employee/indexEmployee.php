@@ -50,7 +50,7 @@ include_once('../../routes.php');
 
             <div class="content">
                 <div class="container-fluid ">
-                    <div class="row centerLarge">
+                    <div class="row centerLarge margin-top-1">
                         <div class="col-md-12 ">
                             <div class="card">
                                 <div class="header">
@@ -132,20 +132,7 @@ include_once('../../routes.php');
                                                             aria-hidden="true"></i></button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Minerva Hooper</td>
-                                                <td>$23,789</td>
-                                                <td>Curaçao</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Sage Rodriguez</td>
-                                                <td>$56,142</td>
-                                                <td>Netherlands</td>
-                                                <td>Baileux</td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
 

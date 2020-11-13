@@ -50,18 +50,16 @@ include_once('../../routes.php');
 
             <div class="content">
                 <div class="container-fluid ">
-                    <br><br><br>
-                    <div class="row ">
-                        <div class="col-md-8 col-md-offset-2 ">
+                    <div class="row centerLarge margin-top-1">
+                        <div class="col-md-12 ">
                             <div class="card">
-                                <div class="header margin-top-2">
-                                    <h4 class="title">Nuevo cliente</h4>
+                                <div class="header">
+                                    <h5 class="title">Cliente</h5>
                                 </div>
                                 <div class="content">
                                     <form>
                                         <div class="row">
-
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Tipo de documento</label>
                                                     <select name="" id="" class="form-control">
@@ -71,7 +69,7 @@ include_once('../../routes.php');
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Número de documento</label>
                                                     <input type="text" class="form-control"
@@ -79,48 +77,20 @@ include_once('../../routes.php');
                                                 </div>
                                             </div>
 
-                                        </div>
+                                            <div class="col-md-1">
+                                                <label>&nbsp;</label>
+                                            </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
-                                                    <label>Nombres</label>
-                                                    <input type="text" class="form-control" placeholder="Nombres">
+                                                    <label>&nbsp;</label>
+                                                    <input value="Realizar reserva" type="button"
+                                                        class="form-control btn btn-admin btn-fill pull-left"
+                                                        data-toggle="modal" data-target="#exampleModalCenter">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Apellidos</label>
-                                                    <input type="text" class="form-control" placeholder="Apellidos">
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Correo</label>
-                                                    <input type="text" class="form-control" placeholder="Correo">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Celular</label>
-                                                    <input type="text" class="form-control" placeholder="Celular">
-                                                </div>
-                                            </div>
                                         </div>
-
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-employee btn-fill">Registrar
-                                                    usuario</button>
-                                            </div>
-                                        </div>
-
-                                        <div class="clearfix"></div>
-                                        <br>
 
                                     </form>
 
@@ -133,6 +103,44 @@ include_once('../../routes.php');
                         </div>
                     </div>
 
+                    <br>
+
+
+                    <div class="row centerLarge">
+                        <div class="col-md-12 ">
+                            <div class="card">
+                                <div class="header">
+                                    <h5 class="title">Reservas</h5>
+                                </div>
+                                <div class="content table-responsive table-full-width">
+
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                            <th>Documento</th>
+                                            <th>Codigo</th>
+                                            <th>Estado</th>
+                                            <th>Fecha de entrega</th>
+                                            <th>Acciones</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>100 años de soledad</td>
+                                                <td>ISBN 1234</td>
+                                                <td>Recogido</td>
+                                                <td>20/11/2020</td>
+                                                <td><button><i type="span" class="fa fa-sign-out"
+                                                            aria-hidden="true"></i></button>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
@@ -162,7 +170,7 @@ include_once('../../routes.php');
                     ...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-employee btn-fill">Hacer reserva</button>
+                    <button type="button" class="btn btn-admin btn-fill">Hacer reserva</button>
                     <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
 
                 </div>

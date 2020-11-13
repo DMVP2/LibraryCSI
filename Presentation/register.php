@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 
-include_once('../../routes.php');
+include_once('../routes.php');
 
 ?>
 
@@ -39,29 +39,34 @@ include_once('../../routes.php');
 
     <div class="wrapper">
 
-        <!-- Sidebar -->
-        <?php
-        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "sidebar.php";
-        ?>
-        <!-- Sidebar -->
+        <div class="main-panel" data="index">
 
+            <!-- Navbar -->
+            <?php
+            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "navbar.php";
+            ?>
+            <!-- Navbar -->
 
-        <div class="main-panel">
-
-            <div class="content">
+            <div class="content background-image-login"
+                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>');">
                 <div class="container-fluid ">
-                    <br><br><br>
-                    <div class="row ">
-                        <div class="col-md-8 col-md-offset-2 ">
-                            <div class="card">
-                                <div class="header margin-top-2">
-                                    <h4 class="title">Nuevo cliente</h4>
-                                </div>
-                                <div class="content">
-                                    <form>
-                                        <div class="row">
 
-                                            <div class="col-md-6">
+                    <br><br>
+                    <div class="row center-block">
+                        <div class="col-xs-offset-3 col-xs-6">
+                            <div class="card ">
+                                <br>
+                                <div class="header ">
+                                    <center>
+                                        <h3 class="title">Registro</h3>
+                                    </center>
+                                </div>
+                                <div class="content col-xs-offset-1 ">
+                                    <br>
+                                    <form>
+                                        <div class="row ">
+
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Tipo de documento</label>
                                                     <select name="" id="" class="form-control">
@@ -88,7 +93,7 @@ include_once('../../routes.php');
                                                     <input type="text" class="form-control" placeholder="Nombres">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Apellidos</label>
                                                     <input type="text" class="form-control" placeholder="Apellidos">
@@ -103,7 +108,7 @@ include_once('../../routes.php');
                                                     <input type="text" class="form-control" placeholder="Correo">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Celular</label>
                                                     <input type="text" class="form-control" placeholder="Celular">
@@ -113,13 +118,17 @@ include_once('../../routes.php');
 
                                         <br>
                                         <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-employee btn-fill">Registrar
-                                                    usuario</button>
+                                            <div class="col-md-11 text-center">
+                                                <button type="submit" class="btn btn-default">Registrarme</button>
                                             </div>
                                         </div>
-
-                                        <div class="clearfix"></div>
+                                        <br>
+                                        <div class="row ">
+                                            <div class="col-md-11 text-center">
+                                                <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>"
+                                                    class="title">Regresar</a>
+                                            </div>
+                                        </div>
                                         <br>
 
                                     </form>
@@ -133,42 +142,22 @@ include_once('../../routes.php');
                         </div>
                     </div>
 
-                </div>
-            </div>
 
-
-            <!-- Footer -->
-            <?php
-            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-            ?>
-            <!-- Footer -->
-
-        </div>
-    </div>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-employee btn-fill">Hacer reserva</button>
-                    <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
 
                 </div>
             </div>
         </div>
+
+
+        <!-- Footer -->
+        <?php
+        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
+        ?>
+        <!-- Footer -->
+
     </div>
+
+
 
 </body>
 

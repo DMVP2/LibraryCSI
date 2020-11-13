@@ -1,111 +1,189 @@
 ﻿<?php
 
-
 include_once('../routes.php');
-
 
 ?>
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edmin</title>
-    <link type="text/css" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'bootstrap/css/bootstrap.min.css' ?>"
-        rel="stylesheet">
-    <link type="text/css"
-        href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'bootstrap/css/bootstrap-responsive.min.css' ?>"
-        rel="stylesheet">
-    <link type="text/css" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/theme.css' ?>" rel="stylesheet">
-    <link type="text/css" href="<?php echo ROOT_DIRECTORY . ROUTE_IMAGES . 'icons/css/font-awesome.css' ?>"
-        rel="stylesheet">
-    <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
-        rel='stylesheet'>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'img/iconApp.png' ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title><?php echo NAME_PROJECT ?></title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href=<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/bootstrap.min.css' ?> rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/animate.min.css' ?>" rel="stylesheet" />
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/light-bootstrap-dashboard.css?v=1.4.0' ?>"
+        rel="stylesheet" />
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/pe-icon-7-stroke.css' ?>" rel="stylesheet" />
+
 </head>
 
 <body>
 
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-                    <i class="icon-reorder shaded"></i>
-                </a>
-
-                <a class="brand" href="index.html">
-                    Edmin
-                </a>
-
-                <div class="nav-collapse collapse navbar-inverse-collapse">
-
-                    <ul class="nav pull-right">
-
-                        <li><a href="#">
-                                Sign Up
-                            </a></li>
-
-
-
-                        <li><a href="#">
-                                Forgot your password?
-                            </a></li>
-                    </ul>
-                </div><!-- /.nav-collapse -->
-            </div>
-        </div><!-- /navbar-inner -->
-    </div><!-- /navbar -->
-
-
-
     <div class="wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="module module-login span4 offset4">
-                    <form class="form-vertical">
-                        <div class="module-head">
-                            <h3>Sign In</h3>
-                        </div>
-                        <div class="module-body">
-                            <div class="control-group">
-                                <div class="controls row-fluid">
-                                    <input class="span12" type="text" id="inputEmail" placeholder="Username">
+
+        <div class="main-panel" data="index">
+
+            <!-- Navbar -->
+            <?php
+            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "navbar.php";
+            ?>
+            <!-- Navbar -->
+
+            <div class="content background-image-login"
+                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>');">
+                <div class="container-fluid ">
+
+                    <br><br><br>
+                    <div class="row center-block">
+                        <div class="col-xs-offset-4 col-xs-4">
+                            <div class="card">
+                                <br>
+                                <div class="header">
+                                    <center>
+                                        <h3 class="title">Iniciar sesión</h3>
+                                    </center>
+                                </div>
+                                <div class="content">
+                                    <br>
+                                    <form action="<?php echo ROOT_DIRECTORY . ROUTE_EMPLOYEE . 'indexEmployee.php' ?>">
+                                        <div class="row">
+                                            <div class="col-md-offset-2 col-xs-8">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label>Usuario</label>
+                                                        <input type="text" class="form-control" placeholder="Usuario">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-offset-2 col-xs-8">
+                                                <div class="form-group">
+                                                    <div class="form-group">
+                                                        <label>Contraseña</label>
+                                                        <input type="password" class="form-control"
+                                                            placeholder="Contraseña">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="row ">
+                                            <div class="text-center">
+                                                <a href="" class="title">¿Olvidaste tu contraseña?</a>
+                                            </div>
+                                        </div>
+
+                                        <br><br>
+
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <button class="btn btn-default  btn-wd ">Iniciar sesión</button>
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="row ">
+                                            <div class="text-center">
+                                                <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>"
+                                                    class="title">Regresar</a>
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                    </form>
+
+
+
+                                    <div class="clearfix"></div>
+
                                 </div>
                             </div>
-                            <div class="control-group">
-                                <div class="controls row-fluid">
-                                    <input class="span12" type="password" id="inputPassword" placeholder="Password">
-                                </div>
-                            </div>
                         </div>
-                        <div class="module-foot">
-                            <div class="control-group">
-                                <div class="controls clearfix">
-                                    <button type="submit" class="btn btn-primary pull-right">Login</button>
-                                    <label class="checkbox">
-                                        <input type="checkbox"> Remember me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <?php
+        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
+        ?>
+        <!-- Footer -->
+
+    </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-employee btn-fill">Hacer reserva</button>
+                    <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
+
                 </div>
             </div>
         </div>
     </div>
-    <!--/.wrapper-->
 
-    <!-- Footer -->
-    <?php
-	include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-	?>
-    <!-- Footer -->
-
-    <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'scripts/jquery-1.9.1.min.js' ?>" type="text/javascript">
-    </script>
-    <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'scripts/jquery-ui-1.10.1.custom.min.js' ?>"
-        type="text/javascript"></script>
-    <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'bootstrap/js/bootstrap.min.js' ?>" type="text/javascript">
-    </script>
 </body>
+
+<!--   Core JS Files   -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/jquery.3.2.1.min.js' ?>" type="text/javascript">
+</script>
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/bootstrap.min.js' ?>" type="text/javascript">
+</script>
+
+<!--  Charts Plugin -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/chartist.min.js' ?>"></script>
+
+<!--  Notifications Plugin    -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/bootstrap-notify.js' ?>"></script>
+
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/light-bootstrap-dashboard.js?v=1.4.0' ?>"></script>
+
+<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
+
+
+</html>

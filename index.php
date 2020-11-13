@@ -50,7 +50,7 @@ include_once('routes.php');
             <div class="content">
                 <div class="container-fluid ">
 
-
+                    <br><br><br>
                     <div class='row'>
                         <div class='col-md-offset-2 col-md-8'>
                             <div class="carousel slide" data-ride="carousel" id="quote-carousel">
@@ -98,38 +98,79 @@ include_once('routes.php');
                                     </div>
                                     <!-- Quote 2 -->
                                     <div class="item">
-                                        <blockquote>
-                                            <div class="row">
-                                                <div class="col-sm-3 text-center">
-                                                    <img class="img-circle"
-                                                        src="https://s3.amazonaws.com/uifaces/faces/twitter/mijustin/128.jpg"
-                                                        style="width: 100px;height:100px;">
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-                                                        auctor nec lacus ut tempor. Mauris.</p>
-                                                    <small>Someone famous</small>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </blockquote>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- Quote 3 -->
                                     <div class="item">
-                                        <blockquote>
-                                            <div class="row">
-                                                <div class="col-sm-3 text-center">
-                                                    <img class="img-circle"
-                                                        src="https://s3.amazonaws.com/uifaces/faces/twitter/keizgoesboom/128.jpg"
-                                                        style="width: 100px;height:100px;">
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                                                        rutrum elit in arcu blandit, eget pretium nisl accumsan. Sed
-                                                        ultricies commodo tortor, eu pretium mauris.</p>
-                                                    <small>Someone famous</small>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </blockquote>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -137,6 +178,144 @@ include_once('routes.php');
                                 <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i
                                         class="fa fa-chevron-left"></i></a>
                                 <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i
+                                        class="fa fa-chevron-right"></i></a>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <!-- Secon carrousel -->
+
+                    <br><br><br>
+                    <div class='row'>
+                        <div class='col-md-offset-2 col-md-8'>
+                            <div class="carousel slide" data-ride="carousel" id="quote-carousel1">
+
+                                <!-- Carousel Slides / Quotes -->
+                                <div class="carousel-inner">
+                                    <!-- Quote 1 -->
+                                    <div class="item active">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- Quote 2 -->
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Quote 3 -->
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card ">
+                                                    <div class="card-header ">
+                                                        <h4 class="card-title">Email Statistics</h4>
+                                                        <p class="card-category">Last Campaign Performance</p>
+                                                    </div>
+                                                    <div class="card-body ">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Carousel Buttons Next/Prev -->
+                                <a data-slide="prev" href="#quote-carousel1" class="left carousel-control"><i
+                                        class="fa fa-chevron-left"></i></a>
+                                <a data-slide="next" href="#quote-carousel1" class="right carousel-control"><i
                                         class="fa fa-chevron-right"></i></a>
                             </div>
                         </div>
