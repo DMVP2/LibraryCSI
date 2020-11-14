@@ -1,7 +1,7 @@
 <?php
 
 
-include_once('../../../Routes.php');
+include_once('../../Routes.php');
 
 
 //include_once($_SERVER['DOCUMENT_ROOT'] . CARPETA_RAIZ . RUTA_MANEJOS . 'ManejoEstudiante.php');
@@ -20,7 +20,6 @@ $c = Connection::getInstance();
 //$manejoEstudiante = new ManejoEstudiante($conexion);
 //$manejoUsuario = new ManejoUsuario($conexion);
 
-
 $mail = $_POST['mail'];
 
 $typeDocument = $_POST['typeDocument'];
@@ -28,11 +27,12 @@ $numberDocument = $_POST['numberDocument'];
 $name = $_POST['name'];
 $lastName = $_POST['lastName'];
 $phone = $_POST['phone'];
+$password1 = $_POST['password1'];
+$password2 = $_POST['password2'];
+
+
 
 $nuevoUser = new User();
-
-$passwordDefault = $nuevoUser->createPassword();
-$password = md5($passwordDefault);
 
 $nuevoUser->setId($numberDocument);
 $nuevoUser->setIdentificationType($typeDocument);
@@ -40,16 +40,16 @@ $nuevoUser->setName($name);
 $nuevoUser->setLastName($lastName);
 $nuevoUser->setMail($mail);
 $nuevoUser->setPhone($phone);
-$nuevoUser->setPassword($password);
-$nuevoUser->setRole("Por Definir");
-$nuevoUser->setStatus("Por Definir");
+$nuevoUser->setPassword(md5($password1));
+$nuevoUser->setRole("Client");
+$nuevoUser->setStatus("Active");
 
 
 //$manejoEstudiante->crearEstudiante($nuevoEstudiante);
 
 
 $sendMail = new MailSend();
-$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Employee", "Desde employee, Su contraseña es: " . $password);
+$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Register", "Desde register, Se ha registrado correctamente");
 $rta = $sendMail->sendMail();
 
 

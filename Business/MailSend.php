@@ -127,8 +127,9 @@ class MailSend
             $this->mail->Body    = $this->mailMessage; // Message
 
             $this->mail->send();
+            return 1;
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
+            return 2;
         }
     }
 

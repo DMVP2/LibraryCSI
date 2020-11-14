@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'register.php' ?>">
+                    <a href="#" data-toggle="modal" data-target="#myModal1">
                         Registrarme
                     </a>
                 </li>

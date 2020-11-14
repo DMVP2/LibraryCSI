@@ -1,7 +1,7 @@
 <?php
 
 
-include_once('../../../Routes.php');
+include_once('../../Routes.php');
 
 
 //include_once($_SERVER['DOCUMENT_ROOT'] . CARPETA_RAIZ . RUTA_MANEJOS . 'ManejoEstudiante.php');
@@ -20,36 +20,28 @@ $c = Connection::getInstance();
 //$manejoEstudiante = new ManejoEstudiante($conexion);
 //$manejoUsuario = new ManejoUsuario($conexion);
 
-
 $mail = $_POST['mail'];
 
 $typeDocument = $_POST['typeDocument'];
 $numberDocument = $_POST['numberDocument'];
-$name = $_POST['name'];
-$lastName = $_POST['lastName'];
-$phone = $_POST['phone'];
 
 $nuevoUser = new User();
 
 $passwordDefault = $nuevoUser->createPassword();
-$password = md5($passwordDefault);
+$pass = md5($passwordDefault);
 
 $nuevoUser->setId($numberDocument);
 $nuevoUser->setIdentificationType($typeDocument);
-$nuevoUser->setName($name);
-$nuevoUser->setLastName($lastName);
 $nuevoUser->setMail($mail);
-$nuevoUser->setPhone($phone);
-$nuevoUser->setPassword($password);
-$nuevoUser->setRole("Por Definir");
-$nuevoUser->setStatus("Por Definir");
+$nuevoUser->setPassword(md5($pass));
+$nuevoUser->setStatus("Inactive");
 
 
-//$manejoEstudiante->crearEstudiante($nuevoEstudiante);
+//$manejoEstudiante->  actualizar contraseña usuario
 
 
 $sendMail = new MailSend();
-$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Employee", "Desde employee, Su contraseña es: " . $password);
+$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Recovey", "Desde recovery se restablecio su contraseña. Contraseña nueva: " . $passwordDefault);
 $rta = $sendMail->sendMail();
 
 

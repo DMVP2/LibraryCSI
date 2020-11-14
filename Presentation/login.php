@@ -89,17 +89,18 @@ include_once('../routes.php');
 
                                         <br>
 
-                                        <div class="row ">
-                                            <div class="text-center">
-                                                <a href="" class="title">¿Olvidaste tu contraseña?</a>
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <a href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'recoveryPassword.php' ?>"
+                                                    class="title text-danger">¿Olvidaste tu contraseña?</a>
                                             </div>
                                         </div>
 
-                                        <br><br>
+                                        <br>
 
                                         <div class="row">
                                             <div class="col-md-12 text-center">
-                                                <button class="btn btn-default  btn-wd ">Iniciar sesión</button>
+                                                <button class="btn btn-primary btn-wd ">Iniciar sesión</button>
                                             </div>
                                         </div>
 
@@ -108,15 +109,13 @@ include_once('../routes.php');
                                         <div class="row ">
                                             <div class="text-center">
                                                 <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>"
-                                                    class="title">Regresar</a>
+                                                    class="title text-info">Regresar</a>
                                             </div>
                                         </div>
 
-                                        <br>
+                                        <br><br>
 
                                     </form>
-
-
 
                                     <div class="clearfix"></div>
 
@@ -139,31 +138,12 @@ include_once('../routes.php');
         <!-- Footer -->
 
     </div>
-    </div>
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-employee btn-fill">Hacer reserva</button>
-                    <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- ModalRegister -->
+    <?php
+    include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalRegister.php";
+    ?>
+    <!-- ModalRegister -->
 
 </body>
 

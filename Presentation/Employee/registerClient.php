@@ -76,7 +76,8 @@ include_once('../../routes.php');
                                                 <div class="form-group">
                                                     <label>Número de documento</label>
                                                     <input type="text" class="form-control" id="numberDocument"
-                                                        name="numberDocument" placeholder="Número de documento">
+                                                        name="numberDocument" placeholder="Número de documento"
+                                                        required>
                                                 </div>
                                             </div>
 
@@ -87,14 +88,14 @@ include_once('../../routes.php');
                                                 <div class="form-group">
                                                     <label>Nombres</label>
                                                     <input type="text" class="form-control" placeholder="Nombres"
-                                                        id="name" name="name">
+                                                        id="name" name="name" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Apellidos</label>
                                                     <input type="text" class="form-control" placeholder="Apellidos"
-                                                        id="lastName" name="lastName">
+                                                        id="lastName" name="lastName" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -104,14 +105,14 @@ include_once('../../routes.php');
                                                 <div class="form-group">
                                                     <label>Correo</label>
                                                     <input type="text" class="form-control" placeholder="Correo"
-                                                        id="mail" name="mail">
+                                                        id="mail" name="mail" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Celular</label>
                                                     <input type="text" class="form-control" placeholder="Celular"
-                                                        id="phone" name="phone">
+                                                        id="phone" name="phone" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -119,7 +120,8 @@ include_once('../../routes.php');
                                         <br>
                                         <div class="row">
                                             <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-employee btn-fill">Registrar
+                                                <button type="submit" class="btn btn-employee btn-fill"
+                                                    id="btnSubmit">Registrar
                                                     cliente</button>
                                             </div>
                                         </div>
@@ -174,6 +176,7 @@ include_once('../../routes.php');
 <script type="text/javascript">
 $(document).ready(function() {
     $('#formClient').submit(function(e) {
+        $('#btnSubmit').prop('disabled', true);
         e.preventDefault();
         $.ajax({
             type: "POST",
@@ -191,6 +194,7 @@ $(document).ready(function() {
                 } else {
                     notifications.showNotificationWarning("Ha ocurrido un error");
                 }
+                $('#btnSubmit').prop('disabled', false);
             }
         });
     });
