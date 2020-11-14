@@ -132,7 +132,47 @@ lbd = {
             }
         }
     },200)
+    
+};
+
+type = ['','','success','danger'];
+
+notifications = {
+    showNotificationInfo: function(message){
+
+        
+        $.notify({
+            icon: "fa fa-info",
+            message: message
+    
+        },{
+            type: 'info',
+            timer: 1500,
+            placement: {
+                from: 'top',
+                align: 'right'
+            }
+        });
+    },
+    showNotificationWarning: function(message){
+
+        
+        $.notify({
+            icon: "fa fa-exclamation-triangle",
+            message: message
+    
+        },{
+            type: 'warning',
+            timer: 1500,
+            placement: {
+                from: 'top',
+                align: 'right'
+            }
+        });
+    },
+
 }
+
 
 
 // Returns a function, that, as long as it continues to be invoked, will not
@@ -152,3 +192,5 @@ function debounce(func, wait, immediate) {
 		if (immediate && !timeout) func.apply(context, args);
 	};
 };
+
+

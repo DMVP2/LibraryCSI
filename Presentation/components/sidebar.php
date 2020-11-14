@@ -1,6 +1,6 @@
 <?php
 
-$rol = 'employe';
+$rol = 'employee';
 $nameFile = basename($_SERVER['PHP_SELF'], '.php');
 
 
@@ -38,8 +38,8 @@ if (strcasecmp($rol, 'employee') == 0) {
                 </a>
             </li>
 
-            <li <?php echo strcasecmp($nameFile, 'registeruser') == 0 ? "class='active'" : "" ?>>
-                <a href="<?php echo ROOT_DIRECTORY . ROUTE_EMPLOYEE . 'registerUser.php' ?>">
+            <li <?php echo strcasecmp($nameFile, 'registerClient') == 0 ? "class='active'" : "" ?>>
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_EMPLOYEE . 'registerClient.php' ?>">
                     <i class="fa fa-user"></i>
                     <p>Registrar cliente</p>
                 </a>

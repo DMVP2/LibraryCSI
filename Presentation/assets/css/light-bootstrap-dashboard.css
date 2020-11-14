@@ -1670,7 +1670,7 @@ fieldset[disabled] .form-control {
 }
 
 .alert-info {
-  background-color: #63d8f1;
+  background-color: #5ab2da;
 }
 
 .alert-success {
@@ -1678,7 +1678,7 @@ fieldset[disabled] .form-control {
 }
 
 .alert-warning {
-  background-color: #ffbc67;
+  background-color: #f8d442;
 }
 
 .alert-danger {
