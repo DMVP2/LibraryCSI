@@ -58,7 +58,7 @@ include_once('../../routes.php');
                                     <h4 class="title">Nuevo cliente</h4>
                                 </div>
                                 <div class="content">
-                                    <form method="POST" id="formClient"
+                                    <form id="formClient"
                                         action="<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/registerClient.php"  ?>">
                                         <div class="row">
 
@@ -171,11 +171,10 @@ include_once('../../routes.php');
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/light-bootstrap-dashboard.js?v=1.4.0' ?>"></script>
 
 
-<!--
 <script type="text/javascript">
 $(document).ready(function() {
     $('#formClient').submit(function(e) {
-        //e.preventDefault();
+        e.preventDefault();
         $.ajax({
             type: "POST",
             url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/registerClient.php"  ?>',
@@ -186,7 +185,7 @@ $(document).ready(function() {
                 console.log(jsonData.success);
 
                 if (jsonData.success == "1") {
-
+                    $("#formClient")[0].reset();
                     notifications.showNotificationInfo("Se ha registrado con exito");
 
                 } else {
@@ -197,6 +196,5 @@ $(document).ready(function() {
     });
 });
 </script>
--->
 
 </html>

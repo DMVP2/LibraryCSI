@@ -62,7 +62,7 @@ include_once('../../routes.php');
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Tipo de documento</label>
-                                                    <select name="" id="" class="form-control">
+                                                    <select name="typeDocument" id="typeDocument" class="form-control">
                                                         <option value="C.C.">C.C.</option>
                                                         <option value="C.E.">C.E.</option>
                                                     </select>
@@ -72,8 +72,8 @@ include_once('../../routes.php');
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Número de documento</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Número de documento">
+                                                    <input type="text" class="form-control" id="numberDocument"
+                                                        name="numberDocument" placeholder="Número de documento">
                                                 </div>
                                             </div>
 
@@ -103,42 +103,7 @@ include_once('../../routes.php');
                         </div>
                     </div>
 
-                    <br>
-
-
-                    <div class="row centerLarge">
-                        <div class="col-md-12 ">
-                            <div class="card">
-                                <div class="header">
-                                    <h5 class="title">Reservas</h5>
-                                </div>
-                                <div class="content table-responsive table-full-width">
-
-                                    <table class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Documento</th>
-                                            <th>Codigo</th>
-                                            <th>Estado</th>
-                                            <th>Fecha de entrega</th>
-                                            <th>Acciones</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>100 años de soledad</td>
-                                                <td>ISBN 1234</td>
-                                                <td>Recogido</td>
-                                                <td>20/11/2020</td>
-                                                <td><button><i type="span" class="fa fa-sign-out"
-                                                            aria-hidden="true"></i></button>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                            </div>
-                        </div>
+                    <div id="tableClientBooking">
 
                     </div>
                 </div>
@@ -197,6 +162,21 @@ include_once('../../routes.php');
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $.fn.rechargeData = function() {
+
+        $('#tableClientBooking').load(
+            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Employee/tableBooking.php" ?>", {
+                'idUser': $('#numberDocument').val()
+            });
+    }
+    $("#numberDocument").on('keyup', function() {
+        $.fn.rechargeData();
+    });
+});
+</script>
 
 
 </html>

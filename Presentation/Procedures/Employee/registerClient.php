@@ -20,7 +20,6 @@ $c = Connection::getInstance();
 //$manejoEstudiante = new ManejoEstudiante($conexion);
 //$manejoUsuario = new ManejoUsuario($conexion);
 
-print_r($_POST);
 
 $mail = $_POST['mail'];
 

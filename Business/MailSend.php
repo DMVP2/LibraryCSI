@@ -21,7 +21,7 @@ class MailSend
     // Attributes
     //----------------------------------
 
-    const LIBRARY_NAME = "FERIA DE OPORTUNIDADES - UEB";
+    const LIBRARY_NAME = "Book Bosque - UEB";
     const LIBRARY_MAIL = "feriaoportunidadtestmail@gmail.com";
     const LIBRARY_PASSWORD = "123456789Abc";
 
