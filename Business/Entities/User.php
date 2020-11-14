@@ -33,6 +33,24 @@ class User
     // Methods
     //----------------------------------
 
+    public function createPassword()
+    {
+
+        $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+        $longitudPass = 8;
+        $longitudCadena = strlen($cadena);
+        $password = "";
+
+        for ($i = 1; $i <= $longitudPass; $i++) {
+
+            $pos = rand(0, $longitudCadena - 1);
+
+            $password .= substr($cadena, $pos, 1);
+        }
+
+        return $password;
+    }
+
     public function getUserId()
     {
         return $this->user_id;

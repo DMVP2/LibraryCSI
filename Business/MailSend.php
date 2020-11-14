@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-include_once "../../rotes.php";
+
 
 require $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_BUSINESS_LIB . "PHPMailer/SMTP.php";
 require $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_BUSINESS_LIB . "PHPMailer/Exception.php";
@@ -12,12 +12,10 @@ require $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_BUSINESS_LIB . "PHPMa
 
 
 
-
-
 /**
  * Class in charge of sending emails through the PHPMailer library
  */
-class SendMail
+class MailSend
 {
     //----------------------------------
     // Attributes
@@ -120,13 +118,13 @@ class SendMail
     {
         try {
 
-            $this->mail->addAddress($this->correoDestinatario); // Add a recipient
+            $this->mail->addAddress($this->mailRecipient); // Add a recipient
 
             // Contenido
 
             $this->mail->isHTML(true); // Set email format to HTML
-            $this->mail->Subject = $this->asunto; // ASUNTO
-            $this->mail->Body    = $this->mensaje; // MENSAJE
+            $this->mail->Subject = $this->mailSubject; // Subject
+            $this->mail->Body    = $this->mailMessage; // Message
 
             $this->mail->send();
         } catch (Exception $e) {

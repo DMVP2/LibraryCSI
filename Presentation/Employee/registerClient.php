@@ -58,13 +58,14 @@ include_once('../../routes.php');
                                     <h4 class="title">Nuevo cliente</h4>
                                 </div>
                                 <div class="content">
-                                    <form>
+                                    <form method="POST" id="formClient"
+                                        action="<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/registerClient.php"  ?>">
                                         <div class="row">
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Tipo de documento</label>
-                                                    <select name="" id="" class="form-control">
+                                                    <select name="typeDocument" id="typeDocument" class="form-control">
                                                         <option value="C.C.">C.C.</option>
                                                         <option value="C.E.">C.E.</option>
                                                     </select>
@@ -74,8 +75,8 @@ include_once('../../routes.php');
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Número de documento</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Número de documento">
+                                                    <input type="text" class="form-control" id="numberDocument"
+                                                        name="numberDocument" placeholder="Número de documento">
                                                 </div>
                                             </div>
 
@@ -85,13 +86,15 @@ include_once('../../routes.php');
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Nombres</label>
-                                                    <input type="text" class="form-control" placeholder="Nombres">
+                                                    <input type="text" class="form-control" placeholder="Nombres"
+                                                        id="name" name="name">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Apellidos</label>
-                                                    <input type="text" class="form-control" placeholder="Apellidos">
+                                                    <input type="text" class="form-control" placeholder="Apellidos"
+                                                        id="lastName" name="lastName">
                                                 </div>
                                             </div>
                                         </div>
@@ -100,13 +103,15 @@ include_once('../../routes.php');
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Correo</label>
-                                                    <input type="text" class="form-control" placeholder="Correo">
+                                                    <input type="text" class="form-control" placeholder="Correo"
+                                                        id="mail" name="mail">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Celular</label>
-                                                    <input type="text" class="form-control" placeholder="Celular">
+                                                    <input type="text" class="form-control" placeholder="Celular"
+                                                        id="phone" name="phone">
                                                 </div>
                                             </div>
                                         </div>
@@ -115,11 +120,12 @@ include_once('../../routes.php');
                                         <div class="row">
                                             <div class="col-md-12 text-center">
                                                 <button type="submit" class="btn btn-employee btn-fill">Registrar
-                                                    usuario</button>
+                                                    cliente</button>
                                             </div>
                                         </div>
 
-                                        <div class="clearfix"></div>
+                                        <div class=" clearfix">
+                                        </div>
                                         <br>
 
                                     </form>
@@ -147,29 +153,6 @@ include_once('../../routes.php');
     </div>
 
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-employee btn-fill">Hacer reserva</button>
-                    <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
 </body>
 
 <!--   Core JS Files   -->
@@ -187,8 +170,33 @@ include_once('../../routes.php');
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/light-bootstrap-dashboard.js?v=1.4.0' ?>"></script>
 
-<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-<script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
 
+<!--
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#formClient').submit(function(e) {
+        //e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/registerClient.php"  ?>',
+            data: $(this).serialize(),
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+
+                console.log(jsonData.success);
+
+                if (jsonData.success == "1") {
+
+                    notifications.showNotificationInfo("Se ha registrado con exito");
+
+                } else {
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+            }
+        });
+    });
+});
+</script>
+-->
 
 </html>
