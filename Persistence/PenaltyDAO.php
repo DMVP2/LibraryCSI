@@ -84,7 +84,7 @@ class PenaltyDAO extends DAO
     public static function getPenaltyDAO($connection)
     {
         if (self::$penaltyDAO == null) {
-            self::$penaltyDAO = new PublisherDAO($connection);
+            self::$penaltyDAO = new PenaltyDAO($connection);
         }
         return self::$penaltyDAO;
     }
