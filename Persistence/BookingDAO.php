@@ -27,7 +27,7 @@ class BookingDAO extends DAO
     private function _construct($connection)
     {
         $this->connection = $connection;
-        mysqli_set_charset($this->connection, "utf8");
+        pg_set_client_encoding($this->connection, "utf8");
     }
 
     //----------------------------------
@@ -40,7 +40,7 @@ class BookingDAO extends DAO
     public function create($pBooking)
     {
         $sql = "INSERT INTO BOOKING VALUES(null,'" . $pBooking->getIdDocument() . "','" . $pBooking->getIdUser() . "', '" . $pBooking->getBookingStatus() . "','" . $pBooking->getBookingDate() . "','" . $pBooking->getDateOfCollection() . "','" . $pBooking->getDeliveryDate() . "')";
-        mysqli_query($this->connection, $sql);
+        pg_query($this->connection, $sql);
     }
 
     /**
@@ -57,11 +57,11 @@ class BookingDAO extends DAO
     {
         $sql = "SELECT * FROM BOOKING";
 
-        if (!$result = mysqli_query($this->connection, $sql)) die();
+        if (!$result = pg_query($this->connection, $sql)) die();
 
         $data = array();
 
-        while ($row = mysqli_fetch_array($result)) {
+        while ($row = pg_fetch_array($result)) {
 
             $info = new Booking();
 

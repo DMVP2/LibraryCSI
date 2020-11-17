@@ -77,10 +77,10 @@ class UserDAO extends DAO
             $info = new User();
 
             $info->setId($row['document']);
-            $info->setTypeDocument($row['type_document']);
+            $info->setIdentificationType($row['type_document']);
             $info->setName($row['name']);
             $info->setLastName($row['last_name']);
-            $info->setEmail($row['mail']);
+            $info->setMail($row['mail']);
             $info->setPhone($row['phone']);
             $info->setPassword($row['password']);
             $info->setStatus($row['status']);

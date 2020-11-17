@@ -73,7 +73,7 @@ class AuditDAO extends DAO
 
             $info = new Audit();
 
-            $info->setId($row['id']);
+            $info->setAuditId($row['id']);
             $info->setUser($row['user']);
             $info->setTable($row['table']);
             $info->setIp($row['ip']);

@@ -37,7 +37,7 @@ class Audit
         return $this->audit_id;
     }
 
-    public function seAudittId($pAuditId)
+    public function setAuditId($pAuditId)
     {
         $this->audit_id = $pAuditId;
     }

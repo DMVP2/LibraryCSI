@@ -94,7 +94,6 @@ class Booking
 
     public function setDeliveryDate($pDeliveryDate)
     {
-        $this->deliveryDate = $peliveryDate;
+        $this->deliveryDate = $pDeliveryDate;
     }
-}
 }
