@@ -23,15 +23,14 @@ class Connection
      */
     public function connectBD()
     {
-        $server = "";
-        $user = "";
-        $pass = "";
-        $bd = "";
-        $port = "3306";
+        $server = "bookbosque.postgres.database.azure.com";
+        $user = "bookbosque@bookbosque";
+        $pass = "UEBbook1234";
+        $bd = "book_bosque";
+        $port = "5432";
 
-        $connection = pg_pconnect("host=$server port=$port dbname=$bd user=$user password=$pass ")
-            or die("An unexpected error occurred in the database connection");
-
+        $con = "host=$server port=$port dbname=$bd user=$user password=$pass";
+        $connection = pg_connect($con);
         return $connection;
     }
 

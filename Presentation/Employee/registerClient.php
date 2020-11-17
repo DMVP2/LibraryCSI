@@ -58,8 +58,7 @@ include_once('../../routes.php');
                                     <h4 class="title">Nuevo cliente</h4>
                                 </div>
                                 <div class="content">
-                                    <form id="formClient"
-                                        action="<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/registerClient.php"  ?>">
+                                    <form id="formClient">
                                         <div class="row">
 
                                             <div class="col-md-6">
@@ -184,8 +183,6 @@ $(document).ready(function() {
             data: $(this).serialize(),
             success: function(response) {
                 var jsonData = JSON.parse(response);
-
-                console.log(jsonData.success);
 
                 if (jsonData.success == "1") {
                     $("#formClient")[0].reset();

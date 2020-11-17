@@ -63,13 +63,15 @@ include_once('../routes.php');
                                 </div>
                                 <div class="content">
                                     <br>
-                                    <form action="<?php echo ROOT_DIRECTORY . ROUTE_EMPLOYEE . 'indexEmployee.php' ?>">
+                                    <form method="POST"
+                                        action="<?php echo ROOT_DIRECTORY . ROUTE_SESSION . 'startSession.php' ?>">
                                         <div class="row">
                                             <div class="col-md-offset-2 col-xs-8">
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label>Usuario</label>
-                                                        <input type="text" class="form-control" placeholder="Usuario">
+                                                        <input type="text" class="form-control" placeholder="Usuario"
+                                                            id="user" name="user">
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,7 +83,7 @@ include_once('../routes.php');
                                                     <div class="form-group">
                                                         <label>Contraseña</label>
                                                         <input type="password" class="form-control"
-                                                            placeholder="Contraseña">
+                                                            placeholder="Contraseña" id="password" name="password">
                                                     </div>
                                                 </div>
                                             </div>

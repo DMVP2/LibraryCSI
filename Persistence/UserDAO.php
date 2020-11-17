@@ -2,7 +2,7 @@
 
 require_once 'DAO.php';
 
-include_once("../Business/Entities/User.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . "User.php");
 
 
 
@@ -10,7 +10,7 @@ include_once("../Business/Entities/User.php");
  * Represents the DAO of the entity "User"
  */
 
-class UserDAO extends DAO
+class UserDAO implements DAO
 {
 
     //----------------------------------
@@ -28,9 +28,9 @@ class UserDAO extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($pConnection)
     {
-        $this->connection = $connection;
+        $this->connection = $pConnection;
         pg_set_client_encoding($this->connection, "utf8");
     }
 
@@ -43,17 +43,55 @@ class UserDAO extends DAO
      */
     public function create($pUser)
     {
-        $sql = "INSERT INTO USER VALUES('" . $pUser->getId() . "','" . $pUser->getTypeDocument() . "','" . $pUser->getName() . "','" . $pUser->getLastName() . "','" . $pUser->getMail() . "','" . $pUser->getPhone() . "','" . $pUser->getPassword() . "','" . $pUser->getStatus() . "')";
+        $sql = "INSERT INTO USERS VALUES('" . $pUser->getUserId() . "','" . $pUser->getTypeDocument() . "','" . $pUser->getName() . "','" . $pUser->getLastName() . "','" . $pUser->getMail() . "','" . $pUser->getPhone() . "','" . $pUser->getPassword() . "','" . $pUser->getStatus() . "')";
         pg_query($this->connection, $sql);
 
-        $sql = "INSERT INTO USER_ROL VALUES('" . $pUser->getId() . "'," . $pUser->getRole() . " )";
+        $sql = "INSERT INTO USERS_ROL VALUES('" . $pUser->getUserId() . "'," . $pUser->getRole() . ")";
         pg_query($this->connection, $sql);
+    }
+
+
+    public function search($pCode)
+    {
+        $sql = "SELECT * FROM USERS WHERE USERS.user_id = " . $pCode;
+        $rta = pg_query($this->connection, $sql);
+
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+            $userSearch = new User();
+
+            $userSearch->setId($row->user_id);
+            $userSearch->setIdentificationType($row->identification_type);
+            $userSearch->setName($row->name);
+            $userSearch->setLastName($row->last_name);
+            $userSearch->setMail($row->mail);
+            $userSearch->setPhone($row->phone);
+            $userSearch->setPassword($row->password);
+            $userSearch->setStatus($row->status);
+
+            $sql = "SELECT rol_id FROM USERS_ROL where USERS_ROL.user_id = " . $userSearch->getUserId();
+            $rta = pg_query($this->connection, $sql);
+            $row2 = pg_fetch_object($rta);
+            $userSearch->setRole($row2->rol_id);
+        } else {
+            return null;
+        }
+
+        return $userSearch;
+    }
+
+    public function searchRol($pCode)
+    {
+        $sql = "SELECT rol FROM ROL where rol_id = " . $pCode;
+        $rta = pg_query($this->connection, $sql);
+        $row = pg_fetch_object($rta);
+        return $row->rol;
     }
 
     /**
      * 
      */
-    public function update()
+    public function update($pElement)
     {
         $sql = "UPDATE - SET";
         pg_query($this->connection, $sql);
@@ -95,6 +133,11 @@ class UserDAO extends DAO
 
         return $data;
     }
+
+    public function delete($pCode)
+    {
+    }
+
 
     public static function getUserDAO($connection)
     {

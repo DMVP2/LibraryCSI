@@ -241,6 +241,8 @@ $(document).ready(function() {
             success: function(response) {
                 var jsonData = JSON.parse(response);
 
+                console.log(jsonData);
+
                 console.log(jsonData.success);
 
                 if (jsonData.success == "1") {
