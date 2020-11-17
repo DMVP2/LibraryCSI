@@ -22,12 +22,19 @@ if (isset($consultUser) and strcasecmp($consultUser->getPassword(), md5($_POST['
     $userSession->setCurrentUser($consultUser);
     $rol = $userDriving->consultRole($consultUser->getRole());
 
-    if (strcasecmp($rol, "Client") == 0) {
-        header("Location: " . ROOT_DIRECTORY);
-    } else if (strcasecmp($rol, "Employee")) {
-        header("Location: " . ROOT_DIRECTORY . ROUTE_EMPLOYEE . "indexEmployee.php");
-    } else if (strcasecmp($rol, "Admin")) {
-        header("Location: " . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdmin.php");
+    if (strcasecmp($consultUser->getStatus(), 'Inactive') == 0) {
+        header("Location: " . ROOT_DIRECTORY . ROUTE_PRESENTATION . 'changePassword.php');
+    } else {
+        if (strcasecmp($rol, "Client") == 0) {
+            $userSession->setRol("Client");
+            header("Location: " . ROOT_DIRECTORY);
+        } else if (strcasecmp($rol, "Employee") == 0) {
+            $userSession->setRol("Employee");
+            header("Location: " . ROOT_DIRECTORY . ROUTE_EMPLOYEE . "indexEmployee.php");
+        } else if (strcasecmp($rol, "Admin") == 0) {
+            $userSession->setRol("Admin");
+            header("Location: " . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdministrator.php");
+        }
     }
 } else {
     echo "paila";

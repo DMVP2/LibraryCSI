@@ -2,6 +2,7 @@
 
 class UserSession
 {
+
     private static $userSession;
 
 
@@ -18,6 +19,16 @@ class UserSession
     public function getCurrentUser()
     {
         return $_SESSION['user'];
+    }
+
+    public function getRol()
+    {
+        return $_SESSION['rol'];
+    }
+
+    public function setRol($pRol)
+    {
+        $_SESSION['rol'] = $pRol;
     }
 
     public function closeSession()

@@ -42,4 +42,10 @@ class UserDriving
         $userDAO = UserDAO::getUserDAO($this->connection);
         return $userDAO->searchRol($pIdRol);
     }
+
+    public function changePassword($pUser)
+    {
+        $userDAO = UserDAO::getUserDAO($this->connection);
+        return $userDAO->changePassword($pUser);
+    }
 }

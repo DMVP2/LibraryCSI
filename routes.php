@@ -19,7 +19,7 @@ define('ROUTE_FIELDS', '/Presentation/Fields/');
 define('ROUTE_BUSINESS_LIB', '/Business/lib/');
 
 define('ROUTE_PRESENTATION', '/Presentation/');
-define('ROUTE_ADMINISTRATOR', '/Presentation/Asministrator/');
+define('ROUTE_ADMINISTRATOR', '/Presentation/Administrator/');
 define('ROUTE_EMPLOYEE', '/Presentation/Employee/');
 
 define('ROUTE_PROCEDURES', '/Presentation/Procedures/');

@@ -97,6 +97,12 @@ class UserDAO implements DAO
         pg_query($this->connection, $sql);
     }
 
+    public function changePassword($pUser)
+    {
+        $sql = "UPDATE USERS SET password='" . $pUser->getPassword() . "',status='" . $pUser->getStatus() . "' WHERE user_id='" . $pUser->getUserId() . "'";
+        pg_query($this->connection, $sql);
+    }
+
     /**
      * 
      *

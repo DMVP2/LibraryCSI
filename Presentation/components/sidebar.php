@@ -1,15 +1,19 @@
 <?php
 
-$rol = 'employee';
-$nameFile = basename($_SERVER['PHP_SELF'], '.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
 
+$userSession = UserSession::getUserSession();
+$userSession->verifySession();
 
+$rol = $userSession->getRol();
 
-if (strcasecmp($rol, 'employee') == 0) {
+if (strcasecmp($rol, 'Employee') == 0) {
     $color = 'yellow';
-} elseif (strcasecmp($rol, 'admin') == 0) {
+} elseif (strcasecmp($rol, 'Admin') == 0) {
     $color = 'red';
 }
+
+$nameFile = basename($_SERVER['PHP_SELF'], '.php');
 
 ?>
 
@@ -47,11 +51,34 @@ if (strcasecmp($rol, 'employee') == 0) {
 
             <?php } elseif (strcasecmp($rol, 'admin') == 0) { ?>
 
-
             <li <?php echo strcasecmp($nameFile, 'indexAdministrator') == 0 ? "class='active'" : "" ?>>
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i>
+                    <p>Inicio</p>
+                </a>
+            </li>
+            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
                 <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'indexAdministrator.php' ?>">
+                    <i class="fa fa-briefcase"></i>
+                    <p>Empleados</p>
+                </a>
+            </li>
+            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
+                <a href="#">
+                    <i class="fa fa-pencil-square-o"></i>
+                    <p>Publicadores</p>
+                </a>
+            </li>
+            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
+                <a href="#">
                     <i class="fa fa-user"></i>
-                    <p>Usuarios</p>
+                    <p>Clientes</p>
+                </a>
+            </li>
+            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
+                <a href="#">
+                    <i class="fa fa-book"></i>
+                    <p>Documentos</p>
                 </a>
             </li>
             <li <?php echo strcasecmp($nameFile, 'a') == 0 ? "class='active'" : "" ?>>
@@ -60,12 +87,18 @@ if (strcasecmp($rol, 'employee') == 0) {
                     <p>Graficas</p>
                 </a>
             </li>
+            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
+                <a href="#">
+                    <i class="fa fa-eye"></i>
+                    <p>Auditoria</p>
+                </a>
+            </li>
 
 
 
             <?php } else { ?>
 
-            <li class="active">
+            <li class=" active">
                 <a href="dashboard.html">
                     <i class="pe-7s-graph"></i>
                     <p>Dashboard</p>
@@ -111,7 +144,7 @@ if (strcasecmp($rol, 'employee') == 0) {
             <?php } ?>
 
             <li class="active-pro">
-                <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>">
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_SESSION . 'closeSession.php' ?>">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <p>Salir</p>
                 </a>
