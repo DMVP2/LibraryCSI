@@ -6,7 +6,7 @@ require_once "DAO.php";
  * Represents the DAO of the entity ""
  */
 
-class Name extends DAO
+class Name implements DAO
 {
 
     //----------------------------------
@@ -15,7 +15,7 @@ class Name extends DAO
 
     private $connection;
 
-    private static $ DAO;
+    private static $elementDAO;
 
     //----------------------------------
     // Builder
@@ -24,7 +24,7 @@ class Name extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($connection)
     {
         $this->connection = $connection;
         mysqli_set_charset($this->conexion, "utf8");
@@ -37,42 +37,50 @@ class Name extends DAO
     /**
      * 
      */
-    public function create($ )
+    public function create($pElement)
     {
         $sql = "INSERT INTO ";
-		mysqli_query($this->conexion, $sql);
+        mysqli_query($this->conexion, $sql);
+    }
+
+    public function search($pCode)
+    {
     }
 
     /**
      * 
      */
-    public function update($ )
+    public function update($pElement)
     {
         $sql = "UPDATE - SET";
-		mysqli_query($this->conexion, $sql);
+        mysqli_query($this->conexion, $sql);
     }
 
     /**
-	 * 
-	 *
-	 * @return -[]
-	 */
-	public function list()
-	{
-		$sql = "SELECT * FROM ";
+     * 
+     *
+     * @return -[]
+     */
+    public function list()
+    {
+        $sql = "SELECT * FROM ";
 
-		if (!$result = mysqli_query($this->conexion, $sql)) die();
+        if (!$result = mysqli_query($this->conexion, $sql)) die();
 
-		$data = array();
+        $data = array();
 
-		while ($row = mysqli_fetch_array($result)) {
+        while ($row = mysqli_fetch_array($result)) {
 
-			$info = new Usuario();
+            $info = new Usuario();
 
-            
-			$data[] = $info;
-		}
 
-		return $data;
-	}
+            $data[] = $info;
+        }
+
+        return $data;
+    }
+
+    public function delete($pCode)
+    {
+    }
 }

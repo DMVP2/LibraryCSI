@@ -10,7 +10,7 @@ include_once("../Business/Entities/Audit.php");
  * Represents the DAO of the entity "Audit"
  */
 
-class AuditDAO extends DAO
+class AuditDAO implements DAO
 {
 
     //----------------------------------
@@ -28,7 +28,7 @@ class AuditDAO extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($connection)
     {
         $this->connection = $connection;
         pg_set_client_encoding($this->connection, "utf8");
@@ -47,13 +47,21 @@ class AuditDAO extends DAO
         pg_query($this->connection, $sql);
     }
 
+    public function search($pCode)
+    {
+    }
+
     /**
      * 
      */
-    public function update()
+    public function update($pAudit)
     {
         $sql = "UPDATE - SET";
         pg_query($this->connection, $sql);
+    }
+
+    public function delete($pCode)
+    {
     }
 
     /**

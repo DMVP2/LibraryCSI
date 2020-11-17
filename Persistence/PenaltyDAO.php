@@ -6,7 +6,7 @@ include_once("../Business/Entities/Penalty.php");
  * Represents the DAO of the entity "Penalty"
  */
 
-class PenaltyDAO extends DAO
+class PenaltyDAO implements DAO
 {
 
     //----------------------------------
@@ -24,7 +24,7 @@ class PenaltyDAO extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($connection)
     {
         $this->connection = $connection;
         mysqli_set_charset($this->connection, "utf8");
@@ -42,10 +42,15 @@ class PenaltyDAO extends DAO
         $sql = "INSERT INTO PENALTY VALUES('" . $pPenalty->getId() . "','" . $pPenalty->getDateStart() . "','" . $pPenalty->getDateEnd() . "','" . $pPenalty->getValue() . "','" . $pPenalty->getStatus() . "','" . $pPenalty->getUserId() . "','" . $pPenalty->getBookingId() . "')";
         mysqli_query($this->connection, $sql);
     }
+
+    public function search($pCode)
+    {
+    }
+
     /**
      * 
      */
-    public function update()
+    public function update($pElement)
     {
         $sql = "UPDATE - SET";
         mysqli_query($this->connection, $sql);
@@ -84,7 +89,11 @@ class PenaltyDAO extends DAO
         }
         return $data;
     }
-    
+
+    public function delete($pCode)
+    {
+    }
+
     public static function getPublisherDAO($connection)
     {
         if (self::$publisherDAO == null) {

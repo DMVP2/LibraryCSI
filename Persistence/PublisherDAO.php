@@ -6,7 +6,7 @@ include_once("../Business/Entities/Publisher.php");
  * Represents the DAO of the entity "Publisher"
  */
 
-class PublisherDAO extends DAO
+class PublisherDAO implements DAO
 {
 
     //----------------------------------
@@ -24,7 +24,7 @@ class PublisherDAO extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($connection)
     {
         $this->connection = $connection;
         mysqli_set_charset($this->connection, "utf8");

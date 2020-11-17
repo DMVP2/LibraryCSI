@@ -10,7 +10,7 @@ include_once("../Business/Entities/Document.php");
  * Represents the DAO of the entity "Document"
  */
 
-class DocumentDAO extends DAO
+class DocumentDAO implements DAO
 {
 
     //----------------------------------
@@ -28,7 +28,7 @@ class DocumentDAO extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($connection)
     {
         $this->connection = $connection;
         pg_set_client_encoding($this->connection, "utf8");
@@ -50,10 +50,14 @@ class DocumentDAO extends DAO
     /**
      * 
      */
-    public function update()
+    public function update($pElement)
     {
         $sql = "UPDATE - SET";
         pg_query($this->connection, $sql);
+    }
+
+    public function search($pCode)
+    {
     }
 
     /**
@@ -96,6 +100,10 @@ class DocumentDAO extends DAO
         }
 
         return $data;
+    }
+
+    public function delete($pCode)
+    {
     }
 
     public static function getDocumentDAO($connection)

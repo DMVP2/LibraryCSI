@@ -7,7 +7,7 @@ include_once("../Business/Entities/Booking.php");
 /**
  * Represents the DAO of the entity "Booking"
  */
-class BookingDAO extends DAO
+class BookingDAO implements DAO
 {
     //----------------------------------
     // Attributes
@@ -24,7 +24,7 @@ class BookingDAO extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($connection)
     {
         $this->connection = $connection;
         mysqli_set_charset($this->connection, "utf8");
@@ -43,11 +43,17 @@ class BookingDAO extends DAO
         mysqli_query($this->connection, $sql);
     }
 
+    public function search($pCode)
+    {
+    }
+
     /**
      * No se realizarán actuliazaciones de la reserva
      */
-    public function update(){}
-    
+    public function update($pBooking)
+    {
+    }
+
     /**
      * Retorna una lista de todas las reservas del sistema
      *
@@ -77,6 +83,11 @@ class BookingDAO extends DAO
         }
         return $data;
     }
+
+    public function delete($pCode)
+    {
+    }
+
     public static function getBookingDAO($connection)
     {
         if (self::$bookingDAO == null) {
