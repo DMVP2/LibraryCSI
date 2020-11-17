@@ -88,6 +88,14 @@ class UserDAO implements DAO
         return $row->rol;
     }
 
+    public function searchRolByDocument($pDocument)
+    {
+        $sql = "SELECT rol FROM ROL, USERS_ROL where ROL.rol_id = USERS_ROL.rol_id AND USERS_ROL.user_id = " . $pDocument;
+        $rta = pg_query($this->connection, $sql);
+        $row = pg_fetch_object($rta);
+        return $row->rol;
+    }
+
     /**
      * 
      */
@@ -120,8 +128,8 @@ class UserDAO implements DAO
 
             $info = new User();
 
-            $info->setId($row['document']);
-            $info->setIdentificationType($row['type_document']);
+            $info->setId($row['user_id']);
+            $info->setIdentificationType($row['identification_type']);
             $info->setName($row['name']);
             $info->setLastName($row['last_name']);
             $info->setMail($row['mail']);
@@ -135,6 +143,35 @@ class UserDAO implements DAO
             $info->setRole($nameRol);
 
             $data[] = $info;
+        }
+
+        return $data;
+    }
+
+    public function listUsersRol($pRol)
+    {
+        $sql = "SELECT USERS.user_id, identification_type, name, last_name, mail, phone, password, status, rol_id FROM USERS, USERS_ROL WHERE USERS.user_id = USERS_ROL.user_id AND USERS_ROL.rol_id=" . $pRol;
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_object($result)) {
+            $info = new User();
+
+            $info->setId($row->user_id);
+            $info->setIdentificationType($row->identification_type);
+            $info->setName($row->name);
+            $info->setLastName($row->last_name);
+            $info->setMail($row->mail);
+            $info->setPhone($row->phone);
+            $info->setPassword($row->password);
+            $info->setStatus($row->status);
+
+            $rolActual = $this->searchRolByDocument($row->user_id);
+            $info->setRole($rolActual);
+
+            array_push($data, $info);
         }
 
         return $data;

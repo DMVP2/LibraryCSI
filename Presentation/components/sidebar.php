@@ -52,26 +52,26 @@ $nameFile = basename($_SERVER['PHP_SELF'], '.php');
             <?php } elseif (strcasecmp($rol, 'admin') == 0) { ?>
 
             <li <?php echo strcasecmp($nameFile, 'indexAdministrator') == 0 ? "class='active'" : "" ?>>
-                <a href="#">
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'indexAdministrator.php' ?>">
                     <i class="fa fa-pie-chart"></i>
                     <p>Inicio</p>
                 </a>
             </li>
-            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
-                <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'indexAdministrator.php' ?>">
+            <li <?php echo strcasecmp($nameFile, 'employeeAdministrator') == 0 ? "class='active'" : "" ?>>
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'employeeAdministrator.php' ?>">
                     <i class="fa fa-briefcase"></i>
                     <p>Empleados</p>
                 </a>
             </li>
-            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
-                <a href="#">
+            <li <?php echo strcasecmp($nameFile, 'publisherAdministrator') == 0 ? "class='active'" : "" ?>>
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'publisherAdministrator.php' ?>">
                     <i class="fa fa-pencil-square-o"></i>
                     <p>Publicadores</p>
                 </a>
             </li>
-            <li <?php echo strcasecmp($nameFile, '') == 0 ? "class='active'" : "" ?>>
-                <a href="#">
-                    <i class="fa fa-user"></i>
+            <li <?php echo strcasecmp($nameFile, 'clientAdministrator') == 0 ? "class='active'" : "" ?>>
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'clientAdministrator.php' ?>"">
+                    <i class=" fa fa-user"></i>
                     <p>Clientes</p>
                 </a>
             </li>
