@@ -34,6 +34,9 @@ if (isset($consultUser) and strcasecmp($consultUser->getPassword(), md5($_POST['
         } else if (strcasecmp($rol, "Admin") == 0) {
             $userSession->setRol("Admin");
             header("Location: " . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdministrator.php");
+        } else if (strcasecmp($rol, "Owner") == 0) {
+            $userSession->setRol("Owner");
+            header("Location: " . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdministrator.php");
         }
     }
 } else {

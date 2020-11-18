@@ -13,7 +13,8 @@ $c = Connection::getInstance();
 $connection = $c->connectBD();
 
 $userDriving = new UserDriving($connection);
-$empleados = $userDriving->listUsersByRol(3);
+$owners = $userDriving->listUsersByRol(1);
+$admins = $userDriving->listUsersByRol(2);
 
 ?>
 
@@ -70,14 +71,17 @@ $empleados = $userDriving->listUsersByRol(3);
                 <div class="container-fluid ">
 
 
-                    <br><br>
+                    <br>
                     <div class="row centerLarge">
                         <div class="col-md-12 ">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Empleados</h4>
+                                    <h4 class="title">Administradores</h4>
+                                    <input value="Agregar administrador" type="button"
+                                        class="btn btn-admin btn-fill pull-right" style="margin-bottom: 40px;">
                                 </div>
                                 <div class="content table-responsive table-full-width">
+
 
                                     <table id="tableEmployee" class="table table-hover table-striped">
                                         <thead>
@@ -89,15 +93,27 @@ $empleados = $userDriving->listUsersByRol(3);
                                         </thead>
                                         <tbody>
                                             <?php
-                                            foreach ($empleados as $empleado) {
+                                            foreach ($owners as $owner) {
 
                                                 echo "<tr>";
 
-                                                echo "<td>" . $empleado->getUserId() . "</td>";
-                                                echo "<td>" . $empleado->getTypeDocument() . "</td>";
-                                                echo "<td>" . $empleado->getName() . "</td>";
-                                                echo "<td>" . $empleado->getLastName() . "</td>";
-                                                echo "<td>" . $empleado->getStatus() . "</td>";
+                                                echo "<td>" . $owner->getUserId() . "</td>";
+                                                echo "<td>" . $owner->getTypeDocument() . "</td>";
+                                                echo "<td>" . $owner->getName() . "</td>";
+                                                echo "<td>" . $owner->getLastName() . "</td>";
+                                                echo "<td>" . $owner->getStatus() . "</td>";
+
+                                                echo "</tr>";
+                                            }
+                                            foreach ($admins as $admin) {
+
+                                                echo "<tr>";
+
+                                                echo "<td>" . $admin->getUserId() . "</td>";
+                                                echo "<td>" . $admin->getTypeDocument() . "</td>";
+                                                echo "<td>" . $admin->getName() . "</td>";
+                                                echo "<td>" . $admin->getLastName() . "</td>";
+                                                echo "<td>" . $admin->getStatus() . "</td>";
 
                                                 echo "</tr>";
                                             }

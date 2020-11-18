@@ -25,6 +25,7 @@ class Document
     private $type;
     private $city;
     private $country;
+    private $status;
 
     //----------------------------------
     // Builder
@@ -180,5 +181,15 @@ class Document
     public function setCountry($pCountry)
     {
         $this->country = $pCountry;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($pStatus)
+    {
+        $this->status = $pStatus;
     }
 }

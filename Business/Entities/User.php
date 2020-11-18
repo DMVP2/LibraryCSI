@@ -98,7 +98,7 @@ class User
 
     public function setMail($pMail)
     {
-        $this->id = $pMail;
+        $this->mail = $pMail;
     }
 
     public function getPhone()
