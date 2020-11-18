@@ -3,17 +3,17 @@
 //error_reporting(0);
 include_once('../../routes.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'DocumentDriving.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Document.php');
 
 
 $c = Connection::getInstance();
 $connection = $c->connectBD();
 
-$userDriving = new UserDriving($connection);
-$empleados = $userDriving->listUsersByRol(3);
+$documentDriving = new DocumentDriving($connection);
+$documents = $documentDriving->listDocuments();
 
 ?>
 
@@ -75,29 +75,34 @@ $empleados = $userDriving->listUsersByRol(3);
                         <div class="col-md-12 ">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Empleados</h4>
+                                    <h4 class="title">Documentos</h4>
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
-                                    <table id="tableEmployee" class="table table-hover table-striped">
+                                    <table id="tableDocuments" class="table table-hover table-striped">
                                         <thead>
-                                            <th>Documento</th>
+                                            <th>Codigo</th>
+                                            <th>Titulo</th>
+                                            <th>Editorial</th>
+                                            <th>Fecha publicación</th>
                                             <th>Tipo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
                                             <th>Estado</th>
+                                            <th>Acción</th>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            foreach ($empleados as $empleado) {
+                                            foreach ($documents as $document) {
 
                                                 echo "<tr>";
 
-                                                echo "<td>" . $empleado->getUserId() . "</td>";
-                                                echo "<td>" . $empleado->getTypeDocument() . "</td>";
-                                                echo "<td>" . $empleado->getName() . "</td>";
-                                                echo "<td>" . $empleado->getLastName() . "</td>";
-                                                echo "<td>" . $empleado->getStatus() . "</td>";
+                                                echo "<td>" . $document->getCode() . "</td>";
+                                                echo "<td>" . $document->getTitle() . "</td>";
+                                                echo "<td>" . $document->getEditorial() . "</td>";
+                                                echo "<td>" . $document->getDateOfPublication() . "</td>";
+                                                echo "<td>" . $document->getType() . "</td>";
+                                                echo "<td>" . $document->getStatus() . "</td>";
+                                                echo "<td><button>Abc</button></td>";
+
 
                                                 echo "</tr>";
                                             }
@@ -150,7 +155,7 @@ $empleados = $userDriving->listUsersByRol(3);
 
 <script>
 $(document).ready(function() {
-    $('#tableEmployee').DataTable();
+    $('#tableDocuments').DataTable();
 });
 </script>
 

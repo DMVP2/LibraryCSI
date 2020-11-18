@@ -2,7 +2,7 @@
 
 require_once 'DAO.php';
 
-include_once("../Business/Entities/Document.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . "Document.php");
 
 
 
@@ -67,7 +67,7 @@ class DocumentDAO implements DAO
      */
     public function list()
     {
-        $sql = "SELECT * FROM DOCUMENT";
+        $sql = "SELECT * FROM DOCUMENT ORDER BY status ASC";
 
         if (!$result = pg_query($this->connection, $sql)) die();
 
@@ -80,21 +80,15 @@ class DocumentDAO implements DAO
             $info->setId($row['document_id']);
             $info->setCode($row['code']);
             $info->setTitle($row['title']);
-            $info->setState($row['state']);
+            $info->setState($row['date']);
             $info->setCongress($row['congress']);
             $info->setCategory($row['category']);
             $info->setLanguage($row['language']);
             $info->setNumOfPages($row['num_pages']);
             $info->setDateOfPublication($row['date']);
             $info->setEditorial($row['editorial']);
-            $info->setType(['type']);
-
-
-
-            //FIX
-            $info->setCity($row['new_data']);
-            $info->setCountry($row['new_data']);
-            $info->setAuthors($row['operation']);
+            $info->setType($row['type']);
+            $info->setStatus($row['status']);
 
             $data[] = $info;
         }

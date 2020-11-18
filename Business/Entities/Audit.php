@@ -12,7 +12,6 @@ class Audit
     //----------------------------------
 
     private $audit_id;
-    private $user;
     private $table;
     private $ip;
     private $operation;
@@ -40,16 +39,6 @@ class Audit
     public function setAuditId($pAuditId)
     {
         $this->audit_id = $pAuditId;
-    }
-
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    public function setUser($pUser)
-    {
-        $this->user = $pUser;
     }
 
     public function getTable()

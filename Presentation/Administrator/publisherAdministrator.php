@@ -14,7 +14,6 @@ $connection = $c->connectBD();
 
 $userDriving = new UserDriving($connection);
 $publishers = $userDriving->listUsersByRol(4);
-
 ?>
 
 <!doctype html>
@@ -41,10 +40,15 @@ $publishers = $userDriving->listUsersByRol(4);
     <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/light-bootstrap-dashboard.css?v=1.4.0' ?>"
         rel="stylesheet" />
 
+
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/pe-icon-7-stroke.css' ?>" rel="stylesheet" />
+
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css"
+        href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION_LIB . "DataTables/datatables.min.css" ?>" />
 
 </head>
 
@@ -70,11 +74,11 @@ $publishers = $userDriving->listUsersByRol(4);
                         <div class="col-md-12 ">
                             <div class="card">
                                 <div class="header">
-                                    <h5 class="title">Publicadores</h5>
+                                    <h4 class="title">Publicadores</h4>
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
-                                    <table class="table table-hover table-striped">
+                                    <table id="tableEmployee" class="table table-hover table-striped">
                                         <thead>
                                             <th>Documento</th>
                                             <th>Tipo</th>
@@ -120,6 +124,7 @@ $publishers = $userDriving->listUsersByRol(4);
 
 </body>
 
+
 <!--   Core JS Files   -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/jquery.3.2.1.min.js' ?>" type="text/javascript">
 </script>
@@ -138,5 +143,14 @@ $publishers = $userDriving->listUsersByRol(4);
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
 
+<!-- DataTables -->
+<script type="text/javascript"
+    src="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION_LIB . "DataTables/datatables.min.js" ?>"></script>
+
+<script>
+$(document).ready(function() {
+    $('#tableEmployee').DataTable();
+});
+</script>
 
 </html>

@@ -3,17 +3,17 @@
 //error_reporting(0);
 include_once('../../routes.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'AuditDriving.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Audit.php');
 
 
 $c = Connection::getInstance();
 $connection = $c->connectBD();
 
-$userDriving = new UserDriving($connection);
-$empleados = $userDriving->listUsersByRol(3);
+$auditDriving = new AuditDriving($connection);
+$audits = $auditDriving->listAudit();
 
 ?>
 
@@ -75,29 +75,31 @@ $empleados = $userDriving->listUsersByRol(3);
                         <div class="col-md-12 ">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Empleados</h4>
+                                    <h4 class="title">Auditoria</h4>
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
                                     <table id="tableEmployee" class="table table-hover table-striped">
                                         <thead>
-                                            <th>Documento</th>
-                                            <th>Tipo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Estado</th>
+                                            <th>Tabla</th>
+                                            <th>Operación</th>
+                                            <th>Dato antiguo</th>
+                                            <th>Dato nuevo</th>
+                                            <th>Ip</th>
+                                            <th>Fecha</th>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            foreach ($empleados as $empleado) {
+                                            foreach ($audits as $audit) {
 
                                                 echo "<tr>";
 
-                                                echo "<td>" . $empleado->getUserId() . "</td>";
-                                                echo "<td>" . $empleado->getTypeDocument() . "</td>";
-                                                echo "<td>" . $empleado->getName() . "</td>";
-                                                echo "<td>" . $empleado->getLastName() . "</td>";
-                                                echo "<td>" . $empleado->getStatus() . "</td>";
+                                                echo "<td>" . $audit->getTable() . "</td>";
+                                                echo "<td>" . $audit->getOperation() . "</td>";
+                                                echo "<td>" . $audit->getOldData() . "</td>";
+                                                echo "<td>" . $audit->getNewData() . "</td>";
+                                                echo "<td>" . $audit->getIp() . "</td>";
+                                                echo "<td>" . $audit->getDate() . "</td>";
 
                                                 echo "</tr>";
                                             }

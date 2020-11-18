@@ -2,7 +2,7 @@
 
 require_once 'DAO.php';
 
-include_once("../Business/Entities/Audit.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . "Audit.php");
 
 
 
@@ -81,9 +81,8 @@ class AuditDAO implements DAO
 
             $info = new Audit();
 
-            $info->setAuditId($row['id']);
-            $info->setUser($row['user']);
-            $info->setTable($row['table']);
+            $info->setAuditId($row['audit_id']);
+            $info->setTable($row['table_name']);
             $info->setIp($row['ip']);
             $info->setOperation($row['operation']);
             $info->setDate($row['date']);

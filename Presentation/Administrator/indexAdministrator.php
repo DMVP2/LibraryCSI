@@ -47,9 +47,10 @@ include_once('../../routes.php');
 
 
         <div class="main-panel">
-
             <div class="content">
                 <div class="container-fluid ">
+
+
                     <div class="row centerLarge margin-top-1">
                         <div class="col-md-12 ">
                             <div class="card">
@@ -95,13 +96,11 @@ include_once('../../routes.php');
                                     </form>
 
 
-
-                                    <div class="clearfix"></div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
 
                 </div>
@@ -117,29 +116,6 @@ include_once('../../routes.php');
         </div>
     </div>
 
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-admin btn-fill">Hacer reserva</button>
-                    <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
 
 </body>
 
