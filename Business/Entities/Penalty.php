@@ -14,7 +14,6 @@ class Penalty
     private $dateEnd;
     private $value;
     private $status;
-    private $userId;
     private $bookingId;
 
     //----------------------------------
@@ -77,16 +76,6 @@ class Penalty
     public function setStatus($pStatus)
     {
         $this->status = $pStatus;
-    }
-
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    public function setUserId($pUserId)
-    {
-        $this->userId = $pUserId;
     }
     public function getBookingId()
     {

@@ -1,43 +1,40 @@
 <?php
-    include_once("../Business/Persistence/PenaltyDAO.php");
-    include_once("../Business/Entities/Penalty.php");
-    include_once("../Business/Persistence/Connection.php");
 
-class PenaltyDriving{
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . "PenaltyDAO.php");
 
-	/**
-		 * Representa la conexión para pasarla a los DAOS utilizados
-		 *
-		 * @var Object
-		 */
-		private static $conexion; 
-		/**
-		 * Crear una penalidad
-		 *
-		 * @param Penalty $pPenlaty
-		 * @return bool
-		 */
-		public static function createPenlaty($pPenlaty){
-			$penaltyDAO = PenaltyDAO::getPenaltyDAO(self::$conexion);
-			$penalty = $penaltyDAO->create($pPenlaty);
-			return $penalty;
-		}
-		/**
-		 * Edita */
+class PenaltyDriving
+{
 
-		/**
-		 * Busca un estudiante por su codigo
-		 *
-		 */
+    //-----------------------------------
+    // Attributes
+    //-----------------------------------
 
-		/**
-		 * Cambia la conexión
-		 *
-		 * @param Object $conexion
-		 * @return void
-		 */
-		public static function setconexion($conexion)
-		{
-			self::$conexion = $conexion;
-		}
+    private $connection;
+    private static $penaltyDriving;
+
+    //----------------------------------
+    // Builder
+    //----------------------------------
+
+    public function __construct($pConnection)
+    {
+        $this->connection = $pConnection;
+    }
+
+    //---------------------------------
+    // Methods
+    //---------------------------------
+
+    public function createPenalty($pPenalty)
+    {
+        $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
+        $penaltyDAO->create($pPenalty);
+    }
+
+    public function searchPenaltyById($pId)
+    {
+        $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
+        return $penaltyDAO->search($pId);
+    }
+
 }

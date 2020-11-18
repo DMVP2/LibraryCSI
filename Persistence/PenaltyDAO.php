@@ -73,14 +73,35 @@ class PenaltyDAO extends DAO
             $info->setDateEnd($row['dateEnd']);
             $info->setValue($row['value']);
             $info->setStatus($row['status']);
-            $info->setUserId($row['userId']);
             $info->setBookingId($row['bookingId']);
             
             $data[] = $info;
         }
         return $data;
     }
-    
+    public function search($pCode)
+    {
+        $sql = "SELECT * FROM PENALTY WHERE  penalty_id = " . $pCode;
+        $rta = pg_query($this->connection, $sql);
+
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+            $penaltySearch = new Penalty();
+
+            $penaltySearch->setId($row->penalty_id);
+            $penaltySearch->setDateStart($row->date_start);
+            $penaltySearch->setDateEnd($row->date_end);
+            $penaltySearch->setValue($row->value);
+            $penaltySearch->setStatus($row->status);
+            $penaltySearch->setBookingId($row->booking_id);
+
+        } else {
+            return null;
+        }
+
+        return $penaltySearch;
+    }
+
     public static function getPenaltyDAO($connection)
     {
         if (self::$penaltyDAO == null) {
