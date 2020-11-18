@@ -23,17 +23,17 @@ class Connection
      */
     public function connectBD()
     {
-        /* $server = "bookbosque.postgres.database.azure.com";
+        $server = "bookbosque.postgres.database.azure.com";
         $user = "bookbosque@bookbosque";
         $pass = "UEBbook1234";
         $bd = "book_bosque";
-        $port = "5432"; */
+        $port = "5432";
 
-        $server = "localhost";
+        /*$server = "localhost";
         $user = "postgres";
         $pass = "1234";
         $bd = "Book";
-        $port = "5432";
+        $port = "5432";*/
 
         $con = "host=$server port=$port dbname=$bd user=$user password=$pass";
         $connection = pg_connect($con);
