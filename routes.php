@@ -5,7 +5,7 @@ define('NAME_PROJECT', 'Book Bosque');
 define('ROOT_DIRECTORY', '/Library_CSI');
 
 define('ROUTE_ASSETS', '/Presentation/assets/');
-define('ROUTE_IMAGES', '/Presentation/images/');
+define('ROUTE_IMAGES', '/Presentation/assets/img/');
 
 define('ROUTE_SESSION', '/Session/');
 

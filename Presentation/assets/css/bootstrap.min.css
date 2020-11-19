@@ -6700,7 +6700,7 @@ button.close {
   position: absolute;
   top: 35px;
   bottom: 0;
-  left: 0;
+  left: -150px;
   width: 15%;
   font-size: 20px;
   color: #fff;
@@ -6738,7 +6738,7 @@ button.close {
 }
 .carousel-control.right {
   right: 0;
-  left: auto;
+  left: 1150px;
   background-image: -webkit-linear-gradient(
     left,
     rgba(0, 0, 0, 0.0001) 0,

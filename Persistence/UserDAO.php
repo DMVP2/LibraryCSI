@@ -80,6 +80,26 @@ class UserDAO implements DAO
         return $userSearch;
     }
 
+    public function userValidate($pTypeId, $pId)
+    {
+        if ($pId == '') {
+            $pId = 0;
+        }
+        $sql = "SELECT * FROM USERS WHERE identification_type='" . $pTypeId . "' AND USERS.user_id = " . $pId;
+        $rta = pg_query($this->connection, $sql);
+
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+
+            if (strcasecmp($row->status, 'Active') == 0) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+        return 0;
+    }
+
     public function searchRol($pCode)
     {
         $sql = "SELECT rol FROM ROL where rol_id = " . $pCode;

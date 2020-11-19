@@ -2,6 +2,18 @@
 
 include_once('routes.php');
 
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'DocumentDriving.php');
+
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Document.php');
+
+
+$c = Connection::getInstance();
+$connection = $c->connectBD();
+
+$documentDriving = new DocumentDriving($connection);
+$documents = $documentDriving->listDocuments();
+
 ?>
 
 <!doctype html>
@@ -37,9 +49,9 @@ include_once('routes.php');
 
 <body>
 
-    <div class="wrapper">
+    <div class="wrapper" style="height: 100%;">
 
-        <div class="main-panel" data="index">
+        <div class="main-panel" data="index" style="max-height:none; height: 100%;">
 
             <!-- Navbar -->
             <?php
@@ -50,9 +62,26 @@ include_once('routes.php');
             <div class="content">
                 <div class="container-fluid ">
 
-                    <br><br><br>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-1">
+                            <input type="text">
+                        </div>
+                        <div class="col-md-3 col-md-offset-1">
+                            <input type="text">
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-1">
+                            <h3>Top libros</h3>
+                        </div>
+                    </div>
+
+                    <br>
+
                     <div class='row'>
-                        <div class='col-md-offset-2 col-md-8'>
+                        <div class='col-md-12 col-md-offset-1'>
                             <div class="carousel slide" data-ride="carousel" id="quote-carousel">
 
                                 <!-- Carousel Slides / Quotes -->
@@ -60,119 +89,40 @@ include_once('routes.php');
                                     <!-- Quote 1 -->
                                     <div class="item active">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
+
+                                            <?php foreach ($documents as $document) { ?>
+
+                                            <div class="col-md-2">
+                                                <div class="card col-md-12 ">
+                                                    <br>
+                                                    <div class="card-header text-center">
+                                                        <center><img
+                                                                src="<?php echo ROOT_DIRECTORY . ROUTE_IMAGES . 'documents/100anos.jpg' ?>"
+                                                                style="width: 50%; height: auto;"></center>
+
+                                                        <br>
+                                                        <p><?php echo $document->getTitle() ?></p>
+                                                        <p class="card-category">19/11/2020</p>
+
+                                                        <input value="Ver más" type="button"
+                                                            class="btn btn-admin btn-fill">
+
+                                                        <br><br>
                                                     </div>
                                                     <div class="card-body ">
 
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
+                                            <?php } ?>
 
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
 
                                     </div>
-                                    <!-- Quote 2 -->
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Quote 3 -->
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
+
 
                                 <!-- Carousel Buttons Next/Prev -->
                                 <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i
@@ -182,158 +132,80 @@ include_once('routes.php');
                             </div>
                         </div>
 
-
-
                     </div>
 
-                    <!-- Secon carrousel -->
+                </div>
 
-                    <br><br><br>
-                    <div class='row'>
-                        <div class='col-md-offset-2 col-md-8'>
-                            <div class="carousel slide" data-ride="carousel" id="quote-carousel1">
+                <!-- Secon carrousel -->
 
-                                <!-- Carousel Slides / Quotes -->
-                                <div class="carousel-inner">
-                                    <!-- Quote 1 -->
-                                    <div class="item active">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
+                <div class="row">
+                    <div class="col-md-12 col-md-offset-1">
+                        <h3>Top libros</h3>
+                    </div>
+                </div>
 
-                                                    </div>
+                <br>
+
+                <div class='row'>
+                    <div class='col-md-12 col-md-offset-1'>
+                        <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+
+                            <!-- Carousel Slides / Quotes -->
+                            <div class="carousel-inner">
+                                <!-- Quote 1 -->
+                                <div class="item active">
+                                    <div class="row">
+
+                                        <?php foreach ($documents as $document) { ?>
+
+                                        <div class="col-md-2">
+                                            <div class="card col-md-12 ">
+                                                <br>
+                                                <div class="card-header text-center">
+                                                    <center><img
+                                                            src="<?php echo ROOT_DIRECTORY . ROUTE_IMAGES . 'documents/100anos.jpg' ?>"
+                                                            style="width: 50%; height: auto;"></center>
+
+                                                    <br>
+                                                    <p><?php echo $document->getTitle() ?></p>
+                                                    <p class="card-category">19/11/2020</p>
+
+                                                    <input value="Ver más" type="button" class="btn btn-admin btn-fill">
+
+                                                    <br><br>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
+                                                <div class="card-body ">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!-- Quote 2 -->
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <?php } ?>
                                     </div>
-                                    <!-- Quote 3 -->
-                                    <div class="item">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="card ">
-                                                    <div class="card-header ">
-                                                        <h4 class="card-title">Email Statistics</h4>
-                                                        <p class="card-category">Last Campaign Performance</p>
-                                                    </div>
-                                                    <div class="card-body ">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
-                                <!-- Carousel Buttons Next/Prev -->
-                                <a data-slide="prev" href="#quote-carousel1" class="left carousel-control"><i
-                                        class="fa fa-chevron-left"></i></a>
-                                <a data-slide="next" href="#quote-carousel1" class="right carousel-control"><i
-                                        class="fa fa-chevron-right"></i></a>
                             </div>
+
+                            <!-- Carousel Buttons Next/Prev -->
+                            <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i
+                                    class="fa fa-chevron-left"></i></a>
+                            <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i
+                                    class="fa fa-chevron-right"></i></a>
                         </div>
-
-
-
                     </div>
                 </div>
             </div>
-
-
-            <!-- Footer -->
-            <?php
-            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-            ?>
-            <!-- Footer -->
-
         </div>
+
+
+        <!-- Footer -->
+        <?php
+        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
+        ?>
+        <!-- Footer -->
+
+    </div>
     </div>
 
     <!-- ModalRegister -->

@@ -54,4 +54,10 @@ class UserDriving
         $userDAO = UserDAO::getUserDAO($this->connection);
         return $userDAO->listUsersRol($pRol);
     }
+
+    public function userValidate($pTypeId, $pId)
+    {
+        $userDAO = UserDAO::getUserDAO($this->connection);
+        return $userDAO->userValidate($pTypeId, $pId);
+    }
 }

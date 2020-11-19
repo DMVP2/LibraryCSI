@@ -52,14 +52,16 @@ include_once('../../routes.php');
             <div class="content">
                 <div class="container-fluid ">
                     <div class="row centerLarge margin-top-1">
-                        <div class="col-md-12 ">
+                        <div class="col-md-8 col-md-offset-2 ">
                             <div class="card">
                                 <div class="header">
-                                    <h5 class="title">Cliente</h5>
                                 </div>
                                 <div class="content">
                                     <form id='formClient'>
                                         <div class="row">
+                                            <div class="col-md-1">
+                                                <label>&nbsp;</label>
+                                            </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Tipo de documento</label>
@@ -70,30 +72,19 @@ include_once('../../routes.php');
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-5">
+                                            <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label>Número de documento</label>
                                                     <input type="number" class="form-control" id="numberDocument"
                                                         name="numberDocument" placeholder="Número de documento">
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-1">
-                                                <label>&nbsp;</label>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>&nbsp;</label>
-                                                    <input value="Realizar reserva" type="button"
-                                                        class="form-control btn btn-employee btn-fill pull-left"
-                                                        data-toggle="modal" data-target="#exampleModalCenter">
-                                                </div>
-                                            </div>
-
                                         </div>
 
                                     </form>
+                                    <input value='Realizar reserva' type='button'
+                                        class='btn btn-employee btn-fill pull-left' data-toggle='modal'
+                                        data-target='#exampleModalCenter'>
 
 
 
@@ -103,9 +94,7 @@ include_once('../../routes.php');
                             </div>
                         </div>
                     </div>
-
                     <div id="tableClientBooking">
-
                     </div>
                 </div>
             </div>
@@ -125,7 +114,7 @@ include_once('../../routes.php');
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content" style="margin-top:40%">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -133,7 +122,30 @@ include_once('../../routes.php');
                     <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <form action="">
+                        <div class="row">
+                            <div class="col-md-4" style="padding-top: 10px;">
+                                Codigo del documento:
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="codeDocument" name="codeDocument"
+                                    placeholder="Codigo del documento">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" style="padding-top: 10px;">
+                                Nombre del documento:
+                            </div>
+                            <div class="col-md-8" style="padding-top: 10px;">
+                                ola
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary btn-fill">Hacer reserva</button>
@@ -155,7 +167,6 @@ include_once('../../routes.php');
             </div>
         </div>
     </div>
-
 </body>
 
 <!--   Core JS Files   -->
@@ -181,6 +192,7 @@ $(document).ready(function() {
     $.fn.rechargeData = function() {
         $('#tableClientBooking').load(
             "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Employee/tableBooking.php" ?>", {
+                'typeId': $('#typeDocument').val(),
                 'idUser': $('#numberDocument').val()
             });
     }
@@ -191,6 +203,8 @@ $(document).ready(function() {
     $('#formClient').submit(function(e) {
         e.preventDefault();
     });
+
+    $.fn.rechargeData();
 });
 
 function updateModal(pStatus, pIdBooking, pIdDocument) {

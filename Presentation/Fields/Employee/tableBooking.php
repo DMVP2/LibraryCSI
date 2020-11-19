@@ -4,9 +4,11 @@ include_once('../../../routes.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'BookingDriving.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'DocumentDriving.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Booking.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
 
 
 $c = Connection::getInstance();
@@ -14,9 +16,15 @@ $connection = $c->connectBD();
 
 $bookingDriving = new BookingDriving($connection);
 $documentDriving = new DocumentDriving($connection);
+$userDriving = new UserDriving($connection);
 
+$typeDocument = $_REQUEST['typeId'];
 $idUser = $_REQUEST['idUser'];
-$books = $bookingDriving->searchBookingActivesByUserId($idUser);
+
+$validate = $userDriving->userValidate($typeDocument, $idUser);
+if ($validate != 0) {
+    $books = $bookingDriving->searchBookingActivesByUserId($idUser);
+}
 
 ?>
 
@@ -25,7 +33,14 @@ $books = $bookingDriving->searchBookingActivesByUserId($idUser);
     <div class="col-md-12 ">
         <div class="card">
             <div class="header">
-                <h5 class="title">Reservas</h5>
+                <?php
+                if ($validate > 0) {
+                    echo "<input value='Realizar reserva' type='button' class='btn btn-employee btn-fill pull-left'
+                        data-toggle='modal' data-target='#exampleModalCenter'>";
+                    echo "<br><br>";
+                }
+                ?>
+
             </div>
             <div class="content table-responsive table-full-width">
 
@@ -41,7 +56,9 @@ $books = $bookingDriving->searchBookingActivesByUserId($idUser);
                     <tbody>
                         <?php
 
-                        if ($books == -1) {
+                        if ($validate == 0) {
+                            echo "<tr><td colspan='6'><center>El usuario no existe.</center></td></tr>";
+                        } else if (isset($books) and $books == -1) {
                             echo "<tr><td colspan='6'><center>No se encontrarón datos.</center></td></tr>";
                         } else {
                             foreach ($books as $book) {
