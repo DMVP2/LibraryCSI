@@ -18,12 +18,18 @@ class UserSession
 
     public function getCurrentUser()
     {
-        return $_SESSION['user'];
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+        return null;
     }
 
     public function getRol()
     {
-        return $_SESSION['rol'];
+        if (isset($_SESSION['rol'])) {
+            return $_SESSION['rol'];
+        }
+        return null;
     }
 
     public function setRol($pRol)
