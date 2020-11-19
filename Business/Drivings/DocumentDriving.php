@@ -25,6 +25,13 @@ class DocumentDriving
     // Methods
     //---------------------------------
 
+    public function getDocument($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->search($pIdDocument);
+    }
+
+
     public function createDocument($pDocument)
     {
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
@@ -35,5 +42,11 @@ class DocumentDriving
     {
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         return $documentDAO->list();
+    }
+
+    public function getTitleDocumentById($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getTitleDocumentById($pIdDocument);
     }
 }

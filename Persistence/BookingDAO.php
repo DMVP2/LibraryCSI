@@ -2,7 +2,7 @@
 
 require_once 'DAO.php';
 
-include_once("../Business/Entities/Booking.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . "Booking.php");
 
 /**
  * Represents the DAO of the entity "Booking"
@@ -86,6 +86,117 @@ class BookingDAO implements DAO
 
     public function delete($pCode)
     {
+    }
+
+    public function searchBookingByUserId($pUserId)
+    {
+
+        $sql = "        SELECT 
+                            BOOKING.booking_id, date_start, date_end, date_delivery, renovations, BOOKING.status, DOCUMENT_BOOKING.document_id 
+                        FROM 
+                            BOOKING, BOOKING_USERS, DOCUMENT_BOOKING, DOCUMENT 
+                        WHERE
+                            BOOKING.booking_id = BOOKING_USERS.booking_id AND BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND DOCUMENT_BOOKING.document_id = DOCUMENT.document_id AND BOOKING_USERS.user_id = " . $pUserId;
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) == 0)
+            return -1;
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = new Booking();
+
+            $info->setId($row['booking_id']);
+            $info->setBookingDate($row['date_start']);
+            $info->setDeliveryDate($row['date_delivery']);
+            $info->setDateOfCollection($row['date_end']);
+            $info->setBookingStatus($row['status']);
+            $info->setIdDocument($row['document_id']);
+            $info->setIdUser($pUserId);
+
+            $data[] = $info;
+        }
+        return $data;
+    }
+
+    public function searchBookingActivesByUserId($pUserId)
+    {
+
+        if ($pUserId == "") {
+            return -1;
+        }
+
+        $sql = "        SELECT 
+                            BOOKING.booking_id, date_start, date_end, date_delivery, renovations, BOOKING.status, DOCUMENT_BOOKING.document_id 
+                        FROM 
+                            BOOKING, BOOKING_USERS, DOCUMENT_BOOKING, DOCUMENT 
+                        WHERE
+                            BOOKING.booking_id = BOOKING_USERS.booking_id AND BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND DOCUMENT_BOOKING.document_id = DOCUMENT.document_id AND BOOKING.status != 'Completed' AND BOOKING.status != 'Canceled'  AND BOOKING_USERS.user_id = " . $pUserId;
+
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) == 0)
+            return -1;
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = new Booking();
+
+            $info->setId($row['booking_id']);
+            $info->setBookingDate($row['date_start']);
+            $info->setDeliveryDate($row['date_delivery']);
+            $info->setDateOfCollection($row['date_end']);
+            $info->setBookingStatus($row['status']);
+            $info->setIdDocument($row['document_id']);
+            $info->setIdUser($pUserId);
+
+            $data[] = $info;
+        }
+        return $data;
+    }
+
+    public function getNameBookingByDocument($pIdDocument)
+    {
+        $sql = "SELECT 
+                    name, last_name 
+                FROM
+                    BOOKING,BOOKING_USERS,USERS 
+                WHERE
+                    USERS.user_id = BOOKING_USERS.user_id AND 
+                    BOOKING_USERS.booking_id = BOOKING.booking_id AND 
+                    BOOKING.booking_id = " . $pIdDocument;
+        $rta = pg_query($this->connection, $sql);
+        $row = pg_fetch_object($rta);
+        $name = $row->name . " " . $row->last_name;
+        return $name;
+    }
+
+    public function updateStatusBooking($pActualStatus, $pIdBooking)
+    {
+
+        if (strcasecmp($pActualStatus, 'Reserved') == 0) {
+            $sql = "UPDATE
+                        BOOKING 
+                    SET 
+                        date_delivery=NOW(), status='Retired' 
+                    WHERE 
+                        booking_id=" . $pIdBooking;
+        } else if (strcasecmp($pActualStatus, 'Retired') == 0) {
+            $sql = "UPDATE
+                        BOOKING 
+                    SET 
+                        date_end=NOW(), status='Completed' 
+                    WHERE 
+                        booking_id=" . $pIdBooking;
+        }
+
+        pg_query($this->connection, $sql);
     }
 
     public static function getBookingDAO($connection)
