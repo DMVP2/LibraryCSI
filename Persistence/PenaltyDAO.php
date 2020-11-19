@@ -98,11 +98,10 @@ class PenaltyDAO extends DAO
         } else {
             return null;
         }
-
         return $penaltySearch;
     }
 
-    public static function getPenaltyDAO($connection)
+        public static function getPenaltyDAO($connection)
     {
         if (self::$penaltyDAO == null) {
             self::$penaltyDAO = new PenaltyDAO($connection);
