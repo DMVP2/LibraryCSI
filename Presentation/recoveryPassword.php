@@ -177,7 +177,7 @@ $(document).ready(function() {
                 if (jsonData.success == "1") {
                     $("#formRecovery")[0].reset();
                     notifications.showNotificationInfo(
-                        "Se ha restablecido su contraseña, mire su correo");
+                        "Se ha restablecido su contraseña, revise su correo");
 
                 } else {
                     notifications.showNotificationWarning("Ha ocurrido un error");

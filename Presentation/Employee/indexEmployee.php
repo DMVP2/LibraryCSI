@@ -2,6 +2,7 @@
 
 include_once('../../routes.php');
 
+
 ?>
 
 <!doctype html>
@@ -57,7 +58,7 @@ include_once('../../routes.php');
                                     <h5 class="title">Cliente</h5>
                                 </div>
                                 <div class="content">
-                                    <form>
+                                    <form id='formClient'>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
@@ -72,7 +73,7 @@ include_once('../../routes.php');
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Número de documento</label>
-                                                    <input type="text" class="form-control" id="numberDocument"
+                                                    <input type="number" class="form-control" id="numberDocument"
                                                         name="numberDocument" placeholder="Número de documento">
                                                 </div>
                                             </div>
@@ -120,7 +121,7 @@ include_once('../../routes.php');
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal Reserva-->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -135,8 +136,20 @@ include_once('../../routes.php');
                     ...
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-employee btn-fill">Hacer reserva</button>
-                    <button type="button" class="btn btn-primary btn-fill" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary btn-fill">Hacer reserva</button>
+                    <button type="button" class="btn btn-employee btn-fill" data-dismiss="modal">Cerrar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Accion-->
+    <div class="modal fade" id="modalAction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="margin-top:40%">
+                <div id="modalActionContent">
 
                 </div>
             </div>
@@ -166,7 +179,6 @@ include_once('../../routes.php');
 <script type="text/javascript">
 $(document).ready(function() {
     $.fn.rechargeData = function() {
-
         $('#tableClientBooking').load(
             "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Employee/tableBooking.php" ?>", {
                 'idUser': $('#numberDocument').val()
@@ -175,7 +187,42 @@ $(document).ready(function() {
     $("#numberDocument").on('keyup', function() {
         $.fn.rechargeData();
     });
+
+    $('#formClient').submit(function(e) {
+        e.preventDefault();
+    });
 });
+
+function updateModal(pStatus, pIdBooking, pIdDocument) {
+    $('#modalActionContent').load("<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Employee/modalAction.php" ?>", {
+        'status': pStatus,
+        'idBooking': pIdBooking,
+        'idDocument': pIdDocument
+    });
+    $("#modalAction").modal('show');
+}
+
+function executeAction(pStatus, pIdBooking) {
+
+    $('#btnConfirmExecute').prop('disabled', true);
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/executeAction.php"  ?>',
+        data: 'status=' + pStatus + '&idBooking=' + pIdBooking,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                $("#modalAction").modal('hide');
+                notifications.showNotificationInfo("Se ha realizado la operación con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+            $('#btnConfirmExecute').prop('disabled', false);
+        }
+    });
+}
 </script>
 
 

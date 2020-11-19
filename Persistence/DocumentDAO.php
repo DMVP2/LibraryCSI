@@ -58,6 +58,31 @@ class DocumentDAO implements DAO
 
     public function search($pCode)
     {
+
+        $sql = "SELECT * FROM DOCUMENT WHERE document_id=" . $pCode;
+        $rta = pg_query($this->connection, $sql);
+
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+            $documentSearch = new Document();
+
+            $documentSearch->setId($row->document_id);
+            $documentSearch->setCode($row->code);
+            $documentSearch->setTitle($row->title);
+            $documentSearch->setState($row->date);
+            $documentSearch->setCongress($row->congress);
+            $documentSearch->setCategory($row->category);
+            $documentSearch->setLanguage($row->language);
+            $documentSearch->setNumOfPages($row->num_pages);
+            $documentSearch->setDateOfPublication($row->date);
+            $documentSearch->setEditorial($row->editorial);
+            $documentSearch->setType($row->type);
+            $documentSearch->setStatus($row->status);
+        } else {
+            return null;
+        }
+
+        return $documentSearch;
     }
 
     /**
@@ -94,6 +119,14 @@ class DocumentDAO implements DAO
         }
 
         return $data;
+    }
+
+    public function getTitleDocumentById($pIdDocument)
+    {
+        $sql = "SELECT title FROM DOCUMENT WHERE document_id= " . $pIdDocument;
+        $rta = pg_query($this->connection, $sql);
+        $row = pg_fetch_object($rta);
+        return $row->title;
     }
 
     public function delete($pCode)

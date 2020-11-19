@@ -186,7 +186,7 @@ $(document).ready(function() {
 
                 if (jsonData.success == "1") {
                     $("#formClient")[0].reset();
-                    notifications.showNotificationInfo("Se ha registrado con exito");
+                    notifications.showNotificationInfo("Se ha registrado con éxito");
 
                 } else {
                     notifications.showNotificationWarning("Ha ocurrido un error");

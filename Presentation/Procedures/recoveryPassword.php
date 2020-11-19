@@ -28,8 +28,6 @@ $passwordDefault = $user->createPassword();
 $pass = md5($passwordDefault);
 
 $user->setId($numberDocument);
-//$user->setIdentificationType($typeDocument);
-//$user->setMail($mail);
 $user->setPassword($pass);
 $user->setStatus("Inactive");
 
