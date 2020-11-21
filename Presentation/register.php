@@ -179,8 +179,6 @@ if ($typeUser == 1) {
                                         </div>
                                     </form>
 
-
-
                                     <div class="clearfix"></div>
 
                                 </div>

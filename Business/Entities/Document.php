@@ -14,7 +14,6 @@ class Document
     private $document_id;
     private $code;
     private $title;
-    private $state;
     private $authors;
     private $congress;
     private $category;
@@ -26,6 +25,7 @@ class Document
     private $city;
     private $country;
     private $status;
+    private $image;
 
     //----------------------------------
     // Builder
@@ -71,16 +71,6 @@ class Document
     public function setTitle($pTitle)
     {
         $this->title = $pTitle;
-    }
-
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    public function setState($pState)
-    {
-        $this->state = $pState;
     }
 
     public function getAuthors()
@@ -191,5 +181,15 @@ class Document
     public function setStatus($pStatus)
     {
         $this->status = $pStatus;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($pImage)
+    {
+        $this->image = $pImage;
     }
 }

@@ -29,8 +29,7 @@ $rol = $userSession->getRol();
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo ROOT_DIRECTORY . ROUTE_SESSION . 'closeSession.php' ?>" data-toggle="modal"
-                        data-target="#myModal1">
+                    <a href="<?php echo ROOT_DIRECTORY . ROUTE_SESSION . 'closeSession.php' ?>">
                         Cerrar sesión
                     </a>
                 </li>
