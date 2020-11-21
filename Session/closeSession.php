@@ -5,4 +5,5 @@ include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserS
 
 $userSession = UserSession::getUserSession();
 $userSession->closeSession();
+
 header("Location: " . ROOT_DIRECTORY . "/index.php");
