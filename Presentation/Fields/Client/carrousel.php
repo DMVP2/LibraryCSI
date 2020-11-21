@@ -179,15 +179,14 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                             echo "<br>";
                             echo "<p>" . $virtuales[$aux]->getTitle() . "<p>";
                             echo "<p class='card-category'>" . $virtuales[$aux]->getDateOfPublication() . "</p>";
-                            if ($search == false) {
-                                echo "<p class='card-category'>Top: " . ($aux + 1) . "</p>";
-                            }
 
                             if (strcasecmp($rol, 'client') == 0) {
                                 echo "<input value='Ver más' type='button' class='btn btn-admin btn-fill'>";
-                                echo "<br>";
+                                echo "<br><br>";
                             }
-                            echo "<br>";
+                            if ($search == false) {
+                                echo "<p class='card-category'>Top: " . ($aux + 1) . "</p>";
+                            }
                             echo "</div>";
 
                             echo "<div class='card-body'></div>";
@@ -196,16 +195,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                             echo "</div>";
                         } else {
                             echo "<div class='col-md-2'>";
-                            echo "<div class='card col-md-12' style='height: 280px'>";
 
-                            echo "<div class='card-header'>";
-                            echo "<h4 class='card-title'></h4>";
-                            echo "<p class='card-category'></p>";
-                            echo "</div>";
-
-                            echo "<div class='card-body'></div>";
-
-                            echo "</div>";
                             echo "</div>";
                         }
 
