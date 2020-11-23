@@ -17,6 +17,8 @@ class BookingDAO implements DAO
 
     private static $bookingDAO;
 
+    private static $valueFinedPerDay = 2500;
+
     //----------------------------------
     // Builder
     //----------------------------------
@@ -43,8 +45,32 @@ class BookingDAO implements DAO
         pg_query($this->connection, $sql);
     }
 
-    public function search($pCode)
+    public function search($pIdBooking)
     {
+        $sql = "SELECT 
+                    BOOKING.booking_id, date_start, date_end, date_delivery, renovations, BOOKING.status
+                FROM 
+                    BOOKING
+                WHERE 
+                    booking_id = " . $pIdBooking;
+
+        $rta = pg_query($this->connection, $sql);
+
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+            $bookingSearch = new Booking();
+
+            $bookingSearch->setId($row->booking_id);
+            $bookingSearch->setBookingStatus($row->status);
+            $bookingSearch->setBookingDate($row->date_start);
+            $bookingSearch->setDateOfCollection($row->date_end);
+            $bookingSearch->setDeliveryDate($row->date_delivery);
+            $bookingSearch->setRenovations($row->renovations);
+        } else {
+            return null;
+        }
+
+        return $bookingSearch;
     }
 
     /**
@@ -177,6 +203,8 @@ class BookingDAO implements DAO
         return $name;
     }
 
+
+
     public function updateStatusBooking($pActualStatus, $pIdBooking)
     {
 
@@ -194,7 +222,15 @@ class BookingDAO implements DAO
                         date_end=NOW(), status='Completed' 
                     WHERE 
                         booking_id=" . $pIdBooking;
+        } else if (strcasecmp($pActualStatus, 'Fined') == 0) {
+            $sql = "UPDATE
+                        BOOKING 
+                    SET 
+                        status='Completed' 
+                    WHERE 
+                        booking_id=" . $pIdBooking;
         }
+
 
         pg_query($this->connection, $sql);
     }
@@ -215,6 +251,42 @@ class BookingDAO implements DAO
 
         $sql = "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ")";
         pg_query($this->connection, $sql);
+    }
+
+    public function serachBookingFined($pDocumentId)
+    {
+        $sql = "SELECT 
+                    BOOKING.booking_id, date_start, date_end, date_delivery, renovations, BOOKING.status, DOCUMENT_BOOKING.document_id 
+                FROM 
+                    BOOKING, DOCUMENT_BOOKING 
+                WHERE 
+                    status='Fined' AND 
+                    BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND 
+                    document_id=" . $pDocumentId;
+
+        $rta = pg_query($this->connection, $sql);
+
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+            $bookingSearch = new Booking();
+
+            $bookingSearch->setId($row->document_id);
+            $bookingSearch->setIdDocument($pDocumentId);
+            $bookingSearch->setBookingStatus($row->status);
+            $bookingSearch->setBookingDate($row->date_start);
+            $bookingSearch->setDateOfCollection($row->date_end);
+            $bookingSearch->setDeliveryDate($row->date_delivery);
+            $bookingSearch->setRenovations($row->renovations);
+        } else {
+            return null;
+        }
+
+        return $bookingSearch;
+    }
+
+    public function getValueFined()
+    {
+        return self::$valueFinedPerDay;
     }
 
     public static function getBookingDAO($connection)

@@ -25,6 +25,12 @@ class BookingDriving
     // Methods
     //---------------------------------
 
+    public function search($pIdBooking)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->search($pIdBooking);
+    }
+
     public function listBookingById($pIdUser)
     {
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);
@@ -53,5 +59,11 @@ class BookingDriving
     {
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);
         $bookingDAO->reserveDocument($pUserId, $pDocumentId);
+    }
+
+    public function getValueFined()
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->getValueFined();
     }
 }

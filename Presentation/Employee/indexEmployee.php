@@ -292,6 +292,28 @@ function executeAction(pStatus, pIdBooking) {
     });
 }
 
+function payPenalty(pIdBooking, pValue) {
+
+    $('#btnConfirmExecute').prop('disabled', true);
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/executeAction.php"  ?>',
+        data: 'status=Fined&idBooking=' + pIdBooking + '&value=' + pValue,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                $("#modalAction").modal('hide');
+                notifications.showNotificationInfo("Se ha cancelado la multa con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+            $('#btnConfirmExecute').prop('disabled', false);
+        }
+    });
+}
+
 
 function clearDoReserve() {
     $("#formDoReserve")[0].reset();
