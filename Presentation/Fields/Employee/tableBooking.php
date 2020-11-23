@@ -35,8 +35,8 @@ if ($validate != 0) {
             <div class="header">
                 <?php
                 if ($validate > 0) {
-                    echo "<input value='Realizar reserva' type='button' class='btn btn-employee btn-fill pull-left'
-                        data-toggle='modal' data-target='#exampleModalCenter'>";
+                    echo "<input value='Realizar reserva' type='button' class='btn btn-employee btn-fill pull-left' data-toggle='modal'
+                    data-target='#exampleModalCenter' onclick='clearDoReserve()'>";
                     echo "<br><br>";
                 }
                 ?>
