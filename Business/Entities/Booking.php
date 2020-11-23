@@ -16,6 +16,8 @@ class Booking
     private $bookingDate;
     private $dateOfCollection;
     private $deliveryDate;
+    private $renovations;
+
     //----------------------------------
     // Builder
     //----------------------------------
@@ -95,5 +97,15 @@ class Booking
     public function setDeliveryDate($pDeliveryDate)
     {
         $this->deliveryDate = $pDeliveryDate;
+    }
+
+    public function getRenovations()
+    {
+        return $this->renovations;
+    }
+
+    public function setRenovations($pRenovations)
+    {
+        $this->renovations = $pRenovations;
     }
 }

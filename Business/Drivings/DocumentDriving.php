@@ -49,4 +49,28 @@ class DocumentDriving
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         return $documentDAO->getTitleDocumentById($pIdDocument);
     }
+
+    public function getTopDocuments($pType, $pCountTop)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getTopDocuments($pType, $pCountTop);
+    }
+
+    public function searchDocumentByFilter($pType, $pTitle, $pCategory)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->searchDocumentByFilter($pType, $pTitle, $pCategory);
+    }
+
+    public function stateReservedDocument($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->stateReservedDocument($pIdDocument);
+    }
+
+    public function searchByCode($pCode, $pType)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->searchByCode($pCode, $pType);
+    }
 }

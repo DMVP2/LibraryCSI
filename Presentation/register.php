@@ -179,8 +179,6 @@ if ($typeUser == 1) {
                                         </div>
                                     </form>
 
-
-
                                     <div class="clearfix"></div>
 
                                 </div>
@@ -240,10 +238,6 @@ $(document).ready(function() {
             data: $(this).serialize(),
             success: function(response) {
                 var jsonData = JSON.parse(response);
-
-                console.log(jsonData);
-
-                console.log(jsonData.success);
 
                 if (jsonData.success == "1") {
                     $("#formRegister")[0].reset();

@@ -2,6 +2,10 @@
 
 include_once('routes.php');
 
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
+
+$userSession = UserSession::getUserSession();
+$rol = $userSession->getRol();
 
 ?>
 
@@ -51,85 +55,37 @@ include_once('routes.php');
             <div class="content">
                 <div class="container-fluid ">
 
-                    <div class="row">
-                        <div class="col-md-4 col-md-offset-1">
-                            <input type="text">
-                        </div>
-                        <div class="col-md-3 col-md-offset-1">
-                            <input type="text">
-                        </div>
-
-                    </div>
+                    <?php if (strcasecmp($rol, 'client') == 0) { ?>
 
                     <div class="row">
-                        <div class="col-md-12 col-md-offset-1">
-                            <h3>Top libros</h3>
+                        <div class="col-md-1 col-md-offset-1">
+                            <h4 style="margin: 0; margin-top: 8px;">Buscar:</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <input type=" text" class="form-control" placeholder="Titulo del documento"
+                                id="titleDocument" name="titleDocument">
+                        </div>
+                        <div class="col-md-2">
+                            <select name="category" id="category" class="form-control">
+                                <option value="" selected style="color:gray">Categoría</option>
+                                <option value="Niños">Niños</option>
+                                <option value="Adultos">Adultos</option>
+                            </select>
+
                         </div>
                     </div>
-
-                    <div id="carrousel"></div>
-                    <br>
-
                 </div>
-
-                <!-- Secon carrousel -->
-
-                <div class="row">
-                    <div class="col-md-12 col-md-offset-1">
-                        <h3>Top libros</h3>
-                    </div>
-                </div>
-
                 <br>
 
-                <div class='row'>
-                    <div class='col-md-12 col-md-offset-1'>
-                        <div class="carousel slide" data-ride="carousel" id="quote-carousel">
-
-                            <!-- Carousel Slides / Quotes -->
-                            <div class="carousel-inner">
-                                <!-- Quote 1 -->
-                                <div class="item active">
-                                    <div class="row">
+                <?php } ?>
 
 
 
-                                        <div class="col-md-2">
-                                            <div class="card col-md-12 ">
-                                                <br>
-                                                <div class="card-header text-center">
-                                                    <center><img
-                                                            src="<?php echo ROOT_DIRECTORY . ROUTE_IMAGES . 'documents/100anos.jpg' ?>"
-                                                            style="width: 50%; height: auto;"></center>
+                <div id="carrousel"></div>
+                <br>
 
-                                                    <br>
-                                                    <p>nombre</p>
-                                                    <p class="card-category">19/11/2020</p>
 
-                                                    <input value="Ver más" type="button" class="btn btn-admin btn-fill">
 
-                                                    <br><br>
-                                                </div>
-                                                <div class="card-body ">
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            <!-- Carousel Buttons Next/Prev -->
-                            <a data-slide="prev" href="#quote-carousel" class="left carousel-control"><i
-                                    class="fa fa-chevron-left"></i></a>
-                            <a data-slide="next" href="#quote-carousel" class="right carousel-control"><i
-                                    class="fa fa-chevron-right"></i></a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -139,9 +95,9 @@ include_once('routes.php');
         include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
         ?>
         <!-- Footer -->
+    </div>
+    </div>
 
-    </div>
-    </div>
 
     <!-- ModalRegister -->
     <?php
@@ -175,11 +131,24 @@ $(document).ready(function() {
 
     $.fn.rechargeData = function() {
         $('#carrousel').load(
-            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Client/carrousel.php" ?>");
+            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Client/carrousel.php" ?>", {
+                'title': $('#titleDocument').val(),
+                'category': $('#category').val()
+            });
     }
+
+    $("#titleDocument").on('keyup', function() {
+        $.fn.rechargeData();
+    });
+
+    $("#category").change(function() {
+        $.fn.rechargeData();
+    });
 
     $.fn.rechargeData();
 });
 </script>
+
+
 
 </html>

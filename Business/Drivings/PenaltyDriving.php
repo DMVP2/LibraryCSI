@@ -37,4 +37,9 @@ class PenaltyDriving
         return $penaltyDAO->search($pId);
     }
 
+    public function payPenalty($pCodeBooking, $pValue)
+    {
+        $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
+        $penaltyDAO->payPenalty($pCodeBooking, $pValue);
+    }
 }

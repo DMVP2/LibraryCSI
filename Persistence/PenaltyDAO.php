@@ -1,13 +1,13 @@
 <?php
 require_once 'DAO.php';
 
-include_once("../Business/Entities/Penalty.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . "Penalty.php");
 
 /**
  * Represents the DAO of the entity "Penalty"
  */
 
-class PenaltyDAO extends DAO
+class PenaltyDAO implements DAO
 {
 
     //----------------------------------
@@ -25,7 +25,7 @@ class PenaltyDAO extends DAO
     /**
      * 
      */
-    private function _construct($connection)
+    private function __construct($connection)
     {
         $this->connection = $connection;
         pg_set_client_encoding($this->connection, "utf8");
@@ -46,10 +46,14 @@ class PenaltyDAO extends DAO
     /**
      * 
      */
-    public function update()
+    public function update($pElement)
     {
         $sql = "UPDATE - SET";
         pg_query($this->connection, $sql);
+    }
+
+    public function delete($pCode)
+    {
     }
     /**
      * Lista de todos los publicadores que hay en el sistema
@@ -74,7 +78,7 @@ class PenaltyDAO extends DAO
             $info->setValue($row['value']);
             $info->setStatus($row['status']);
             $info->setBookingId($row['bookingId']);
-            
+
             $data[] = $info;
         }
         return $data;
@@ -94,14 +98,25 @@ class PenaltyDAO extends DAO
             $penaltySearch->setValue($row->value);
             $penaltySearch->setStatus($row->status);
             $penaltySearch->setBookingId($row->booking_id);
-
         } else {
             return null;
         }
         return $penaltySearch;
     }
 
-        public static function getPenaltyDAO($connection)
+    public function payPenalty($pCodeBooking, $pValue)
+    {
+
+        $sql = "SELECT penalty_id FROM PENALTY_BOOKING WHERE booking_id= " . $pCodeBooking;
+        $rta = pg_query($this->connection, $sql);
+        $row = pg_fetch_object($rta);
+        $idPenalty = $row->penalty_id;
+
+        $sql = "UPDATE PENALTY SET date_end=NOW(), value=" . $pValue . " ,status='Paid' WHERE penalty_id = " . $idPenalty;
+        pg_query($this->connection, $sql);
+    }
+
+    public static function getPenaltyDAO($connection)
     {
         if (self::$penaltyDAO == null) {
             self::$penaltyDAO = new PenaltyDAO($connection);

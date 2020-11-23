@@ -71,7 +71,6 @@ include_once('../../routes.php');
                                                     </select>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label>Número de documento</label>
@@ -80,11 +79,8 @@ include_once('../../routes.php');
                                                 </div>
                                             </div>
                                         </div>
-
                                     </form>
-                                    <input value='Realizar reserva' type='button'
-                                        class='btn btn-employee btn-fill pull-left' data-toggle='modal'
-                                        data-target='#exampleModalCenter'>
+
 
 
 
@@ -122,14 +118,14 @@ include_once('../../routes.php');
                     <h5 class="modal-title" id="exampleModalLongTitle">Reservar documento</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form id="formDoReserve">
                         <div class="row">
                             <div class="col-md-4" style="padding-top: 10px;">
-                                Codigo del documento:
+                                Código del documento:
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="codeDocument" name="codeDocument"
-                                    placeholder="Codigo del documento">
+                                <input type="text" class="form-control" id="codeDocumentReserve"
+                                    name="codeDocumentReserve" placeholder="Código del documento" autocomplete="off">
                             </div>
                         </div>
                         <div class="row">
@@ -142,15 +138,18 @@ include_once('../../routes.php');
                                 Nombre del documento:
                             </div>
                             <div class="col-md-8" style="padding-top: 10px;">
-                                ola
+                                <label id="titleReserve" name="titleReserve"></label>
                             </div>
                         </div>
-                    </form>
+                        <input id="idDocumentReserve" name="idDocumentReserve" value="" type="hidden">
+                        <input id="idClientReserve" name="idClientReserve" value="" type="hidden">
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary btn-fill">Hacer reserva</button>
+                    <button id="btnReserveDocument" type="submit" class="btn btn-primary btn-fill">Hacer
+                        reserva</button>
                     <button type="button" class="btn btn-employee btn-fill" data-dismiss="modal">Cerrar</button>
-
+                    </form>
                 </div>
             </div>
         </div>
@@ -189,6 +188,7 @@ include_once('../../routes.php');
 
 <script type="text/javascript">
 $(document).ready(function() {
+
     $.fn.rechargeData = function() {
         $('#tableClientBooking').load(
             "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Employee/tableBooking.php" ?>", {
@@ -196,8 +196,38 @@ $(document).ready(function() {
                 'idUser': $('#numberDocument').val()
             });
     }
+
+    $.fn.rechargeDataReserveModal = function() {
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/reserveDocument.php"  ?>',
+            data: 'action=1&' + 'code=' + $('#codeDocumentReserve').val(),
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+                $('#titleReserve').html(jsonData.success);
+
+                if (jsonData.code == "-1" || jsonData.code == "-2") {
+                    $('#btnReserveDocument').prop('disabled', true);
+                    $('#idDocumentReserve').val(-1);
+                    $('#idClientReserve').val(-1);
+
+
+                } else {
+                    $('#btnReserveDocument').prop('disabled', false);
+                    $('#idDocumentReserve').val(jsonData.code);
+                    $('#idClientReserve').val($('#numberDocument').val());
+
+                }
+            }
+        });
+    }
+
     $("#numberDocument").on('keyup', function() {
         $.fn.rechargeData();
+    });
+
+    $("#codeDocumentReserve").on('keyup', function() {
+        $.fn.rechargeDataReserveModal();
     });
 
     $('#formClient').submit(function(e) {
@@ -205,6 +235,30 @@ $(document).ready(function() {
     });
 
     $.fn.rechargeData();
+
+
+    $('#formDoReserve').submit(function(e) {
+        $('#btnReserveDocument').prop('disabled', true);
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/reserveDocument.php"  ?>',
+            data: $(this).serialize(),
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+
+                if (jsonData.success == "1") {
+                    $("#exampleModalCenter").modal('hide');
+                    notifications.showNotificationInfo(
+                        "Se ha realizado la reserva con éxito");
+                    $.fn.rechargeData();
+                } else {
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+                $('#btnReserveDocument').prop('disabled', false);
+            }
+        });
+    });
 });
 
 function updateModal(pStatus, pIdBooking, pIdDocument) {
@@ -236,6 +290,35 @@ function executeAction(pStatus, pIdBooking) {
             $('#btnConfirmExecute').prop('disabled', false);
         }
     });
+}
+
+function payPenalty(pIdBooking, pValue) {
+
+    $('#btnConfirmExecute').prop('disabled', true);
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "employee/executeAction.php"  ?>',
+        data: 'status=Fined&idBooking=' + pIdBooking + '&value=' + pValue,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                $("#modalAction").modal('hide');
+                notifications.showNotificationInfo("Se ha cancelado la multa con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+            $('#btnConfirmExecute').prop('disabled', false);
+        }
+    });
+}
+
+
+function clearDoReserve() {
+    $("#formDoReserve")[0].reset();
+    $('#titleReserve').html("-----");
+    $('#btnReserveDocument').prop('disabled', true);
 }
 </script>
 
