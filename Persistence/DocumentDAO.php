@@ -77,12 +77,47 @@ class DocumentDAO implements DAO
             $documentSearch->setEditorial($row->editorial);
             $documentSearch->setType($row->type);
             $documentSearch->setStatus($row->status);
-            $documentSearch->setImage($row['image']);
+            $documentSearch->setImage($row->image);
         } else {
             return null;
         }
 
         return $documentSearch;
+    }
+
+    public function searchByCode($pCode, $pType)
+    {
+        $sql = "SELECT * FROM DOCUMENT WHERE UPPER(code)=UPPER('" . $pCode . "') AND type='" . $pType . "'";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) > 0) {
+            $data = array();
+
+            while ($row = pg_fetch_array($result)) {
+
+                $info = new Document();
+
+                $info->setId($row['document_id']);
+                $info->setCode($row['code']);
+                $info->setTitle($row['title']);
+                $info->setCongress($row['congress']);
+                $info->setCategory($row['category']);
+                $info->setLanguage($row['language']);
+                $info->setNumOfPages($row['num_pages']);
+                $info->setDateOfPublication($row['date']);
+                $info->setEditorial($row['editorial']);
+                $info->setType($row['type']);
+                $info->setStatus($row['status']);
+                $info->setImage($row['image']);
+
+                $data[] = $info;
+            }
+
+            return $data;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -129,15 +164,90 @@ class DocumentDAO implements DAO
         return $row->title;
     }
 
-    public function getTopDocuments($pType)
+    public function stateReservedDocument($pIdDocument)
     {
-        $sql = "SELECT 
+        $sql = "SELECT
+                    * 
+                FROM 
+                    BOOKING, DOCUMENT_BOOKING 
+                WHERE
+                    BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND 
+                    DOCUMENT_BOOKING.document_id = " . $pIdDocument . " AND 
+                    status = 'Reserved' OR 
+                    status = 'Retired' OR 
+                    status = 'Fined'";
+
+        $rta = pg_query($this->connection, $sql);
+        if (pg_num_rows($rta) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getTopDocuments($pType, $pCountTop)
+    {
+        if (strcasecmp($pType, 'Fisico') == 0) {
+            $sql = "SELECT 
                         DOCUMENT_BOOKING.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image, count(DOCUMENT_BOOKING.document_id) as nBookings
                     FROM 
                         DOCUMENT_BOOKING, DOCUMENT 
                     WHERE 
-                        DOCUMENT_BOOKING.document_id = DOCUMENT.document_id AND type='" . $pType . "' 
-                    GROUP BY(DOCUMENT_BOOKING.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image) ORDER BY nBookings DESC LIMIT 15";
+                        DOCUMENT_BOOKING.document_id = DOCUMENT.document_id AND type='Fisico' 
+                    GROUP BY(DOCUMENT_BOOKING.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image) 
+                    ORDER BY nBookings DESC LIMIT " . $pCountTop;
+        } else {
+            $sql = "SELECT 
+                        DOCUMENT.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image, count(DOWNLOAD.document_id) as nBookings
+                    FROM 
+                        DOCUMENT, DOWNLOAD 
+                    WHERE 
+                        DOWNLOAD.document_id = DOCUMENT.document_id AND type='Virtual' 
+                    GROUP BY(DOCUMENT.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image) 
+                    ORDER BY nBookings DESC LIMIT " . $pCountTop;
+        }
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = new Document();
+
+            $info->setId($row['document_id']);
+            $info->setCode($row['code']);
+            $info->setTitle($row['title']);
+            $info->setCongress($row['congress']);
+            $info->setCategory($row['category']);
+            $info->setLanguage($row['language']);
+            $info->setNumOfPages($row['num_pages']);
+            $info->setDateOfPublication($row['date']);
+            $info->setEditorial($row['editorial']);
+            $info->setType($row['type']);
+            $info->setStatus($row['status']);
+            $info->setImage($row['image']);
+
+            $data[] = $info;
+        }
+
+        if (count($data) < $pCountTop) {
+            $data = array_merge($data, $this->completeDocuments($data, $pCountTop, $pType));
+        }
+
+        return $data;
+    }
+
+    public function completeDocuments($pDocumentSelect, $pCount, $pType)
+    {
+        $num = $pCount - (count($pDocumentSelect));
+
+        $sql = "SELECT * FROM DOCUMENT WHERE type='" . $pType . "'";
+
+        foreach ($pDocumentSelect as $document) {
+            $sql = $sql . " AND document_id != " . $document->getDocumentId();
+        }
+        $sql = $sql . " LIMIT " . $num;
 
         if (!$result = pg_query($this->connection, $sql)) die();
 

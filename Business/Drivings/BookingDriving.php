@@ -48,4 +48,10 @@ class BookingDriving
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);
         $bookingDAO->updateStatusBooking($pActualStatus, $pIdBooking);
     }
+
+    public function reserveDocument($pUserId, $pDocumentId)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        $bookingDAO->reserveDocument($pUserId, $pDocumentId);
+    }
 }

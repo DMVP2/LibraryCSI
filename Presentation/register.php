@@ -239,10 +239,6 @@ $(document).ready(function() {
             success: function(response) {
                 var jsonData = JSON.parse(response);
 
-                console.log(jsonData);
-
-                console.log(jsonData.success);
-
                 if (jsonData.success == "1") {
                     $("#formRegister")[0].reset();
                     notifications.showNotificationInfo("Se ha registrado con éxito");
