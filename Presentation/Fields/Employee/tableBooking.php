@@ -66,16 +66,21 @@ if ($validate != 0) {
                                 $status = $book->getBookingStatus();
 
                                 if (strcasecmp($status, 'Reserved') == 0) {
-                                    $btnAction = " <button class='btn btn-admin btn-fill' onClick=updateModal('" . $status . "'," . $book->getId() . "," . $book->getIdDocument() . ")>
+                                    $btnAction = " <button class='btn btn-employee btn-fill' onClick=updateModal('" . $status . "'," . $book->getId() . "," . $book->getIdDocument() . ")>
                                                         <i type='span' class='fa fa-check' aria-hidden='true'></i>
                                                     </button>";
                                     $status = "Reservado";
                                 } else if (strcasecmp($status, 'Retired') == 0) {
 
                                     $btnAction = "<button class='btn btn-primary btn-fill' onClick=updateModal('" . $status . "'," . $book->getId() . "," . $book->getIdDocument() . ")>
-                                                    <i type='span' class='fa fa fa-sign-in' aria-hidden='true'></i>
+                                                    <i type='span' class='fa fa-sign-in' aria-hidden='true'></i>
                                                   </button>";
                                     $status = "Retirado";
+                                } else if (strcasecmp($status, 'Fined') == 0) {
+                                    $btnAction = "<button class='btn btn-admin btn-fill' onClick=updateModal('" . $status . "'," . $book->getId() . "," . $book->getIdDocument() . ")>
+                                    <i type='span' class='fa fa-money' style='font-size: 1.3em;'></i>
+                                  </button>";
+                                    $status = "Multado";
                                 }
 
                                 $title = $documentDriving->getTitleDocumentById($book->getIdDocument());
