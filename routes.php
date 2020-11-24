@@ -23,5 +23,6 @@ define('ROUTE_PRESENTATION_LIB', '/Presentation/assets/lib/');
 define('ROUTE_PRESENTATION', '/Presentation/');
 define('ROUTE_ADMINISTRATOR', '/Presentation/Administrator/');
 define('ROUTE_EMPLOYEE', '/Presentation/Employee/');
+define('ROUTE_CLIENT', '/Presentation/Client/');
 
 define('ROUTE_PROCEDURES', '/Presentation/Procedures/');

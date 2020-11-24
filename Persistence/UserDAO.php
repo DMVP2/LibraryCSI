@@ -50,6 +50,16 @@ class UserDAO implements DAO
         pg_query($this->connection, $sql);
     }
 
+    public function updateProfile($pUser, $changePass)
+    {
+        if ($changePass == 0) {
+            $sql = "UPDATE USERS SET name='" . $pUser->getName() . "', last_name='" . $pUser->getLastName() . "', mail='" . $pUser->getMail() . "', phone='" . $pUser->getPhone() . "'  WHERE user_id=" . $pUser->getUserId();
+        } else {
+            $sql = "UPDATE USERS SET name='" . $pUser->getName() . "', last_name='" . $pUser->getLastName() . "', mail='" . $pUser->getMail() . "', phone='" . $pUser->getPhone() . "', password='" . $pUser->getPassword() . "'  WHERE user_id=" . $pUser->getUserId();
+        }
+        pg_query($this->connection, $sql);
+    }
+
 
     public function search($pCode)
     {
@@ -116,14 +126,6 @@ class UserDAO implements DAO
         return $row->rol;
     }
 
-    /**
-     * 
-     */
-    public function update($pElement)
-    {
-        $sql = "UPDATE - SET";
-        pg_query($this->connection, $sql);
-    }
 
     public function changePassword($pUser)
     {
@@ -196,6 +198,12 @@ class UserDAO implements DAO
 
         return $data;
     }
+
+    public function update($pUser)
+    {
+    }
+
+
 
     public function delete($pCode)
     {

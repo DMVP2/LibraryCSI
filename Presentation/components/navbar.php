@@ -24,8 +24,13 @@ $rol = $userSession->getRol();
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'login.php' ?>">
-                        safanfanganjdanf
+                    <a href="<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyProfile.php' ?>">
+                        Mi perfil
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php' ?>">
+                        Mis reservas
                     </a>
                 </li>
                 <li>

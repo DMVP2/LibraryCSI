@@ -43,7 +43,7 @@ $nuevoUser->setStatus("Inactive");
 $userDriving->createUser($nuevoUser);
 
 $sendMail = new MailSend();
-$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Employee", "Desde employee, Su contraseña es: " . $password);
+$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Employee", "Desde employee, Su contraseña es: " . $passwordDefault);
 $rta = $sendMail->sendMail();
 
 

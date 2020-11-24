@@ -10,7 +10,6 @@ class AuditDriving
     //-----------------------------------
 
     private $connection;
-    private static $auditDriving;
 
     //----------------------------------
     // Builder

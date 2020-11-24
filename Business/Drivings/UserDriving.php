@@ -10,7 +10,6 @@ class UserDriving
     //-----------------------------------
 
     private $connection;
-    private static $userDriving;
 
     //----------------------------------
     // Builder
@@ -29,6 +28,12 @@ class UserDriving
     {
         $userDAO = UserDAO::getUserDAO($this->connection);
         $userDAO->create($pUser);
+    }
+
+    public function updateProfile($pUser, $changePass)
+    {
+        $userDAO = UserDAO::getUserDAO($this->connection);
+        $userDAO->updateProfile($pUser, $changePass);
     }
 
     public function searchUserById($pId)

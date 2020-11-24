@@ -10,7 +10,6 @@ class BookingDriving
     //-----------------------------------
 
     private $connection;
-    private static $bookingDriving;
 
     //----------------------------------
     // Builder

@@ -40,5 +40,5 @@ if (isset($consultUser) and strcasecmp($consultUser->getPassword(), md5($_POST['
         }
     }
 } else {
-    echo "paila";
+    header("Location: " . ROOT_DIRECTORY . ROUTE_PRESENTATION . "login.php?code=1");
 }

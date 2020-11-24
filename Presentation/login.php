@@ -167,5 +167,16 @@ include_once('../routes.php');
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
 
+<?php
+if (isset($_GET['code'])) {
+    $code = $_GET['code'];
+    if ($code == 1) {
+        echo "<script> notifications.showNotificationWarning('Verifique los datos ingresados.');</script>";
+    }
+}
+
+?>
+
+
 
 </html>

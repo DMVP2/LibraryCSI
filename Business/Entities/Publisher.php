@@ -17,6 +17,7 @@ class Publisher
     private $phone;
     private $type;
     private $status;
+    private $attendant;
     //----------------------------------
     // Builder
     //----------------------------------
@@ -97,5 +98,15 @@ class Publisher
     public function setStatus($pStatus)
     {
         $this->status = $pStatus;
+    }
+
+    public function getAttendant()
+    {
+        return $this->attendant;
+    }
+
+    public function setAttendant($pAttendant)
+    {
+        $this->attendant = $pAttendant;
     }
 }

@@ -7,9 +7,11 @@ $typeUser = $_GET['u'];
 if ($typeUser == 1) {
     $nameUser = " estandar";
     $typeBtn = "primary";
+    $classDiv = "col-xs-offset-3 col-xs-6";
 } else {
     $nameUser = " publicador";
     $typeBtn = "danger";
+    $classDiv = "col-xs-offset-2 col-xs-8";
 }
 
 
@@ -62,7 +64,7 @@ if ($typeUser == 1) {
                 style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>');">
                 <div class="container-fluid ">
                     <div class="row center-block">
-                        <div class="col-xs-offset-3 col-xs-7">
+                        <div class="<?php echo $classDiv ?>">
                             <div class="card ">
                                 <div class="header ">
                                     <center>
@@ -158,7 +160,105 @@ if ($typeUser == 1) {
 
                                         <?php } else { ?>
 
-                                        aaaa
+                                        <div class="row ">
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Tipo de documento</label>
+                                                    <select name="typeDocument" id="typeDocument" class="form-control">
+                                                        <option value="C.C.">C.C.</option>
+                                                        <option value="C.E.">C.E.</option>
+                                                        <option value="NIT">NIT</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Número de identificación</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Número de identificación" id="numberDocument"
+                                                        name="numberDocument">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label>Nombre comercial</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Nombre comercial" id="comercialName"
+                                                        name="comercialName">
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Correo</label>
+                                                    <input type="text" class="form-control" placeholder="Correo"
+                                                        id="mail" name="mail">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Encargado</label>
+                                                    <input type="text" class="form-control" placeholder="Encargado"
+                                                        id="name" name="name">
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Tipo de publicador</label>
+                                                    <select name="typePublisher" id="typePublisher"
+                                                        class="form-control">
+                                                        <option value="Editorial">Editorial</option>
+                                                        <option value="Independiente">Independiente</option>
+                                                        <option value="Otro">Otro</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Celular</label>
+                                                    <input type="text" class="form-control" placeholder="Celular"
+                                                        id="phone" name="phone">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Contraseña</label>
+                                                    <input type="password" class="form-control" placeholder="Contraseña"
+                                                        id="password1" name="password1">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Confirmar contraseña</label>
+                                                    <input type="password" class="form-control"
+                                                        placeholder="Confirmar contraseña" name="password2"
+                                                        id="password2">
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <?php }  ?>
                                         <br>

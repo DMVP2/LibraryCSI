@@ -1,7 +1,7 @@
 <?php
 require_once 'DAO.php';
 
-include_once("../Business/Entities/Publisher.php");
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . "Publisher.php");
 /**
  * Represents the DAO of the entity "Publisher"
  */
@@ -39,20 +39,27 @@ class PublisherDAO implements DAO
      */
     public function create($pPublisher)
     {
-        $sql = "INSERT INTO PUBLISHER VALUES('" . $pPublisher->getDocument() . "','" . $pPublisher->getTypeDocument() . "','" . $pPublisher->getBusinessName() . "','" . $pPublisher->getMail() . "','" . $pPublisher->getPhone() . "','" . $pPublisher->getType() . "','" . $pPublisher->getStatus() . "')";
-        pg_query($this->connection, $sql);
-
-        $sql = "INSERT INTO USER VALUES('" . $pPublisher->getId() . "','" . $pPublisher->getTypeDocument() . "','" . $pPublisher->getName() . "','" . $pPublisher->getLastName() . "','" . $pPublisher->getMail() . "','" . $pPublisher->getPhone() . "','" . $pPublisher->getPassword() . "','" . $pPublisher->getStatus() . "')";
-        pg_query($this->connection, $sql); //Se debe especificar como se crea el usuario al crear el publisher, si lo hacemos en otro método
-
-        $sql = "INSERT INTO USER_ROL VALUES('" . $pPublisher->getId() . "'," . $pPublisher->getRole() . " )";
+        $sql = "INSERT INTO PUBLISHER VALUES('" . $pPublisher->getDocument() . "','" . $pPublisher->getBusinessName() . "','" . $pPublisher->getTypeDocument() . "','" . $pPublisher->getAttendant() . "','" . $pPublisher->getMail() . "','" . $pPublisher->getPhone() . "','" . $pPublisher->getType() . "','" . $pPublisher->getStatus() . "')";
         pg_query($this->connection, $sql);
     }
 
     /**
      * 
      */
-    public function update(){}
+    public function search($pIdPublisher)
+    {
+    }
+
+    /**
+     * 
+     */
+    public function update($pElement)
+    {
+    }
+
+    public function delete($pCode)
+    {
+    }
 
     /**
      * Lista de todos los publicadores que hay en el sistema

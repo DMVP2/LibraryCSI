@@ -104,6 +104,7 @@ class BookingDAO implements DAO
             $info->setBookingDate($row['bookingDate']);
             $info->setDateOfCollection($row['dateOfCollection']);
             $info->setDeliveryDate($row['deliveryDate']);
+            $info->setRenovations($row['renovations']);
 
             $data[] = $info;
         }
@@ -122,7 +123,11 @@ class BookingDAO implements DAO
                         FROM 
                             BOOKING, BOOKING_USERS, DOCUMENT_BOOKING, DOCUMENT 
                         WHERE
-                            BOOKING.booking_id = BOOKING_USERS.booking_id AND BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND DOCUMENT_BOOKING.document_id = DOCUMENT.document_id AND BOOKING_USERS.user_id = " . $pUserId;
+                            BOOKING.booking_id = BOOKING_USERS.booking_id AND 
+                            BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND 
+                            DOCUMENT_BOOKING.document_id = DOCUMENT.document_id AND 
+                            BOOKING_USERS.user_id = " . $pUserId . "
+                            ORDER BY BOOKING.booking_id DESC";
 
         if (!$result = pg_query($this->connection, $sql)) die();
 
@@ -141,6 +146,7 @@ class BookingDAO implements DAO
             $info->setDateOfCollection($row['date_end']);
             $info->setBookingStatus($row['status']);
             $info->setIdDocument($row['document_id']);
+            $info->setRenovations($row['renovations']);
             $info->setIdUser($pUserId);
 
             $data[] = $info;
@@ -180,6 +186,7 @@ class BookingDAO implements DAO
             $info->setDateOfCollection($row['date_end']);
             $info->setBookingStatus($row['status']);
             $info->setIdDocument($row['document_id']);
+            $info->setRenovations($row['renovations']);
             $info->setIdUser($pUserId);
 
             $data[] = $info;

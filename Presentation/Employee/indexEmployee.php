@@ -197,6 +197,10 @@ $(document).ready(function() {
             });
     }
 
+    $("#numberDocument").on('keyup', function() {
+        $.fn.rechargeData();
+    });
+
     $.fn.rechargeDataReserveModal = function() {
         $.ajax({
             type: "POST",
@@ -222,9 +226,7 @@ $(document).ready(function() {
         });
     }
 
-    $("#numberDocument").on('keyup', function() {
-        $.fn.rechargeData();
-    });
+
 
     $("#codeDocumentReserve").on('keyup', function() {
         $.fn.rechargeDataReserveModal();

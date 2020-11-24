@@ -9,7 +9,7 @@ class PublisherDriving
     // Attributes
     //-----------------------------------
     private $connection;
-    private static $publisherDriving;
+
     //----------------------------------
     // Builder
     //----------------------------------

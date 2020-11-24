@@ -10,7 +10,6 @@ class DocumentDriving
     //-----------------------------------
 
     private $connection;
-    private static $documentDriving;
 
     //----------------------------------
     // Builder

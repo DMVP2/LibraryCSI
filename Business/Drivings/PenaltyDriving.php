@@ -10,7 +10,6 @@ class PenaltyDriving
     //-----------------------------------
 
     private $connection;
-    private static $penaltyDriving;
 
     //----------------------------------
     // Builder
@@ -41,5 +40,17 @@ class PenaltyDriving
     {
         $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
         $penaltyDAO->payPenalty($pCodeBooking, $pValue);
+    }
+
+    public function payPenaltyByPAYU($pIdPenalty, $pValue)
+    {
+        $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
+        return $penaltyDAO->payPenaltyByPAYU($pIdPenalty, $pValue);
+    }
+
+    public function bookingIsPenalty($pIdBooking)
+    {
+        $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
+        return $penaltyDAO->bookingIsPenalty($pIdBooking);
     }
 }

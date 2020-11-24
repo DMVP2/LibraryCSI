@@ -97,7 +97,6 @@ class PenaltyDAO implements DAO
             $penaltySearch->setDateEnd($row->date_end);
             $penaltySearch->setValue($row->value);
             $penaltySearch->setStatus($row->status);
-            $penaltySearch->setBookingId($row->booking_id);
         } else {
             return null;
         }
@@ -106,7 +105,6 @@ class PenaltyDAO implements DAO
 
     public function payPenalty($pCodeBooking, $pValue)
     {
-
         $sql = "SELECT penalty_id FROM PENALTY_BOOKING WHERE booking_id= " . $pCodeBooking;
         $rta = pg_query($this->connection, $sql);
         $row = pg_fetch_object($rta);
@@ -114,6 +112,30 @@ class PenaltyDAO implements DAO
 
         $sql = "UPDATE PENALTY SET date_end=NOW(), value=" . $pValue . " ,status='Paid' WHERE penalty_id = " . $idPenalty;
         pg_query($this->connection, $sql);
+    }
+
+    public function payPenaltyByPAYU($pIdPenalty, $pValue)
+    {
+        $sql = "UPDATE PENALTY SET date_end=NOW(), value=" . $pValue . " ,status='Paid' WHERE penalty_id = " . $pIdPenalty;
+        pg_query($this->connection, $sql);
+
+        $sql = "SELECT booking_id FROM PENALTY_BOOKING WHERE penalty_id= " . $pIdPenalty;
+        $rta = pg_query($this->connection, $sql);
+        $row = pg_fetch_object($rta);
+        return $row->booking_id;
+    }
+
+    public function bookingIsPenalty($pIdBooking)
+    {
+        $sql = "SELECT penalty_id FROM PENALTY_BOOKING WHERE booking_id= " . $pIdBooking;
+        $rta = pg_query($this->connection, $sql);
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+            $idPenalty = $row->penalty_id;
+            return $idPenalty;
+        } else {
+            return null;
+        }
     }
 
     public static function getPenaltyDAO($connection)
