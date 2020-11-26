@@ -26,6 +26,8 @@ class Document
     private $country;
     private $status;
     private $image;
+    private $description;
+
 
     //----------------------------------
     // Builder
@@ -191,5 +193,14 @@ class Document
     public function setImage($pImage)
     {
         $this->image = $pImage;
+    }
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($pDescription)
+    {
+        $this->description = $pDescription;
     }
 }

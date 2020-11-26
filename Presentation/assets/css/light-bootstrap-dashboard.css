@@ -1279,7 +1279,7 @@ fieldset[disabled] .btn-employee.active {
 }
 
 .btn-admin {
-  border-color: #ff4a55;
+  border-color: #FFBABF;
   color: #ff4a55;
 }
 
@@ -1323,7 +1323,7 @@ fieldset[disabled] .btn-admin.active {
 
 .btn-admin.btn-fill {
   color: #ffffff;
-  background-color: #ff4a55;
+  background-color: #FFBABF;
   opacity: 1;
   filter: alpha(opacity=100);
 }

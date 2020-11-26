@@ -11,6 +11,8 @@
                     </button>
                     <h5 class="modal-title" id="exampleModalLabel">
                         <center>¿Que tipo de usuario deseas ser?</center>
+                        
+
                     </h5>
                 </div>
                 <div class="modal-body text-center">
@@ -19,9 +21,10 @@
                     &nbsp;o&nbsp;
                     <button type="button" class="btn btn-danger btn-outline-primary" style="width: 132px;"
                         onclick="window.location.href='<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'register.php?u=2' ?>'">Publicador</button>
-                </div>
+                
+                    </div>
+                    
             </div>
-
         </div>
     </div>
 </div>

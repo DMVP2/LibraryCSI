@@ -49,6 +49,16 @@ class DocumentDriving
         return $documentDAO->getTitleDocumentById($pIdDocument);
     }
 
+    public function getAuthorsByDocumentId($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getAuthorsByDocumentId($pIdDocument);
+    }
+    public function getPublisherByDocumentId($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getPublisherByDocumentId($pIdDocument);
+    }
     public function getTopDocuments($pType, $pCountTop)
     {
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);

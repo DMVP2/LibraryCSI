@@ -42,7 +42,7 @@ $rol = $userSession->getRol();
 
 <body>
 
-    <div class="wrapper" style="height: 100%;">
+    <div class="wrapper" style="height: 100%;margin-top: 6%;">
 
         <div class="main-panel" data="index" style="max-height:none; height: 100%;">
 
@@ -104,8 +104,19 @@ $rol = $userSession->getRol();
     include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalRegister.php";
     ?>
     <!-- ModalRegister -->
+  <!-- ModalMoreInfoDoc include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php";   ?> -->
+    <!-- ModalMoreInfoDoc --> 
+    <div class="modal fade" id="modalMoreInfoDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="margin-top:5%">
+                <div id="modalMoreInfoDocContent">
 
-
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ModalMoreInfoDoc -->
 </body>
 
 <!--   Core JS Files   -->
@@ -147,8 +158,20 @@ $(document).ready(function() {
 
     $.fn.rechargeData();
 });
+
+
 </script>
 
+<script>
 
+    /*Función para mostrar el modal de la información detallada del documento, tiene como parámetro el ID del Doc */
+function updateModalMoreInfo(pIdDocument, pDigitalFisico) {
+    $('#modalMoreInfoDocContent').load("<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php" ?>", {
+        'idDocument': pIdDocument,
+        'digitalFisico': pDigitalFisico
+    });
+    $("#modalMoreInfoDoc").modal('show');
+}
+</script>
 
 </html>
