@@ -3,18 +3,6 @@
 //error_reporting(0);
 include_once('../../routes.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
-
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
-
-
-$c = Connection::getInstance();
-$connection = $c->connectBD();
-
-$userDriving = new UserDriving($connection);
-$owners = $userDriving->listUsersByRol(1);
-$admins = $userDriving->listUsersByRol(2);
 
 ?>
 
@@ -77,49 +65,17 @@ $admins = $userDriving->listUsersByRol(2);
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">Administradores</h4>
-                                    <input value="Agregar administrador" type="button"
-                                        class="btn btn-admin btn-fill pull-right" style="margin-bottom: 40px;">
+                                    <button data-toggle='modal' data-target='#exampleModalCenter'
+                                        class="btn btn-red btn-fill pull-right" style="margin-bottom: 40px;">
+                                        <i type='span' class='fa fa-user' style='color: white'></i> Agregar
+                                        administrador
+                                    </button>
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
+                                    <div id="divTable"></div>
 
-                                    <table id="tableEmployee" class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Documento</th>
-                                            <th>Tipo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Estado</th>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($owners as $owner) {
 
-                                                echo "<tr>";
-
-                                                echo "<td>" . $owner->getUserId() . "</td>";
-                                                echo "<td>" . $owner->getTypeDocument() . "</td>";
-                                                echo "<td>" . $owner->getName() . "</td>";
-                                                echo "<td>" . $owner->getLastName() . "</td>";
-                                                echo "<td>" . $owner->getStatus() . "</td>";
-
-                                                echo "</tr>";
-                                            }
-                                            foreach ($admins as $admin) {
-
-                                                echo "<tr>";
-
-                                                echo "<td>" . $admin->getUserId() . "</td>";
-                                                echo "<td>" . $admin->getTypeDocument() . "</td>";
-                                                echo "<td>" . $admin->getName() . "</td>";
-                                                echo "<td>" . $admin->getLastName() . "</td>";
-                                                echo "<td>" . $admin->getStatus() . "</td>";
-
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
 
                                 </div>
                             </div>
@@ -136,6 +92,95 @@ $admins = $userDriving->listUsersByRol(2);
             ?>
             <!-- Footer -->
 
+        </div>
+    </div>
+
+    <!-- Modal admin-->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="margin-top:20%">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Agregar administrador</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <form id="formAdmin">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tipo de documento</label>
+                                        <select name="typeDocument" id="typeDocument" class="form-control">
+                                            <option value="C.C.">C.C.</option>
+                                            <option value="C.E.">C.E.</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Número de documento</label>
+                                        <input type="text" class="form-control" id="numberDocument"
+                                            name="numberDocument" placeholder="Número de documento" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nombres</label>
+                                        <input type="text" class="form-control" placeholder="Nombres" id="name"
+                                            name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Apellidos</label>
+                                        <input type="text" class="form-control" placeholder="Apellidos" id="lastName"
+                                            name="lastName" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Correo</label>
+                                        <input type="text" class="form-control" placeholder="Correo" id="mail"
+                                            name="mail" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Celular</label>
+                                        <input type="text" class="form-control" placeholder="Celular" id="phone"
+                                            name="phone" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-red btn-fill" id="btnSubmit">Agregar
+                                        administrador</button>
+                                </div>
+                            </div>
+
+                            <div class=" clearfix">
+                            </div>
+                            <br>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -166,8 +211,57 @@ $admins = $userDriving->listUsersByRol(2);
 
 <script>
 $(document).ready(function() {
-    $('#tableEmployee').DataTable();
+    $.fn.rechargeData = function() {
+        $('#divTable').load(
+            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Administrator/tableAdministrators.php" ?>");
+    }
+
+    $.fn.rechargeData();
+
+    $('#formAdmin').submit(function(e) {
+        $('#btnSubmit').prop('disabled', true);
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "administrator/registerAdministrator.php"  ?>',
+            data: $(this).serialize(),
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+
+                if (jsonData.success == "1") {
+                    $("#formAdmin")[0].reset();
+                    $("#exampleModalCenter").modal('hide');
+                    $.fn.rechargeData();
+                    notifications.showNotificationInfo("Se ha registrado con éxito");
+
+                } else {
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+                $('#btnSubmit').prop('disabled', false);
+            }
+        });
+    });
 });
+
+function executeAction(pAction, pIdUser) {
+
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Administrator/actionUser.php"  ?>',
+        data: 'action=' + pAction + '&idUser=' + pIdUser,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                notifications.showNotificationInfo("Se ha realizado la operación con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+        }
+    });
+}
 </script>
+
 
 </html>

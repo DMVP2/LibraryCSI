@@ -48,6 +48,27 @@ class PublisherDAO implements DAO
      */
     public function search($pIdPublisher)
     {
+        $sql = "SELECT * FROM PUBLISHER WHERE publisher_id = " . $pIdPublisher;
+        $rta = pg_query($this->connection, $sql);
+
+        if (pg_num_rows($rta) > 0) {
+            $row = pg_fetch_object($rta);
+
+            $info = new Publisher();
+
+            $info->setDocument($row->publisher_id);
+            $info->setTypeDocument($row->identification_type);
+            $info->setBusinessName($row->name);
+            $info->setEmail($row->mail);
+            $info->setPhone($row->phone);
+            $info->setType($row->type);
+            $info->setAttendant($row->attendant);
+            $info->setStatus($row->status);
+        } else {
+            return null;
+        }
+
+        return $info;
     }
 
     /**
@@ -99,5 +120,17 @@ class PublisherDAO implements DAO
         }
 
         return self::$publisherDAO;
+    }
+
+    public function activePublisher($pIdPublisher)
+    {
+        $sql = "UPDATE PUBLISHER SET status='Active' WHERE publisher_id=" . $pIdPublisher;
+        pg_query($this->connection, $sql);
+    }
+
+    public function inactivePublisher($pIdPublisher)
+    {
+        $sql = "UPDATE PUBLISHER SET status='Inactive' WHERE publisher_id=" . $pIdPublisher;
+        pg_query($this->connection, $sql);
     }
 }

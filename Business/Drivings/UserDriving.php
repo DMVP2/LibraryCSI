@@ -65,4 +65,16 @@ class UserDriving
         $userDAO = UserDAO::getUserDAO($this->connection);
         return $userDAO->userValidate($pTypeId, $pId);
     }
+
+    public function activeUser($pIdUser)
+    {
+        $userDAO = UserDAO::getUserDAO($this->connection);
+        $userDAO->activeUser($pIdUser);
+    }
+
+    public function inactiveUser($pIdUser)
+    {
+        $userDAO = UserDAO::getUserDAO($this->connection);
+        $userDAO->inactiveUser($pIdUser);
+    }
 }

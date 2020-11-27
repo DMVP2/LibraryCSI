@@ -31,4 +31,16 @@ class PublisherDriving
         $publisherDAO = PublisherDAO::getPublisherDAO($this->connection);
         return $publisherDAO->search($pId);
     }
+
+    public function activePublisher($pPublisher)
+    {
+        $publisherDAO = PublisherDAO::getPublisherDAO($this->connection);
+        $publisherDAO->activePublisher($pPublisher);
+    }
+
+    public function inactivePublisher($pPublisher)
+    {
+        $publisherDAO = PublisherDAO::getPublisherDAO($this->connection);
+        $publisherDAO->inactivePublisher($pPublisher);
+    }
 }

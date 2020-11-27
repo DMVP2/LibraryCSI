@@ -635,8 +635,6 @@ input:focus {
   width: calc(100% - 260px);
 }
 
-
-
 .main-panel > .content {
   padding: 30px 15px;
   min-height: calc(100% - 62px);
@@ -1279,7 +1277,7 @@ fieldset[disabled] .btn-employee.active {
 }
 
 .btn-admin {
-  border-color: #FFBABF;
+  border-color: #ffbabf;
   color: #ff4a55;
 }
 
@@ -1323,7 +1321,7 @@ fieldset[disabled] .btn-admin.active {
 
 .btn-admin.btn-fill {
   color: #ffffff;
-  background-color: #FFBABF;
+  background-color: #ffbabf;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -1342,6 +1340,73 @@ fieldset[disabled] .btn-admin.active {
 }
 
 .btn-admin .caret {
+  border-top-color: #ff4a55;
+}
+
+.btn-red {
+  border-color: #ff4a55;
+  color: #ff4a55;
+}
+
+.btn-red:hover,
+.btn-red:focus,
+.btn-red:active,
+.btn-red.active,
+.open > .btn-red.dropdown-toggle {
+  background-color: transparent;
+  color: #ee2d20;
+  border-color: #ee2d20;
+}
+
+.btn-red.disabled,
+.btn-red.disabled:hover,
+.btn-red.disabled:focus,
+.btn-red.disabled.focus,
+.btn-red.disabled:active,
+.btn-red.disabled.active,
+.btn-red:disabled,
+.btn-red:disabled:hover,
+.btn-red:disabled:focus,
+.btn-red:disabled.focus,
+.btn-red:disabled:active,
+.btn-red:disabled.active,
+.btn-red[disabled],
+.btn-red[disabled]:hover,
+.btn-red[disabled]:focus,
+.btn-red[disabled].focus,
+.btn-red[disabled]:active,
+.btn-red[disabled].active,
+fieldset[disabled] .btn-red,
+fieldset[disabled] .btn-red:hover,
+fieldset[disabled] .btn-red:focus,
+fieldset[disabled] .btn-red.focus,
+fieldset[disabled] .btn-red:active,
+fieldset[disabled] .btn-red.active {
+  background-color: transparent;
+  border-color: #ff4a55;
+}
+
+.btn-red.btn-fill {
+  color: #ffffff;
+  background-color: #ff4a55;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+.btn-red.btn-fill:hover,
+.btn-red.btn-fill:focus,
+.btn-red.btn-fill:active,
+.btn-red.btn-fill.active,
+.open > .btn-red.btn-fill.dropdown-toggle {
+  background-color: #ee2d20;
+  color: #ffffff;
+}
+
+.btn-red.btn-fill .caret {
+  border-top-color: #ffffff;
+}
+
+.btn-red .caret {
   border-top-color: #ff4a55;
 }
 

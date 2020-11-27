@@ -172,6 +172,8 @@ if (isset($_GET['code'])) {
     $code = $_GET['code'];
     if ($code == 1) {
         echo "<script> notifications.showNotificationWarning('Verifique los datos ingresados.');</script>";
+    } else if ($code == 2) {
+        echo "<script> notifications.showNotificationWarning('Su cuenta ha sido bloqueada, contacte a un administrador.');</script>";
     }
 }
 
