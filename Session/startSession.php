@@ -25,7 +25,7 @@ if (isset($consultUser) and strcasecmp($consultUser->getPassword(), md5($_POST['
     if (strcasecmp($consultUser->getStatus(), 'Inactive') == 0) {
         header("Location: " . ROOT_DIRECTORY . ROUTE_PRESENTATION . 'changePassword.php');
     } else {
-        if (strcasecmp($rol, "Client") == 0) {
+        if (strcasecmp($rol, "Client") == 0 || strcasecmp($rol, "Publisher") == 0) {
             $userSession->setRol("Client");
             header("Location: " . ROOT_DIRECTORY);
         } else if (strcasecmp($rol, "Employee") == 0) {

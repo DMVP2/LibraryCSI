@@ -82,4 +82,16 @@ class DocumentDriving
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         return $documentDAO->searchByCode($pCode, $pType);
     }
+
+    public function activeDocument($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        $documentDAO->activeDocument($pIdDocument);
+    }
+
+    public function inactiveDocument($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        $documentDAO->inactiveDocument($pIdDocument);
+    }
 }

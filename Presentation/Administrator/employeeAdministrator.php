@@ -3,17 +3,6 @@
 //error_reporting(0);
 include_once('../../routes.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
-
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
-
-
-$c = Connection::getInstance();
-$connection = $c->connectBD();
-
-$userDriving = new UserDriving($connection);
-$empleados = $userDriving->listUsersByRol(3);
 
 ?>
 
@@ -79,31 +68,7 @@ $empleados = $userDriving->listUsersByRol(3);
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
-                                    <table id="tableEmployee" class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Documento</th>
-                                            <th>Tipo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Estado</th>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($empleados as $empleado) {
-
-                                                echo "<tr>";
-
-                                                echo "<td>" . $empleado->getUserId() . "</td>";
-                                                echo "<td>" . $empleado->getTypeDocument() . "</td>";
-                                                echo "<td>" . $empleado->getName() . "</td>";
-                                                echo "<td>" . $empleado->getLastName() . "</td>";
-                                                echo "<td>" . $empleado->getStatus() . "</td>";
-
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                    <div id="divTable"></div>
 
                                 </div>
                             </div>
@@ -150,8 +115,31 @@ $empleados = $userDriving->listUsersByRol(3);
 
 <script>
 $(document).ready(function() {
-    $('#tableEmployee').DataTable();
+    $.fn.rechargeData = function() {
+        $('#divTable').load(
+            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Administrator/tableEmployees.php" ?>");
+    }
+    $.fn.rechargeData();
 });
+
+function executeAction(pAction, pIdUser) {
+
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Administrator/actionUser.php"  ?>',
+        data: 'action=' + pAction + '&idUser=' + pIdUser,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                notifications.showNotificationInfo("Se ha realizado la operación con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+        }
+    });
+}
 </script>
 
 </html>

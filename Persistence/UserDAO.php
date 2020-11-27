@@ -172,7 +172,7 @@ class UserDAO implements DAO
 
     public function listUsersRol($pRol)
     {
-        $sql = "SELECT USERS.user_id, identification_type, name, last_name, mail, phone, password, status, rol_id FROM USERS, USERS_ROL WHERE USERS.user_id = USERS_ROL.user_id AND USERS_ROL.rol_id=" . $pRol;
+        $sql = "SELECT USERS.user_id, identification_type, name, last_name, mail, phone, password, status, rol_id FROM USERS, USERS_ROL WHERE USERS.user_id = USERS_ROL.user_id AND USERS_ROL.rol_id=" . $pRol . " ORDER BY status ASC";
 
         if (!$result = pg_query($this->connection, $sql)) die();
 
@@ -198,6 +198,19 @@ class UserDAO implements DAO
 
         return $data;
     }
+
+    public function activeUser($pIdUser)
+    {
+        $sql = "UPDATE USERS SET status='Active' WHERE user_id=" . $pIdUser;
+        pg_query($this->connection, $sql);
+    }
+
+    public function inactiveUser($pIdUser)
+    {
+        $sql = "UPDATE USERS SET status='Blocked' WHERE user_id=" . $pIdUser;
+        pg_query($this->connection, $sql);
+    }
+
 
     public function update($pUser)
     {

@@ -3,17 +3,6 @@
 //error_reporting(0);
 include_once('../../routes.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'DocumentDriving.php');
-
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Document.php');
-
-
-$c = Connection::getInstance();
-$connection = $c->connectBD();
-
-$documentDriving = new DocumentDriving($connection);
-$documents = $documentDriving->listDocuments();
 
 ?>
 
@@ -79,36 +68,8 @@ $documents = $documentDriving->listDocuments();
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
-                                    <table id="tableDocuments" class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Codigo</th>
-                                            <th>Titulo</th>
-                                            <th>Editorial</th>
-                                            <th>Fecha publicación</th>
-                                            <th>Tipo</th>
-                                            <th>Estado</th>
-                                            <th>Acción</th>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($documents as $document) {
+                                    <div id="divTable"></div>
 
-                                                echo "<tr>";
-
-                                                echo "<td>" . $document->getCode() . "</td>";
-                                                echo "<td>" . $document->getTitle() . "</td>";
-                                                echo "<td>" . $document->getEditorial() . "</td>";
-                                                echo "<td>" . $document->getDateOfPublication() . "</td>";
-                                                echo "<td>" . $document->getType() . "</td>";
-                                                echo "<td>" . $document->getStatus() . "</td>";
-                                                echo "<td><button>Abc</button></td>";
-
-
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
 
                                 </div>
                             </div>
@@ -155,8 +116,31 @@ $documents = $documentDriving->listDocuments();
 
 <script>
 $(document).ready(function() {
-    $('#tableDocuments').DataTable();
+    $.fn.rechargeData = function() {
+        $('#divTable').load(
+            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Administrator/tableDocuments.php" ?>");
+    }
+    $.fn.rechargeData();
 });
+
+function executeAction(pAction, pIdDocument) {
+
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Administrator/actionDocument.php"  ?>',
+        data: 'action=' + pAction + '&idDocument=' + pIdDocument,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                notifications.showNotificationInfo("Se ha realizado la operación con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+        }
+    });
+}
 </script>
 
 </html>

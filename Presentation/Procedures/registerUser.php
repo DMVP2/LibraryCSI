@@ -53,7 +53,7 @@ if (!isset($_POST['typePublisher'])) {
     $numberDocument = $_POST['numberDocument'];
     $nameComercial = $_POST['comercialName'];
     $mail = $_POST['mail'];
-    $attendant = $_POST['name'];
+    $attendant = $_POST['attendant'];
     $typePublisher = $_POST['typePublisher'];
     $phone = $_POST['phone'];
     $password1 = $_POST['password1'];
@@ -70,7 +70,7 @@ if (!isset($_POST['typePublisher'])) {
     $nuevoUser->setPhone($phone);
     $nuevoUser->setPassword(md5($password1));
     $nuevoUser->setRole(4);
-    $nuevoUser->setStatus("Pending");
+    $nuevoUser->setStatus("Active");
 
     $userDriving->createUser($nuevoUser);
 
@@ -79,6 +79,7 @@ if (!isset($_POST['typePublisher'])) {
     $nuevoPublisher->setDocument($numberDocument);
     $nuevoPublisher->setTypeDocument($typeDocument);
     $nuevoPublisher->setBusinessName($nameComercial);
+    $nuevoPublisher->setAttendant($attendant);
     $nuevoPublisher->setEmail($mail);
     $nuevoPublisher->setPhone($phone);
     $nuevoPublisher->setType($typePublisher);

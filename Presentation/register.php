@@ -209,7 +209,7 @@ if ($typeUser == 1) {
                                                 <div class="form-group">
                                                     <label>Encargado</label>
                                                     <input type="text" class="form-control" placeholder="Encargado"
-                                                        id="name" name="name">
+                                                        id="attendant" name="attendant">
                                                 </div>
                                             </div>
 

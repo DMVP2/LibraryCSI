@@ -3,18 +3,6 @@
 //error_reporting(0);
 include_once('../../routes.php');
 
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
-
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
-include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
-
-
-$c = Connection::getInstance();
-$connection = $c->connectBD();
-
-$userDriving = new UserDriving($connection);
-$owners = $userDriving->listUsersByRol(1);
-$admins = $userDriving->listUsersByRol(2);
 
 ?>
 
@@ -78,48 +66,13 @@ $admins = $userDriving->listUsersByRol(2);
                                 <div class="header">
                                     <h4 class="title">Administradores</h4>
                                     <input value="Agregar administrador" type="button"
-                                        class="btn btn-admin btn-fill pull-right" style="margin-bottom: 40px;">
+                                        class="btn btn-red btn-fill pull-right" style="margin-bottom: 40px;">
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
+                                    <div id="divTable"></div>
 
-                                    <table id="tableEmployee" class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Documento</th>
-                                            <th>Tipo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Estado</th>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($owners as $owner) {
 
-                                                echo "<tr>";
-
-                                                echo "<td>" . $owner->getUserId() . "</td>";
-                                                echo "<td>" . $owner->getTypeDocument() . "</td>";
-                                                echo "<td>" . $owner->getName() . "</td>";
-                                                echo "<td>" . $owner->getLastName() . "</td>";
-                                                echo "<td>" . $owner->getStatus() . "</td>";
-
-                                                echo "</tr>";
-                                            }
-                                            foreach ($admins as $admin) {
-
-                                                echo "<tr>";
-
-                                                echo "<td>" . $admin->getUserId() . "</td>";
-                                                echo "<td>" . $admin->getTypeDocument() . "</td>";
-                                                echo "<td>" . $admin->getName() . "</td>";
-                                                echo "<td>" . $admin->getLastName() . "</td>";
-                                                echo "<td>" . $admin->getStatus() . "</td>";
-
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
 
                                 </div>
                             </div>
@@ -166,8 +119,31 @@ $admins = $userDriving->listUsersByRol(2);
 
 <script>
 $(document).ready(function() {
-    $('#tableEmployee').DataTable();
+    $.fn.rechargeData = function() {
+        $('#divTable').load(
+            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Administrator/tableAdministrators.php" ?>");
+    }
+    $.fn.rechargeData();
 });
+
+function executeAction(pAction, pIdUser) {
+
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Administrator/actionUser.php"  ?>',
+        data: 'action=' + pAction + '&idUser=' + pIdUser,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                notifications.showNotificationInfo("Se ha realizado la operación con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+        }
+    });
+}
 </script>
 
 </html>

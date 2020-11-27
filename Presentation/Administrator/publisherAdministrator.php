@@ -4,16 +4,21 @@
 include_once('../../routes.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'PublisherDriving.php');
+
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Publisher.php');
 
 
 $c = Connection::getInstance();
 $connection = $c->connectBD();
 
 $userDriving = new UserDriving($connection);
-$publishers = $userDriving->listUsersByRol(4);
+$publisherDriving = new PublisherDriving($connection);
+
+$usersPublishers = $userDriving->listUsersByRol(4);
 ?>
 
 <!doctype html>
@@ -78,31 +83,7 @@ $publishers = $userDriving->listUsersByRol(4);
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
-                                    <table id="tableEmployee" class="table table-hover table-striped">
-                                        <thead>
-                                            <th>Documento</th>
-                                            <th>Tipo</th>
-                                            <th>Nombre</th>
-                                            <th>Apellido</th>
-                                            <th>Estado</th>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($publishers as $publisher) {
-
-                                                echo "<tr>";
-
-                                                echo "<td>" . $publisher->getUserId() . "</td>";
-                                                echo "<td>" . $publisher->getTypeDocument() . "</td>";
-                                                echo "<td>" . $publisher->getName() . "</td>";
-                                                echo "<td>" . $publisher->getLastName() . "</td>";
-                                                echo "<td>" . $publisher->getStatus() . "</td>";
-
-                                                echo "</tr>";
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                    <div id="divTable"></div>
 
                                 </div>
                             </div>
@@ -149,8 +130,33 @@ $publishers = $userDriving->listUsersByRol(4);
 
 <script>
 $(document).ready(function() {
-    $('#tableEmployee').DataTable();
+
+    $.fn.rechargeData = function() {
+        $('#divTable').load(
+            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Administrator/tablePublishers.php" ?>");
+    }
+    $.fn.rechargeData();
+
 });
+
+function executeAction(pAction, pIdPublisher) {
+
+    $.ajax({
+        type: "POST",
+        url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Administrator/actionPublisher.php"  ?>',
+        data: 'action=' + pAction + '&idPublisher=' + pIdPublisher,
+        success: function(response) {
+            var jsonData = JSON.parse(response);
+
+            if (jsonData.success == "1") {
+                notifications.showNotificationInfo("Se ha realizado la operación con éxito");
+                $.fn.rechargeData();
+            } else {
+                notifications.showNotificationWarning("Ha ocurrido un error");
+            }
+        }
+    });
+}
 </script>
 
 </html>

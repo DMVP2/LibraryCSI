@@ -112,7 +112,7 @@ class DocumentDAO implements DAO
                 $info->setType($row['type']);
                 $info->setStatus($row['status']);
                 $info->setImage($row['image']);
-            $info->setDescription($row['description']);
+                $info->setDescription($row['description']);
 
                 $data[] = $info;
             }
@@ -130,7 +130,7 @@ class DocumentDAO implements DAO
      */
     public function list()
     {
-        $sql = "SELECT * FROM DOCUMENT ORDER BY status ASC";
+        $sql = "SELECT * FROM DOCUMENT ORDER BY status, document_id ASC";
 
         if (!$result = pg_query($this->connection, $sql)) die();
 
@@ -281,7 +281,8 @@ class DocumentDAO implements DAO
 
         return $data;
     }
-    public function getAuthorsByDocumentId($pDocumentId){
+    public function getAuthorsByDocumentId($pDocumentId)
+    {
 
         $sql = "SELECT AUTHOR.name FROM AUTHOR, DOCUMENT_AUTHOR WHERE document_id = '" . $pDocumentId . "'AND DOCUMENT_AUTHOR.author_id = AUTHOR.author_id group by(name, document_id);";
 
@@ -290,15 +291,15 @@ class DocumentDAO implements DAO
         $data = array();
 
         while ($row = pg_fetch_array($result)) {
-            
+
             $data[] = $row['name'];
         }
 
         return $data;
-
     }
     //--- se debe arreglar la bd para completar esta función 
-    public function getCountyCity($pDocumentId){
+    public function getCountyCity($pDocumentId)
+    {
 
         $sql = "SELECT AUTHOR.name FROM AUTHOR, DOCUMENT_AUTHOR WHERE document_id = '" . $pDocumentId . "'AND DOCUMENT_AUTHOR.author_id = AUTHOR.author_id group by(name, document_id);";
 
@@ -307,29 +308,29 @@ class DocumentDAO implements DAO
         $data = array();
 
         while ($row = pg_fetch_array($result)) {
-            
+
             $data[] = $row['name'];
         }
 
         return $data;
-
     }
 
-    public function getPublisherByDocumentId($pDocumentId){
+    public function getPublisherByDocumentId($pDocumentId)
+    {
 
         $sql = "SELECT
                     name 
                 FROM
                     PUBLISHER, PUBLISHER_DOCUMENT
                 WHERE 
-                    PUBLISHER_DOCUMENT.document_id = '".$pDocumentId ."' 
+                    PUBLISHER_DOCUMENT.document_id = '" . $pDocumentId . "' 
                     AND
                     PUBLISHER.publisher_id = PUBLISHER_DOCUMENT.publisher_id";
 
         if (!$result = pg_query($this->connection, $sql)) die();
         $data = array();
         while ($row = pg_fetch_array($result)) {
-            
+
             $data[] = $row['name'];
         }
 
@@ -381,6 +382,18 @@ class DocumentDAO implements DAO
         }
 
         return $data;
+    }
+
+    public function activeDocument($pIdDocument)
+    {
+        $sql = "UPDATE DOCUMENT SET status='Active' WHERE document_id=" . $pIdDocument;
+        pg_query($this->connection, $sql);
+    }
+
+    public function inactiveDocument($pIdDocument)
+    {
+        $sql = "UPDATE DOCUMENT SET status='Inactive' WHERE document_id=" . $pIdDocument;
+        pg_query($this->connection, $sql);
     }
 
     public function delete($pCode)
