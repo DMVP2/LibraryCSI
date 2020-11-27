@@ -38,7 +38,7 @@ $clients = $userDriving->listUsersByRol(5);
             } else if (strcasecmp($client->getStatus(), 'Blocked') == 0) {
                 $btnAction = "
                 <button class='btn btn-red btn-fill' onclick='executeAction(1, " . $client->getUserId() . ")'>
-                    <i type='span' class='fa fa-check' style='color: white'></i>
+                    <i type='span' class='fa fa-unlock' style='color: white'></i>
                 </button>";
             } else {
                 $btnAction = "";

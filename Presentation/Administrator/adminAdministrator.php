@@ -65,8 +65,11 @@ include_once('../../routes.php');
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">Administradores</h4>
-                                    <input value="Agregar administrador" type="button"
+                                    <button data-toggle='modal' data-target='#exampleModalCenter'
                                         class="btn btn-red btn-fill pull-right" style="margin-bottom: 40px;">
+                                        <i type='span' class='fa fa-user' style='color: white'></i> Agregar
+                                        administrador
+                                    </button>
                                 </div>
                                 <div class="content table-responsive table-full-width">
 
@@ -89,6 +92,95 @@ include_once('../../routes.php');
             ?>
             <!-- Footer -->
 
+        </div>
+    </div>
+
+    <!-- Modal admin-->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="margin-top:20%">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Agregar administrador</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <form id="formAdmin">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tipo de documento</label>
+                                        <select name="typeDocument" id="typeDocument" class="form-control">
+                                            <option value="C.C.">C.C.</option>
+                                            <option value="C.E.">C.E.</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Número de documento</label>
+                                        <input type="text" class="form-control" id="numberDocument"
+                                            name="numberDocument" placeholder="Número de documento" required>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Nombres</label>
+                                        <input type="text" class="form-control" placeholder="Nombres" id="name"
+                                            name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Apellidos</label>
+                                        <input type="text" class="form-control" placeholder="Apellidos" id="lastName"
+                                            name="lastName" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Correo</label>
+                                        <input type="text" class="form-control" placeholder="Correo" id="mail"
+                                            name="mail" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Celular</label>
+                                        <input type="text" class="form-control" placeholder="Celular" id="phone"
+                                            name="phone" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-red btn-fill" id="btnSubmit">Agregar
+                                        administrador</button>
+                                </div>
+                            </div>
+
+                            <div class=" clearfix">
+                            </div>
+                            <br>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -123,7 +215,32 @@ $(document).ready(function() {
         $('#divTable').load(
             "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Administrator/tableAdministrators.php" ?>");
     }
+
     $.fn.rechargeData();
+
+    $('#formAdmin').submit(function(e) {
+        $('#btnSubmit').prop('disabled', true);
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "administrator/registerAdministrator.php"  ?>',
+            data: $(this).serialize(),
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+
+                if (jsonData.success == "1") {
+                    $("#formAdmin")[0].reset();
+                    $("#exampleModalCenter").modal('hide');
+                    $.fn.rechargeData();
+                    notifications.showNotificationInfo("Se ha registrado con éxito");
+
+                } else {
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+                $('#btnSubmit').prop('disabled', false);
+            }
+        });
+    });
 });
 
 function executeAction(pAction, pIdUser) {
@@ -145,5 +262,6 @@ function executeAction(pAction, pIdUser) {
     });
 }
 </script>
+
 
 </html>

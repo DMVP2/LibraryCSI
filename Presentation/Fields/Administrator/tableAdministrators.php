@@ -52,7 +52,7 @@ $admins = $userDriving->listUsersByRol(2);
             } else if (strcasecmp($admin->getStatus(), 'Blocked') == 0) {
                 $btnAction = "
                 <button class='btn btn-red btn-fill' onclick='executeAction(1, " . $admin->getUserId() . ")'>
-                    <i type='span' class='fa fa-check' style='color: white'></i>
+                    <i type='span' class='fa fa-unlock' style='color: white'></i>
                 </button>";
             } else {
                 $btnAction = "";

@@ -22,7 +22,9 @@ if (isset($consultUser) and strcasecmp($consultUser->getPassword(), md5($_POST['
     $userSession->setCurrentUser($consultUser);
     $rol = $userDriving->consultRole($consultUser->getRole());
 
-    if (strcasecmp($consultUser->getStatus(), 'Inactive') == 0) {
+    if (strcasecmp($consultUser->getStatus(), 'Blocked') == 0) {
+        header("Location: " . ROOT_DIRECTORY . ROUTE_PRESENTATION . "login.php?code=2");
+    } else if (strcasecmp($consultUser->getStatus(), 'Inactive') == 0) {
         header("Location: " . ROOT_DIRECTORY . ROUTE_PRESENTATION . 'changePassword.php');
     } else {
         if (strcasecmp($rol, "Client") == 0 || strcasecmp($rol, "Publisher") == 0) {
