@@ -112,7 +112,7 @@ class DocumentDAO implements DAO
                 $info->setType($row['type']);
                 $info->setStatus($row['status']);
                 $info->setImage($row['image']);
-                $info->setDescription($row['description']);
+            $info->setDescription($row['description']);
 
                 $data[] = $info;
             }
@@ -193,21 +193,21 @@ class DocumentDAO implements DAO
     {
         if (strcasecmp($pType, 'Fisico') == 0) {
             $sql = "SELECT 
-                        DOCUMENT_BOOKING.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image, description,count(DOCUMENT_BOOKING.document_id) as nBookings
+                        DOCUMENT_BOOKING.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image, count(DOCUMENT_BOOKING.document_id) as nBookings
                     FROM 
                         DOCUMENT_BOOKING, DOCUMENT 
                     WHERE 
                         DOCUMENT_BOOKING.document_id = DOCUMENT.document_id AND type='Fisico' 
-                    GROUP BY(DOCUMENT_BOOKING.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image,description) 
+                    GROUP BY(DOCUMENT_BOOKING.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image) 
                     ORDER BY nBookings DESC LIMIT " . $pCountTop;
         } else {
             $sql = "SELECT 
-                        DOCUMENT.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image,description, count(DOWNLOAD.document_id) as nBookings
+                        DOCUMENT.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image, count(DOWNLOAD.document_id) as nBookings
                     FROM 
                         DOCUMENT, DOWNLOAD 
                     WHERE 
                         DOWNLOAD.document_id = DOCUMENT.document_id AND type='Virtual' 
-                    GROUP BY(DOCUMENT.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image,description) 
+                    GROUP BY(DOCUMENT.document_id,code,title, congress, category, language, num_pages, date, editorial, type, status, image) 
                     ORDER BY nBookings DESC LIMIT " . $pCountTop;
         }
 
@@ -281,8 +281,7 @@ class DocumentDAO implements DAO
 
         return $data;
     }
-    public function getAuthorsByDocumentId($pDocumentId)
-    {
+    public function getAuthorsByDocumentId($pDocumentId){
 
         $sql = "SELECT AUTHOR.name FROM AUTHOR, DOCUMENT_AUTHOR WHERE document_id = '" . $pDocumentId . "'AND DOCUMENT_AUTHOR.author_id = AUTHOR.author_id group by(name, document_id);";
 
@@ -291,124 +290,46 @@ class DocumentDAO implements DAO
         $data = array();
 
         while ($row = pg_fetch_array($result)) {
-
+            
             $data[] = $row['name'];
         }
 
         return $data;
-    }
-    //Obtiene arreglo con la ciudad y país por documento id
-    public function getCityCounty($pDocumentId)
-    {
 
-        $sql = "SELECT 
-                CITY.city, COUNTRY.country 
-                FROM 
-                COUNTRY, COUNTRY_CITY, CITY, DOCUMENT_CITY
-                WHERE 
-                DOCUMENT_CITY.document_id =  '" . $pDocumentId . "' AND
-                COUNTRY.country_id = COUNTRY_CITY.country_id AND
-                COUNTRY_CITY.city_id = CITY.city_id AND
-                CITY.city_id = DOCUMENT_CITY.city_id";
+    }
+    //--- se debe arreglar la bd para completar esta función 
+    public function getCountyCity($pDocumentId){
+
+        $sql = "SELECT AUTHOR.name FROM AUTHOR, DOCUMENT_AUTHOR WHERE document_id = '" . $pDocumentId . "'AND DOCUMENT_AUTHOR.author_id = AUTHOR.author_id group by(name, document_id);";
 
         if (!$result = pg_query($this->connection, $sql)) die();
 
         $data = array();
 
         while ($row = pg_fetch_array($result)) {
-
-            $data[] = $row['city'];
-            $data[] = $row['country'];
+            
+            $data[] = $row['name'];
         }
 
         return $data;
+
     }
-    //Obtiene arreglo con las reservas x documento -- No está en el Driving
-    public function getBookingsByDocumentId($pDocumentId)
-    {
 
-        $sql = "SELECT * FROM BOOKING,DOCUMENT_BOOKING 
-                WHERE DOCUMENT_BOOKING.document_id = '" . $pDocumentId . "' 
-                AND  BOOKING.booking_id =DOCUMENT_BOOKING.booking_id";
-
-
-        if (!$result = pg_query($this->connection, $sql)) die();
-
-        $data = array();
-
-        while ($row = pg_fetch_array($result)) {
-
-            $data[] = $row['booking_id'];
-            $data[] = $row['date_start'];
-            $data[] = $row['date_end'];
-            $data[] = $row['date_delivery'];
-            $data[] = $row['renovations'];
-            $data[] = $row['status'];
-            $data[] = $row['document_id'];
-        }
-
-        return $data;
-    }
-    //Regresa el número de reservas históricas que tiene un documento -- No está en el Driving
-    public function getBookingsCountByDocumentId($pDocumentId)
-    {
-
-        $sql = "SELECT count(0) FROM BOOKING,DOCUMENT_BOOKING 
-                WHERE DOCUMENT_BOOKING.document_id = '" . $pDocumentId . "' 
-                AND  BOOKING.booking_id =DOCUMENT_BOOKING.booking_id";
-
-
-        if (!$result = pg_query($this->connection, $sql)) die();
-
-        $data = array();
-
-        while ($row = pg_fetch_array($result)) {
-
-            $data[] = $row['count'];
-        }
-
-        return $data;
-    }
-    //Regresa el número de usuarios que se encuentra en cola (queue) en un documento 
-    public function getQueuesCountByDocumentId($pDocumentId)
-    {
-
-        $sql = "SELECT count(*) 
-                FROM 
-                QUEUE, DOCUMENT_QUEUE 
-                WHERE 
-                DOCUMENT_QUEUE.document_id = '" . $pDocumentId . "' AND  
-                QUEUE.queue_id =DOCUMENT_QUEUE.queue_id";
-
-
-        if (!$result = pg_query($this->connection, $sql)) die();
-
-        $data = array();
-
-        while ($row = pg_fetch_array($result)) {
-
-            $data[] = $row['count'];
-        }
-
-        return $data;
-    }
-    //Retoirna el nombre del publicador por el documento
-    public function getPublisherByDocumentId($pDocumentId)
-    {
+    public function getPublisherByDocumentId($pDocumentId){
 
         $sql = "SELECT
                     name 
                 FROM
                     PUBLISHER, PUBLISHER_DOCUMENT
                 WHERE 
-                    PUBLISHER_DOCUMENT.document_id = '" . $pDocumentId . "' 
+                    PUBLISHER_DOCUMENT.document_id = '".$pDocumentId ."' 
                     AND
                     PUBLISHER.publisher_id = PUBLISHER_DOCUMENT.publisher_id";
 
         if (!$result = pg_query($this->connection, $sql)) die();
         $data = array();
         while ($row = pg_fetch_array($result)) {
-
+            
             $data[] = $row['name'];
         }
 

@@ -11,6 +11,8 @@
                     </button>
                     <h5 class="modal-title" id="exampleModalLabel">
                         <center>¿Que tipo de usuario deseas ser?</center>
+                        
+
                     </h5>
                 </div>
                 <div class="modal-body text-center">
