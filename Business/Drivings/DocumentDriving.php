@@ -59,6 +59,16 @@ class DocumentDriving
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         return $documentDAO->getPublisherByDocumentId($pIdDocument);
     }
+    public function getQueuesCountByDocumentId($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getQueuesCountByDocumentId($pIdDocument);
+    }
+    public function getCityCounty($pIdDocument)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getCityCounty($pIdDocument);
+    }
     public function getTopDocuments($pType, $pCountTop)
     {
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
@@ -82,7 +92,6 @@ class DocumentDriving
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         return $documentDAO->searchByCode($pCode, $pType);
     }
-
     public function activeDocument($pIdDocument)
     {
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
