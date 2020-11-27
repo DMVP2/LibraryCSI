@@ -42,7 +42,7 @@ $rol = $userSession->getRol();
 
 <body>
 
-    <div class="wrapper" style="height: 100%;width: 100%;margin-top: 6%;">
+    <div class="wrapper" style="height: 100%;margin-top: 6%;">
 
         <div class="main-panel" data="index" style="max-height:none; height: 100%;">
 

@@ -60,7 +60,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
 ?>
 
-<div class="row" style="margin-top:.5%;margin-bottom:2.5%;" >
+<div class="row" >
     <div class="col-md-12 col-md-offset-1">
         <?php
         if ($search == false) {
@@ -112,7 +112,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                             if (isset($fisicos[$aux])) {
 
                                 if ($documentDriving->stateReservedDocument($fisicos[$aux]->getDocumentId()) == true) {
-                                    $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Este documento se encuentra reservado' style='color:skyblue'></i>";
+                                    $iconState = "<i class='fa fa-clock-o pull-right'></i>";
                                 } else {
                                     $iconState = "";
                                 }
@@ -175,14 +175,14 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
             </div>
 
             <!-- Carousel Buttons Next/Prev -->
-            <a data-slide="prev" href="#quote-carousel2" class="left carousel-control"><i class="fa fa-chevron-left"  style="color:#F4D03F"></i></a>
-            <a data-slide="next" href="#quote-carousel2" class="right carousel-control"><i class="fa fa-chevron-right" style="color:#F4D03F"></i></a>
+            <a data-slide="prev" href="#quote-carousel2" class="left carousel-control"><i class="fa fa-chevron-left"  style="color:lightskyblue"></i></a>
+            <a data-slide="next" href="#quote-carousel2" class="right carousel-control"><i class="fa fa-chevron-right" style="color:lightskyblue"></i></a>
         </div>
     </div>
 
 </div>
 
-<div class="row"style="margin-top:.5%;margin-bottom:2.5%;">
+<div class="row" style="margin-top: 10px;">
     <div class="col-md-12 col-md-offset-1">
         <?php
 
@@ -241,11 +241,15 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                     for ($j = 0; $j < 5; $j++) {
                                         if (isset($virtuales[$aux])) {
 
-                  
+                                            if ($documentDriving->stateReservedDocument($virtuales[$aux]->getDocumentId()) == true) {
+                                                $iconState = "<i class='fa fa-clock-o pull-right'></i>";
+                                            } else {
+                                                $iconState = "";
+                                            }
 
                                             echo "<div class='col-md-2'>";
                                             echo "<div class='card col-md-12'"; if (strcasecmp($rol, 'client') == 0) {echo "style='height: 367px' > ";} else{echo "style='height: 310px' >";};
-                                            echo "<br>";        
+                                            echo "<br>";
                                             echo "<div class='card-header text-center'>";
                                             if ($search == false) {
                                                 echo "<b><p class='card-category'>TOP " . ($aux + 1) . "</b></p>";
@@ -295,5 +299,5 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
 
 <!-- Carousel Buttons Next/Prev -->
-<a data-slide="prev" href="#quote-carousel3" class="left carousel-control"><i class="fa fa-chevron-left" style="color:skyblue"></i></a>
-<a data-slide="next" href="#quote-carousel3" class="right carousel-control"><i class="fa fa-chevron-right" style="color:skyblue"></i></a>
+<a data-slide="prev" href="#quote-carousel3" class="left carousel-control"><i class="fa fa-chevron-left" style="color:lightskyblue"></i></a>
+<a data-slide="next" href="#quote-carousel3" class="right carousel-control"><i class="fa fa-chevron-right" style="color:lightskyblue"></i></a>

@@ -1279,8 +1279,8 @@ fieldset[disabled] .btn-employee.active {
 }
 
 .btn-admin {
-  border-color: #FA8181;
-  color: #FA8181;
+  border-color: #FFBABF;
+  color: #ff4a55;
 }
 
 .btn-admin:hover,
@@ -1289,8 +1289,8 @@ fieldset[disabled] .btn-employee.active {
 .btn-admin.active,
 .open > .btn-admin.dropdown-toggle {
   background-color: transparent;
-  color: #FA8181;
-  border-color: #eca1a1;
+  color: #ee2d20;
+  border-color: #ee2d20;
 }
 
 .btn-admin.disabled,
@@ -1318,12 +1318,12 @@ fieldset[disabled] .btn-admin.focus,
 fieldset[disabled] .btn-admin:active,
 fieldset[disabled] .btn-admin.active {
   background-color: transparent;
-  border-color: #FFB9B9;
+  border-color: #ff4a55;
 }
 
 .btn-admin.btn-fill {
   color: #ffffff;
-  background-color: #FA8181;
+  background-color: #FFBABF;
   opacity: 1;
   filter: alpha(opacity=100);
 }
@@ -1333,7 +1333,7 @@ fieldset[disabled] .btn-admin.active {
 .btn-admin.btn-fill:active,
 .btn-admin.btn-fill.active,
 .open > .btn-admin.btn-fill.dropdown-toggle {
-  background-color: #ec9c9c;
+  background-color: #ee2d20;
   color: #ffffff;
 }
 
@@ -1342,7 +1342,7 @@ fieldset[disabled] .btn-admin.active {
 }
 
 .btn-admin .caret {
-  border-top-color: #FFB9B9;
+  border-top-color: #ff4a55;
 }
 
 .btn:disabled,
@@ -2337,7 +2337,7 @@ fieldset[disabled] .form-control {
 }
 
 .navbar-default .navbar-nav > li > a:not(.btn) {
-  color: #747474;
+  color: #9a9a9a;
 }
 
 .navbar-default .navbar-nav > .active > a,
