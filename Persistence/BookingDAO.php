@@ -244,20 +244,17 @@ class BookingDAO implements DAO
 
     public function reserveDocument($pUserId, $pDocumentId)
     {
-
-        $sql = "INSERT INTO BOOKING VALUES(DEFAULT, NOW(), NOW() + interval '3 day', NOW(),0,'Retired')";
-        pg_query($this->connection, $sql);
-
-        $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
-        $rta = pg_query($this->connection, $sql);
-        $row = pg_fetch_object($rta);
-        $idBooking = $row->booking_id;
-
-        $sql = "INSERT INTO BOOKING_USERS VALUES(" . $idBooking . ", " . $pUserId . ")";
-        pg_query($this->connection, $sql);
-
-        $sql = "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ")";
-        pg_query($this->connection, $sql);
+        $sql = "INSERT INTO BOOKING VALUES( DEFAULT,NOW(), NOW() + interval '3 day', NOW(),0,'Reserved')";
+        $reserva = pg_query($this->connection, $sql);
+        if($reserva){
+            $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
+            $rta = pg_query($this->connection, $sql);
+            $row = pg_fetch_object($rta);
+            $idBooking = $row->booking_id;    
+            $sql = "INSERT INTO BOOKING_USERS VALUES(" . $idBooking . ", " . $pUserId . ");"; 
+            $sql .= "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ");";
+            pg_query($this->connection, $sql);
+        }
     }
 
     public function serachBookingFined($pDocumentId)

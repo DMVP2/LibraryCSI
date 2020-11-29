@@ -57,8 +57,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
     <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/animate.min.css' ?>" rel="stylesheet" />
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/light-bootstrap-dashboard.css?v=1.4.0' ?>"
-        rel="stylesheet" />
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/light-bootstrap-dashboard.css?v=1.4.0' ?>" rel="stylesheet" />
 
 
     <!--     Fonts and icons     -->
@@ -67,8 +66,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
     <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/pe-icon-7-stroke.css' ?>" rel="stylesheet" />
 
     <!-- DataTables -->
-    <link rel="stylesheet" type="text/css"
-        href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION_LIB . "DataTables/datatables.min.css" ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION_LIB . "DataTables/datatables.min.css" ?>" />
 
 </head>
 
@@ -143,8 +141,14 @@ $bookings = $bookingDriving->listBookingById($idUser);
                                                     } else {
                                                         if (strcasecmp($status, 'Completed') == 0) {
                                                             $status = 'Finalizado';
-                                                        } else {
-                                                            $status = 'Retirado';
+                                                        } else if (strcasecmp($status, 'Reserved') == 0) {
+                                                            $status = 'En Reserva';
+                                                        } else if (strcasecmp($status, 'Retired') == 0) {
+                                                            $status = 'En Préstamo';
+                                                        } else if (strcasecmp($status, 'Penalty') == 0) {
+                                                            $status = '<p style="color:red">Multado</p>';
+                                                        } else if (strcasecmp($status, 'Canceled') == 0) {
+                                                            $status = 'Multa Pagada';
                                                         }
                                                     }
 
@@ -186,7 +190,37 @@ $bookings = $bookingDriving->listBookingById($idUser);
     </div>
 
 </body>
+<!-- BookingInfo -->
+<div class="modal fade" id="modalBookingInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="margin-top:15%">
+            <div id="modalBookingInfoContent">
 
+                <div class="modal-content">
+
+                    <div class="modal-header" id="topTileModal">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <b>
+                            <h3 style="margin: 1.5%;" class="modal-title" id="exampleModalLongTitle">
+                                <center>Se ha realizado su reserva</center>
+
+                            </h3>
+                        </b>
+                    </div>
+
+                    <div style="margin: 2%;" class="row-md-12">
+                        <p>- Apartir del momento cuenta con 3 días para retirar su libro y disfrutarlo.
+                            <br><br>- Podrá renovarlo dos veces en caso de que ningún usuario entre a la cola de reserva. <br><br>
+                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán xxxxx$ por hora.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ModalBookingInfo -->
 
 <!--   Core JS Files   -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/jquery.3.2.1.min.js' ?>" type="text/javascript">
@@ -207,13 +241,27 @@ $bookings = $bookingDriving->listBookingById($idUser);
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
 
 <!-- DataTables -->
-<script type="text/javascript"
-    src="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION_LIB . "DataTables/datatables.min.js" ?>"></script>
+<script type="text/javascript" src="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION_LIB . "DataTables/datatables.min.js" ?>"></script>
 
 <script>
-$(document).ready(function() {
-    $('#tableBookings').DataTable();
-});
+    $(document).ready(function() {
+        $('#tableBookings').DataTable();
+    });
 </script>
+
+
+<?php
+if (isset($_GET['cod'])) {
+    $cod = $_GET['cod'];
+    if ($cod == 1) {
+
+?> <script>
+            $("#modalBookingInfo").modal('show');
+        </script>
+<?php
+    }
+}
+
+?>
 
 </html>

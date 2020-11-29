@@ -368,6 +368,7 @@ class DocumentDAO implements DAO
 
         return $data;
     }
+    
     //Regresa el número de usuarios que se encuentra en cola (queue) en un documento 
     public function getQueuesCountByDocumentId($pDocumentId)
     {

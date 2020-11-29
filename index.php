@@ -30,8 +30,7 @@ $rol = $userSession->getRol();
     <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/animate.min.css' ?>" rel="stylesheet" />
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/light-bootstrap-dashboard.css?v=1.4.0' ?>"
-        rel="stylesheet" />
+    <link href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'css/light-bootstrap-dashboard.css?v=1.4.0' ?>" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -57,32 +56,31 @@ $rol = $userSession->getRol();
 
                     <?php if (strcasecmp($rol, 'client') == 0) { ?>
 
-                    <div class="row">
-                        <div class="col-md-1 col-md-offset-1">
-                            <h4 style="margin: 0; margin-top: 8px;">Buscar:</h4>
-                        </div>
-                        <div class="col-md-4">
-                            <input type=" text" class="form-control" placeholder="Titulo del documento"
-                                id="titleDocument" name="titleDocument">
-                        </div>
-                        <div class="col-md-2">
-                            <select name="category" id="category" class="form-control">
-                                <option value="" selected style="color:gray">Categoría</option>
-                                <option value="Niños">Niños</option>
-                                <option value="Adultos">Adultos</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-1 col-md-offset-1">
+                                <h4 style="margin: 0; margin-top: 8px;">Buscar:</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <input type=" text" class="form-control" placeholder="Titulo del documento" id="titleDocument" name="titleDocument">
+                            </div>
+                            <div class="col-md-2">
+                                <select name="category" id="category" class="form-control">
+                                    <option value="" selected style="color:gray">Categoría</option>
+                                    <option value="Niños">Niños</option>
+                                    <option value="Adultos">Adultos</option>
+                                </select>
 
+                            </div>
                         </div>
-                    </div>
                 </div>
                 <br>
 
-                <?php } ?>
+            <?php } ?>
 
 
 
-                <div id="carrousel"></div>
-                <br>
+            <div id="carrousel"></div>
+            <br>
 
 
 
@@ -104,10 +102,9 @@ $rol = $userSession->getRol();
     include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalRegister.php";
     ?>
     <!-- ModalRegister -->
-  <!-- ModalMoreInfoDoc include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php";   ?> -->
-    <!-- ModalMoreInfoDoc --> 
-    <div class="modal fade" id="modalMoreInfoDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
+    <!-- ModalMoreInfoDoc include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php";   ?> -->
+    <!-- ModalMoreInfoDoc -->
+    <div class="modal fade" id="modalMoreInfoDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="margin-top:5%">
                 <div id="modalMoreInfoDocContent">
@@ -138,40 +135,57 @@ $rol = $userSession->getRol();
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
 
 <script type="text/javascript">
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    $.fn.rechargeData = function() {
-        $('#carrousel').load(
-            "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Client/carrousel.php" ?>", {
-                'title': $('#titleDocument').val(),
-                'category': $('#category').val()
-            });
-    }
+        $.fn.rechargeData = function() {
+            $('#carrousel').load(
+                "<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "Client/carrousel.php" ?>", {
+                    'title': $('#titleDocument').val(),
+                    'category': $('#category').val()
+                });
+        }
 
-    $("#titleDocument").on('keyup', function() {
+        $("#titleDocument").on('keyup', function() {
+            $.fn.rechargeData();
+        });
+
+        $("#category").change(function() {
+            $.fn.rechargeData();
+        });
+
         $.fn.rechargeData();
     });
-
-    $("#category").change(function() {
-        $.fn.rechargeData();
-    });
-
-    $.fn.rechargeData();
-});
-
-
 </script>
 
 <script>
-
     /*Función para mostrar el modal de la información detallada del documento, tiene como parámetro el ID del Doc */
-function updateModalMoreInfo(pIdDocument, pDigitalFisico) {
-    $('#modalMoreInfoDocContent').load("<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php" ?>", {
-        'idDocument': pIdDocument,
-        'digitalFisico': pDigitalFisico
-    });
-    $("#modalMoreInfoDoc").modal('show');
-}
+    function updateModalMoreInfo(pIdDocument, pDigitalFisico) {
+        $('#modalMoreInfoDocContent').load("<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php" ?>", {
+            'idDocument': pIdDocument,
+            'digitalFisico': pDigitalFisico
+        });
+        $("#modalMoreInfoDoc").modal('show');
+    }
+
+    /*Función para ir a la ruta del procedimiento bookingDocument por POST, en caso de que sea correcto envía a MyBookings el cod=1 mediante GET*/
+    function bookingDocumentCarrusel(pIdDocument) {
+        //alert ( "holaa");
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/bookingDocument.php"?>',
+            data: 'idDocument='+ pIdDocument,
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+                if (jsonData.success == "1") {
+                    window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=1'  ?>"; //enviar a reserva
+                } else {
+                   
+
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+            }
+        });
+    }
 </script>
 
 </html>

@@ -26,7 +26,7 @@ $numDiasMaxPrestamo = 3;
 $idDoc = $_REQUEST['idDocument'];
 $digiFisi = $_REQUEST['digitalFisico'];
 
-
+$documentoReservadoBool = $documentDriving->stateReservedDocument($idDoc);
 
 ?>
 <div class="modal-content">
@@ -35,21 +35,23 @@ $digiFisi = $_REQUEST['digitalFisico'];
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <b><h3 class="modal-title" id="exampleModalLongTitle">
-            <center> <?php echo $document->getTitle(); ?> — <?php echo $authorsNames[0]; ?></center>
+        <b>
+            <h3 class="modal-title" id="exampleModalLongTitle">
+                <center> <?php echo $document->getTitle(); ?> — <?php echo $authorsNames[0]; ?></center>
 
-        </h3></b>
+            </h3>
+        </b>
     </div>
 
     <div class="row-md-12">
         <div class="col-md-6 float-left">
-            <h5>
+            <h5 style="margin-top:7%;">
                 <center><b>
-                    <?php if ($digiFisi == 'Digital') {
-                        echo 'Datos del Documento';
-                    } else {
-                        echo 'Datos del Libro';
-                    } ?></b> </center>
+                        <?php if ($digiFisi == 'Digital') {
+                            echo 'Datos del Documento';
+                        } else {
+                            echo 'Datos del Libro';
+                        } ?></b> </center>
             </h5>
             <div class="row-md-12 float-left ">
 
@@ -75,7 +77,7 @@ $digiFisi = $_REQUEST['digitalFisico'];
                     <b>Lugar de Publicación: </b><br><?php echo $cityCountry[0];  ?> — <?php echo $cityCountry[1];  ?>
                 </p>
                 <p class="font-weight-light">
-                    <b>Fecha: </b><?php echo $document ->getDateOfPublication();  ?><b style="font-size:xx-small;"> (AAAA-MM-DD)</b>
+                    <b>Fecha: </b><?php echo $document->getDateOfPublication();  ?><b style="font-size:xx-small;"> (AAAA-MM-DD)</b>
                 </p>
                 <p>
                     <?php
@@ -93,22 +95,21 @@ $digiFisi = $_REQUEST['digitalFisico'];
                 <p class="font-weight-light">
                     <b> Descripción:</b> <?php echo $document->getDescription(); ?>
                 </p>
-             
-                <?php if($queuesCount[0] > 0){ ?>
-                <p class="font-weight-light" style="color:darkcyan ;">
-                    <b> ¡Este libro se encuentra en préstamo!  </b>                       <br>
-                    El número de lectores en cola es <b><?php echo $queuesCount[0];?> </b>, tardará al rededor de <b><?php echo ( $queuesCount[0] * $numDiasMaxPrestamo ); ?> días.</b>
-                </p>
-                <?php } 
-                else{
-                    ?>
-                     <p class="font-weight-light" style="color:darkcyan ;">
-                    <b> ¡Este libro se encuentra en préstamo!  </b>                       <br>
-                Nadie ha ingresado a la cola, se el primero en hacerlo para acceder al libro en <b>máximo 3 días. </b>
-                </p>
+
+                <?php if ($queuesCount[0] > 0) { ?>
+                    <p class="font-weight-light" style="color:darkcyan ;">
+                        <b> ¡Este libro se encuentra en préstamo! </b> <br>
+                        El número de lectores en cola es <b><?php echo $queuesCount[0]; ?> </b>, tardará máximo <b><?php echo (($queuesCount[0] +1) * $numDiasMaxPrestamo); ?> días.</b>
+                    </p>
+                <?php } else if ($documentoReservadoBool) {
+                ?><p class="font-weight-light" style="color:darkcyan ;">
+                        <b> ¡Este libro se encuentra en préstamo! </b> <br>
+                        Nadie ha ingresado a la cola, se el primero en hacerlo para acceder al libro en <b>máximo 3 días. </b>
+                    </p>
                 <?php
                 }
                 ?>
+                
 
             </div>
         </div>
@@ -117,9 +118,38 @@ $digiFisi = $_REQUEST['digitalFisico'];
 
                 <?php echo "<img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/100anos.jpg" . "' style='width: 95%; height: 90%; margin-top:6%;'>"; ?>
                 <p class="font-weight-light">
-                <center><i><b> Publicador:</b> <?php echo $publisherName[0]; ?></i></center>
+                    <center><i><b> Publicador:</b> <?php echo $publisherName[0]; ?></i></center>
                 </p>
+                <?php
+                if (!$documentoReservadoBool) {
+                ?>
 
+                    <div>
+                        <center>
+                            <?php
+
+                            $btnMoreInfoPdf =  "<button  class='btn btn-primary '  onClick=bookingDocumentCarrusel('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Reservar</button>";
+                            echo $btnMoreInfoPdf;
+                            ?>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> ¡El libro se encuentra disponible para reservar!</p>
+                        </center>
+                    </div>
+                <?php
+                } else if ($documentoReservadoBool && $queuesCount[0] > 0) {
+                    ?>
+                    <div>
+                        <center>
+                            <?php
+
+                            $btnMoreInfoPdf =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Reservar</button>";
+                            echo $btnMoreInfoPdf;
+                            ?>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> ¡El libro se encuentra disponible para reservar!</p>
+                        </center>
+                    </div>
+                    <?php
+                    }
+                ?>
 
             </div>
         </div>
@@ -130,19 +160,17 @@ $digiFisi = $_REQUEST['digitalFisico'];
     </div>
 </div>
 <style>
-#topTileModal{
-    background-image: 
-    linear-gradient(
-      rgba(0, 0, 0, 0.09),
-      rgba(0, 0, 0, 0.04)
-    ),
-     url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/fondoNavBarFooterEncabezado.png";  ?>');
-   -webkit-background-size: cover;
-   -moz-background-size: cover;
-   -o-background-size: cover;
-   background-size: cover;
-   height: 100%;
-   width: 100% ;
-   text-align: center; 
-}
+    #topTileModal {
+        background-image:
+            linear-gradient(rgba(0, 0, 0, 0.09),
+                rgba(0, 0, 0, 0.04)),
+            url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/fondoNavBarFooterEncabezado.png";  ?>');
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+    }
 </style>
