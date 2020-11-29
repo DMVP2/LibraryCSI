@@ -242,10 +242,10 @@ class BookingDAO implements DAO
         pg_query($this->connection, $sql);
     }
 
-    public function reserveDocument($pUserId, $pDocumentId)
+    public function reserveDocument($pUserId, $pDocumentId, $pStatus)
     {
 
-        $sql = "INSERT INTO BOOKING VALUES(DEFAULT, NOW(), NOW() + interval '3 day', NOW(),0,'Retired')";
+        $sql = "INSERT INTO BOOKING VALUES(DEFAULT, NOW(), NOW() + interval '3 day', NOW(),0,'" . $pStatus . "')";
         pg_query($this->connection, $sql);
 
         $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
@@ -289,6 +289,27 @@ class BookingDAO implements DAO
         }
 
         return $bookingSearch;
+    }
+
+
+    public function getReportBookingPerDay()
+    {
+
+        $sql = "SELECT date_start , count(booking_id) as fecha
+                FROM booking
+                WHERE date_start > now() - interval '2 week' GROUP BY date_start ORDER BY date_start ";
+
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+            $date = new DateTime($row['date_start']);
+            array_push($data, array("year" => $date->format('y'), "month" => $date->format('m') - 1, "day" => $date->format('d'), "count" => $row['fecha']));
+        }
+
+        return $data;
     }
 
     public function getValueFined()

@@ -19,7 +19,6 @@ $bookingDriving = new BookingDriving($connection);
 if (isset($_POST['action'])) {
 
     $codeDocument = $_POST['code'];
-    $documentsCode = $documentDriving->searchByCode($codeDocument, "Fisico");
 
     if ($documentsCode == null) {
         echo json_encode(array('success' => "No existe", 'code' => -1));
@@ -45,7 +44,7 @@ if (isset($_POST['action'])) {
     $idDocument = $_POST['idDocumentReserve'];
     $userDocument = $_POST['idClientReserve'];
 
-    $bookingDriving->reserveDocument($userDocument, $idDocument);
+    $bookingDriving->reserveDocument($userDocument, $idDocument, 'Retired');
 
     echo json_encode(array('success' => 1));
 }
