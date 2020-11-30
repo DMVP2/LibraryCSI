@@ -153,6 +153,158 @@ class BookingDAO implements DAO
         }
         return $data;
     }
+    public function searchBookingStateByDocumentId($pDocumentId)
+    {
+
+        $sql = "SELECT
+                    status 
+                FROM 
+                    BOOKING, DOCUMENT_BOOKING
+                WHERE 
+                    BOOKING.booking_id = DOCUMENT_BOOKING.booking_id
+                AND
+                    document_id =" . $pDocumentId . ";";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) == 0)
+            return -1;
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = new Booking();
+            $info->setBookingStatus($row['status']);
+            $data[] = $info;
+        }
+        return $data;
+    }
+    // Retorna el código del usuario que realizó la reserva de x documentoId
+    // tan solo lo retorna cuándo el estado de la reserva es 'Reserved' o 'Retired'
+    public function getUserIdBooking($pDocumentId)
+    {
+
+        $sql = "SELECT
+                    user_id 
+                FROM 
+                    BOOKING, DOCUMENT_BOOKING, BOOKING_USERS
+                WHERE 
+                    BOOKING.booking_id = DOCUMENT_BOOKING.booking_id
+                AND
+                    DOCUMENT_BOOKING.booking_id = BOOKING_USERS.booking_id                    
+                AND
+                    (BOOKING.status = 'Reserved' or BOOKING.status ='Retired') 
+                AND
+                    document_id =" . $pDocumentId . ";";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = $row['user_id'];
+            $data[] = $info;
+        }
+        return $data;
+    }
+    // Retorna el código del usuario que realizó la reserva y tiene una MULTA ACTIVA de x documentoId
+    // tan solo lo retorna cuándo el estado de la reserva es 'Penalty'
+    public function getUserIdPenaltyBooking($pDocumentId)
+    {
+
+        $sql = "SELECT
+        user_id
+        FROM
+        BOOKING, BOOKING_USERS, DOCUMENT_BOOKING, PENALTY_BOOKING, PENALTY
+        WHERE
+        document_id =" . $pDocumentId . " AND
+        BOOKING_USERS.booking_id = BOOKING.booking_id
+        AND
+        DOCUMENT_BOOKING.booking_id = BOOKING.booking_id
+        AND
+        PENALTY_BOOKING.booking_id = BOOKING.booking_id
+        AND
+        PENALTY_BOOKING.penalty_id = PENALTY.penalty_id
+        AND
+        (PENALTY.status = 'Pending' or BOOKING.status = 'Penalty');";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) == 0)
+            return -1;
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+            $info = $row['user_id'];
+            $data[] = $info;
+        }
+        return $data;
+    }
+    // Realiza la renovación de una reserva, busca la fecha y el id de la reserva
+    // actualiza Booking sumando los X días de la reserva
+    public function renovateBooking($pDocumentId, $pDiasRenovacion)
+    {
+        $sql = "SELECT
+        BOOKING.booking_id, renovations
+        FROM
+        BOOKING, DOCUMENT_BOOKING
+        WHERE 
+        BOOKING.booking_id = " . $pDocumentId . " AND
+        BOOKING.booking_id = DOCUMENT_BOOKING.booking_id;";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            
+            $fecha = date_create();
+            $renovateDateEnd =date_add($fecha, date_interval_create_from_date_string($pDiasRenovacion. 'days'));
+            date_format($renovateDateEnd, 'Y-m-d');
+            
+            
+            $renovationsNow = $row['renovations']  + 1;
+            $sql = "UPDATE
+                BOOKING
+                SET
+                date_end = '" . $renovateDateEnd->format('Y-m-d') . "', renovations = " . $renovationsNow . "
+                WHERE
+                booking_id =" . $row['booking_id'];
+            pg_query($this->connection, $sql);
+        }
+    }
+    public function getRenovationsBookingByDocId($pDocumentId)
+    {
+
+        $sql = "SELECT
+                    renovations 
+                FROM 
+                    BOOKING, DOCUMENT_BOOKING, BOOKING_USERS
+                WHERE 
+                    BOOKING.booking_id = DOCUMENT_BOOKING.booking_id
+                AND
+                    DOCUMENT_BOOKING.booking_id = BOOKING_USERS.booking_id
+                AND
+                    document_id =" . $pDocumentId . ";";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) == 0)
+            return -1;
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = $row['renovations'];
+            $data[] = $info;
+        }
+        return $data;
+    }
 
     public function searchBookingActivesByUserId($pUserId)
     {
@@ -241,23 +393,20 @@ class BookingDAO implements DAO
 
         pg_query($this->connection, $sql);
     }
-
     public function reserveDocument($pUserId, $pDocumentId, $pStatus)
     {
 
         $sql = "INSERT INTO BOOKING VALUES(DEFAULT, NOW(), NOW() + interval '3 day', NOW(),0,'" . $pStatus . "')";
-        pg_query($this->connection, $sql);
-
-        $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
-        $rta = pg_query($this->connection, $sql);
-        $row = pg_fetch_object($rta);
-        $idBooking = $row->booking_id;
-
-        $sql = "INSERT INTO BOOKING_USERS VALUES(" . $idBooking . ", " . $pUserId . ")";
-        pg_query($this->connection, $sql);
-
-        $sql = "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ")";
-        pg_query($this->connection, $sql);
+        $reserva = pg_query($this->connection, $sql);
+        if ($reserva) {
+            $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
+            $rta = pg_query($this->connection, $sql);
+            $row = pg_fetch_object($rta);
+            $idBooking = $row->booking_id;
+            $sql = "INSERT INTO BOOKING_USERS VALUES(" . $idBooking . ", " . $pUserId . ");";
+            $sql .= "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ");";
+            pg_query($this->connection, $sql);
+        }
     }
 
     public function serachBookingFined($pDocumentId)

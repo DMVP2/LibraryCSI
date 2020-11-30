@@ -1,8 +1,4 @@
 <?php
-/* 
-error_reporting(0);*/
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1 
-
 include_once('../../../routes.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
@@ -21,9 +17,9 @@ $userSession->verifySession();
 
 $usSesion = $userSession->getCurrentUser();
 $idUser = $usSesion->getUserId();
-
 $bookingDriving = new BookingDriving($connection);
 
 $idDocument = $_POST['idDocument'];
-$bookingDriving->reserveDocument($idUser, $idDocument, 'Reserved');
+$diasRenovacion = $_POST['diasRenovacion'];
+$bookingDriving->renovateBooking($idDocument, $diasRenovacion);
 echo json_encode(array('success' => '1')); 

@@ -7,10 +7,16 @@ include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'Docu
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Booking.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Document.php');
-
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
 
 $c = Connection::getInstance();
 $connection = $c->connectBD();
+
+$userSession = UserSession::getUserSession();
+$userSession->verifySession();
+$usSesion = $userSession->getCurrentUser();
+$idUser = $usSesion->getUserId();
 
 $bookingDriving = new BookingDriving($connection);
 $documentDriving = new DocumentDriving($connection);
@@ -22,11 +28,20 @@ $queuesCount = $documentDriving->getQueuesCountByDocumentId($_REQUEST['idDocumen
 
 //Variable del número de días máximos que puede tener en préstamo un libro un usuario
 $numDiasMaxPrestamo = 3;
+// Número de renovaciones a reservas que puede realizar una persona 
+$numRenovaciones = 3;
+
 
 $idDoc = $_REQUEST['idDocument'];
 $digiFisi = $_REQUEST['digitalFisico'];
 
 $documentoReservadoBool = $documentDriving->stateReservedDocument($idDoc);
+$bookingState = $bookingDriving->searchBookingStateByDocumentId($idDoc);
+$userIdBookingByDocumnetId = $bookingDriving->getUserIdBooking($idDoc);
+$userIdPenaltyBookingByDocumnetId = $bookingDriving->getUserIdPenaltyBooking($idDoc);
+$renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDoc);
+
+
 
 ?>
 <div class="modal-content">
@@ -99,9 +114,9 @@ $documentoReservadoBool = $documentDriving->stateReservedDocument($idDoc);
                 <?php if ($queuesCount[0] > 0) { ?>
                     <p class="font-weight-light" style="color:darkcyan ;">
                         <b> ¡Este libro se encuentra en préstamo! </b> <br>
-                        El número de lectores en cola es <b><?php echo $queuesCount[0]; ?> </b>, tardará máximo <b><?php echo (($queuesCount[0] +1) * $numDiasMaxPrestamo); ?> días.</b>
+                        El número de lectores en cola es <b><?php echo $queuesCount[0]; ?> </b>, tardará máximo <b><?php echo (($queuesCount[0] + 1) * $numDiasMaxPrestamo); ?> días.</b>
                     </p>
-                <?php } else if ($documentoReservadoBool) {
+                <?php } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] != $idUser) {
                 ?><p class="font-weight-light" style="color:darkcyan ;">
                         <b> ¡Este libro se encuentra en préstamo! </b> <br>
                         Nadie ha ingresado a la cola, se el primero en hacerlo para acceder al libro en <b>máximo 3 días. </b>
@@ -109,7 +124,7 @@ $documentoReservadoBool = $documentDriving->stateReservedDocument($idDoc);
                 <?php
                 }
                 ?>
-                
+
 
             </div>
         </div>
@@ -121,34 +136,94 @@ $documentoReservadoBool = $documentDriving->stateReservedDocument($idDoc);
                     <center><i><b> Publicador:</b> <?php echo $publisherName[0]; ?></i></center>
                 </p>
                 <?php
-                if (!$documentoReservadoBool) {
+                //Para cuiándo el documento es reservado por uno mismo y SÍ se puede renovar
+                if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] == 0) {
+                ?>
+                    <div>
+                        <center>
+                            <?php
+                            $btnRenovarReserva =  "<button  class='btn btn-success '  onClick='renovateBooking(" . $idDoc . ", " . $numRenovaciones . ")'>   <i type='span' class='fa fa-recycle' aria-hidden='true'></i> &nbsp;Renovar</button>";
+                            echo $btnRenovarReserva;
+                            ?>
+                            <p class="font-weight-light" style="color:#87cb16;margin:3%;"> ¡Tienes el libro en préstamo! ¿Deseas renovar la reserva?</p>
+                        </center>
+                    </div>
+                <?php
+                
+                } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] > 0) {
+
+                ?>
+
+                    <div>
+                        <center>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Tienes este libro en prestamo, no puedes renovarlo debido a que otros usuarios entraron a la cola de préstamo.
+                                <br><br> Recuerda reazlizar la devolución en el tiempo establecido</p>
+                        </center>
+                    </div>
+                <?php
+                } else if ($documentoReservadoBool && $userIdPenaltyBookingByDocumnetId[0] == $idUser) {
+
                 ?>
 
                     <div>
                         <center>
                             <?php
 
-                            $btnMoreInfoPdf =  "<button  class='btn btn-primary '  onClick=bookingDocumentCarrusel('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Reservar</button>";
-                            echo $btnMoreInfoPdf;
+                            $btnReserva =  "<button  class='btn btn-danger '  onClick=payPenalty('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Pagar</button>";
+                            echo $btnReserva;
+                            ?>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Se ha vencido el tiempo de préstamo, en este momento estás siendo multado. Procede a pagar y entregar el documento lo antes posible.</p>
+                        </center>
+                    </div>
+                <?php
+                } else if (!$documentoReservadoBool) {
+                ?>
+
+                    <div>
+                        <center>
+                            <?php
+
+                            $btnReserva =  "<button  class='btn btn-primary '  onClick=bookingDocumentCarrusel('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Reservar</button>";
+                            echo $btnReserva;
                             ?>
                             <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> ¡El libro se encuentra disponible para reservar!</p>
                         </center>
                     </div>
                 <?php
+                } else if ($documentoReservadoBool && $queuesCount[0] == 0) {
+                ?>
+                    <div>
+                        <center>
+                            <?php
+                            $btnReserva =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Ingresar</button>";
+                            echo $btnReserva;
+                            ?>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> El libro se encuentra en préstamo, ¡Ingresa a la cola de préstramo de primero!</p>
+                        </center>
+                    </div>
+                <?php
                 } else if ($documentoReservadoBool && $queuesCount[0] > 0) {
-                    ?>
+                ?>
                     <div>
                         <center>
                             <?php
 
-                            $btnMoreInfoPdf =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Reservar</button>";
-                            echo $btnMoreInfoPdf;
+                            $btnReserva =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Ingresar</button>";
+                            echo $btnReserva;
                             ?>
-                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> ¡El libro se encuentra disponible para reservar!</p>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> El libro se encuentra en préstamo, ingresa a la cola en la posición No. <?php ($queuesCount[0] + 1) ?></p>
                         </center>
                     </div>
-                    <?php
-                    }
+                <?php
+                } else if ($documentoReservadoBool && $bookingState[0] == 'Penalty') {
+                ?>
+                    <div>
+                        <center>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> El libro se encuentra en multado, en cuánto sea devuelto podrás reservarlo</p>
+                        </center>
+                    </div>
+                <?php
+                }
                 ?>
 
             </div>

@@ -6,10 +6,8 @@ include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserS
 
 $userSession = UserSession::getUserSession();
 $rol = $userSession->getRol();
-
 ?>
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -94,9 +92,6 @@ $rol = $userSession->getRol();
         ?>
         <!-- Footer -->
     </div>
-    </div>
-
-
     <!-- ModalRegister -->
     <?php
     include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalRegister.php";
@@ -155,9 +150,6 @@ $rol = $userSession->getRol();
 
         $.fn.rechargeData();
     });
-</script>
-
-<script>
     /*Función para mostrar el modal de la información detallada del documento, tiene como parámetro el ID del Doc */
     function updateModalMoreInfo(pIdDocument, pDigitalFisico) {
         $('#modalMoreInfoDocContent').load("<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php" ?>", {
@@ -166,21 +158,34 @@ $rol = $userSession->getRol();
         });
         $("#modalMoreInfoDoc").modal('show');
     }
-
     /*Función para ir a la ruta del procedimiento bookingDocument por POST, en caso de que sea correcto envía a MyBookings el cod=1 mediante GET*/
     function bookingDocumentCarrusel(pIdDocument) {
-        //alert ( "holaa");
         $.ajax({
             type: "POST",
-            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/bookingDocument.php"?>',
-            data: 'idDocument='+ pIdDocument,
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/bookingDocument.php" ?>',
+            data: 'idDocument=' + pIdDocument,
             success: function(response) {
                 var jsonData = JSON.parse(response);
                 if (jsonData.success == "1") {
                     window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=1'  ?>"; //enviar a reserva
                 } else {
-                   
-
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+            }
+        });
+    }
+    /*Función para ir a la ruta del procedimiento bookingDocument por POST, en caso de que sea correcto envía a MyBookings el cod=1 mediante GET*/
+    function renovateBooking(pIdDocument, pDiasRenovacion) {
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/renovateBooking.php" ?>',
+            data: 'idDocument=' + pIdDocument + '&diasRenovacion=' + pDiasRenovacion,
+            success: function(response) {
+                alert(response);
+                var jsonData = JSON.parse(response);
+                if (jsonData.success == "1") {
+                    window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=2'  ?>"; //enviar a reserva
+                } else {
                     notifications.showNotificationWarning("Ha ocurrido un error");
                 }
             }

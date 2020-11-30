@@ -222,6 +222,40 @@ $bookings = $bookingDriving->listBookingById($idUser);
 </div>
 <!-- ModalBookingInfo -->
 
+<!-- RenovateBookingInfo -->
+<div class="modal fade" id="modalRenovateBookingInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="margin-top:15%">
+            <div id="modalBookingInfoContent">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" id="topTileModal">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <b>
+                            <h3 style="margin: 1.5%;" class="modal-title" id="exampleModalLongTitle">
+                                <center>Se ha realizado la renovación de su documento</center>
+
+                            </h3>
+                        </b>
+                    </div>
+
+                    <div style="margin: 2%;" class="row-md-12">
+                        <p>- Apartir del momento cuenta con 3 días para seguir disfrutando de su libro. <br>
+                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán xxxxx$ por hora.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- RenovateModalBookingInfo -->
+
+
+
+
 <!--   Core JS Files   -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/jquery.3.2.1.min.js' ?>" type="text/javascript">
 </script>
@@ -261,7 +295,19 @@ if (isset($_GET['cod'])) {
 <?php
     }
 }
+?>
 
+<?php
+if (isset($_GET['cod'])) {
+    $cod = $_GET['cod'];
+    if ($cod == 2) {
+
+?> <script>
+            $("#modalRenovateBookingInfo").modal('show');
+        </script>
+<?php
+    }
+}
 ?>
 
 </html>
