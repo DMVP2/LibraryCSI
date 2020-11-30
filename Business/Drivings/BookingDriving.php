@@ -57,6 +57,31 @@ class BookingDriving
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);
         return $bookingDAO->getUserIdPenaltyBooking($pIdDocument);
     }
+    public function getPenaltyInfoByDocumentId($pIdDocument)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->getPenaltyInfoByDocumentId($pIdDocument);
+    }
+    public function queueTurn($pIdDocument)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->queueTurn($pIdDocument);
+    }
+    public function joinQueue($pDocumentId, $userId, $numQueue)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->joinQueue($pDocumentId, $userId, $numQueue);
+    }
+    public function getCountBookingsByUserId($pUserId)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->getCountBookingsByUserId($pUserId);
+    }
+    public function getCountPenaltysByUserId($pUserId)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->getCountPenaltysByUserId($pUserId);
+    }
     public function renovateBooking($pIdDocument, $pDiasRenovacion)
     {
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);

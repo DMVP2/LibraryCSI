@@ -181,7 +181,6 @@ $rol = $userSession->getRol();
             url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/renovateBooking.php" ?>',
             data: 'idDocument=' + pIdDocument + '&diasRenovacion=' + pDiasRenovacion,
             success: function(response) {
-                alert(pIdDocument);
                 var jsonData = JSON.parse(response);
                 if (jsonData.success == "1") {
                     window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=2'  ?>"; //enviar a reserva
@@ -192,16 +191,31 @@ $rol = $userSession->getRol();
         });
     }
     /*Función para ir a la ruta del procedimiento --payPenalty-- por POST, en caso de que sea correcto envía a MyBookings el cod=3 mediante GET*/
-    function payPenalty(pIdDocument) {
+    function payPenaltyBooking(pIdDocument) {
         $.ajax({
             type: "POST",
             url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/payPenaltyBooking.php" ?>',
             data: 'idDocument=' + pIdDocument,
             success: function(response) {
-                alert(response);
                 var jsonData = JSON.parse(response);
                 if (jsonData.success == "1") {
                     window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=3'  ?>"; //enviar a reserva
+                } else {
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+            }
+        });
+    }
+    /*Función para ir a la ruta del procedimiento --joinQueue-- por POST, en caso de que sea correcto envía a MyBookings el cod=3 mediante GET*/
+    function joinQueue(pIdDocument) {
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/joinQueue.php" ?>',
+            data: 'idDocument=' + pIdDocument,
+            success: function(response) {
+                var jsonData = JSON.parse(response);
+                if (jsonData.success == pIdDocument) {
+                    window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=4&doc=' ?>".pIdDocument; //enviar a reserva
                 } else {
                     notifications.showNotificationWarning("Ha ocurrido un error");
                 }

@@ -2,7 +2,42 @@
 
 include_once('../../../Routes.php');
 
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'BookingDriving.php');
 
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Booking.php');
+
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
+
+
+$c = Connection::getInstance();
+$connection = $c->connectBD();
+
+$userDriving = new UserDriving($connection);
+
+$userSession = UserSession::getUserSession();
+$userSession->verifySession();
+
+$us = $userSession->getCurrentUser();
+
+$usSesion = $userDriving->searchUserById($us->getUserId());
+
+
+$bookingDriving = new BookingDriving($connection);
+$idDoc = $_REQUEST['idDocument'];
+$penaltyInfo = $bookingDriving->getPenaltyInfoByDocumentId($idDoc);
+$bookingId = $penaltyInfo[0];
+$mail=  $usSesion->getMail();//$penaltyInfo[1];
+
+// Cálculos
+$booking = $bookingDriving->search($bookingId);
+$fecha1 = new DateTime($booking->getDateOfCollection());
+$fecha2 = new DateTime();
+$diff = $fecha1->diff($fecha2);
+$daysR = $diff->days - 1;
+$valueFined = $daysR * $bookingDriving->getValueFined();
 
 
 //Config
@@ -13,14 +48,14 @@ $ApiKey = '4Vj8eK4rloUd272L48hsrarnUA';
 $merchantId = '508029';
 $accountId = '512321';
 $description = 'Multa por entrega tardía de documento'; //Descripción del pago
-$referenceCode = $_POST['idPenalty']; // Referencia Unica del pedido
-$amount = $_POST['valuePenalty']; //Es el mo nto total de la transacción.
+$referenceCode = $bookingId; // Referencia Unica del pedido
+$amount = $valueFined; //Es el mo nto total de la transacción.
 $tax = '0'; // Es el valor del IVA de la transacción, si se envía el IVA nulo el sistema aplicará el 19% automáticamente. En caso de no tener IVA debe enviarse en 0.
 $taxReturnBase = '0'; // Es el valor base sobre el cual se calcula el IVA. En caso de que no tenga IVA debe enviarse en 0.
 $currency = 'COP'; // Moneda
 $test = 1; // Variable para poder utilizar tarjetas de crédito de pruebas, los valores pueden ser 1 ó 0.
-$buyerEmail = $_POST['mailUser']; // Respuesta por Payu al comprador
-$confirmacionEmail = $_POST['mailUser']; // Confirmación email
+$buyerEmail = $mail; // Respuesta por Payu al comprador
+$confirmacionEmail = $mail; // Confirmación email
 
 $responseUrl = "http:/localhost" . ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php'; // URL de respuesta,
 

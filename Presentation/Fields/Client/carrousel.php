@@ -2,9 +2,12 @@
 
 include_once('../../../routes.php');
 
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'DocumentDriving.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Booking.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'BookingDriving.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Document.php');
@@ -14,9 +17,17 @@ $c = Connection::getInstance();
 $connection = $c->connectBD();
 
 $documentDriving = new DocumentDriving($connection);
+$bookingDriving = new BookingDriving($connection);
 
 $userSession = UserSession::getUserSession();
+$userSession->verifySession();
+$usSesion = $userSession->getCurrentUser();
+$idUser = $usSesion->getUserId();
+
 $rol = $userSession->getRol();
+
+
+
 
 function recortarNombreLibro($texto, $limite = 30)
 {
@@ -113,7 +124,25 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                             if (isset($fisicos[$aux])) {
 
                                 if ($documentDriving->stateReservedDocument($fisicos[$aux]->getDocumentId()) == true) {
-                                    $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Este documento se encuentra reservado' style='color:skyblue;margin-left:-12%'></i>";
+                                    $idDoc =$fisicos[$aux]->getDocumentId();
+
+                                    $userIdBookingByDocumnetId = $bookingDriving->getUserIdBooking($idDoc);
+
+                                    $userIdPenaltyBookingByDocumnetId = $bookingDriving->getUserIdPenaltyBooking($idDoc);
+
+                                    if (count($userIdPenaltyBookingByDocumnetId) > 0) {
+
+                                        if ($userIdPenaltyBookingByDocumnetId[0] == $idUser) {
+                                            $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='¡Tienes penalidad en este documento!' style='color:darkred;margin-left:-12%'></i>";
+                                        }
+                                    } else if (count($userIdBookingByDocumnetId) > 0) {
+
+                                        if ($userIdBookingByDocumnetId[0] == $idUser) {
+                                            $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Tu tienes este documento en reserva actualmente' style='color:#58D68D ;margin-left:-12%'></i>";
+                                        }
+                                    } else {
+                                        $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Este documento se encuentra reservado' style='color:skyblue;margin-left:-12%'></i>";
+                                    }
                                 } else {
                                     $iconState = "";
                                 }
@@ -136,7 +165,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                             style='width: 50%; height: auto;'></center>";
                                 echo "<br>";
                                 echo "<p><b>" . recortarNombreLibro($fisicos[$aux]->getTitle()) . "</b><p>";
-                                $authorsNames = $documentDriving->getAuthorsByDocumentId($fisicos[$aux]->getDocumentId());
+                                $authorsNames = $documentDriving->getAuthorsByDocumentId($idDoc);
                                 echo "<p style='font-size:13px' class='card-category'>" .  $authorsNames[0] . "</p>";
                                 echo "<p style='font-size:13px' class='card-category'> Año: " . substr($fisicos[$aux]->getDateOfPublication(), 0, 4) . "</p>";
 
@@ -145,7 +174,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                                                         echo "<br><br>"; */
 
                                     $digitalFisic = "Fisico";
-                                    $btnMoreInfoPdf =  "<button  style='bottom:4%;position:absolute;right:19%' class='btn btn-admin btn-fill'  onClick=updateModalMoreInfo('" . $fisicos[$aux]->getDocumentId() . "','" . $digitalFisic . "')>   <i type='span' class='fa fa-book' aria-hidden='true'></i> Ver más </button>";
+                                    $btnMoreInfoPdf =  "<button  style='bottom:4%;position:absolute;right:19%' class='btn btn-admin btn-fill'  onClick=updateModalMoreInfo('" . $idDoc . "','" . $digitalFisic . "')>   <i type='span' class='fa fa-book' aria-hidden='true'></i> Ver más </button>";
                                     echo $btnMoreInfoPdf;
                                     echo "<br>";
                                     echo "<br>";

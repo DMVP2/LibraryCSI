@@ -30,6 +30,8 @@ $queuesCount = $documentDriving->getQueuesCountByDocumentId($_REQUEST['idDocumen
 $numDiasMaxPrestamo = 3;
 // Número de renovaciones a reservas que puede realizar una persona 
 $numRenovaciones = 3;
+// Número máximo de prestam,os al tiempo
+$numMaxPrestamos = 3;
 
 
 $idDoc = $_REQUEST['idDocument'];
@@ -40,6 +42,10 @@ $bookingState = $bookingDriving->searchBookingStateByDocumentId($idDoc);
 $userIdBookingByDocumnetId = $bookingDriving->getUserIdBooking($idDoc);
 $userIdPenaltyBookingByDocumnetId = $bookingDriving->getUserIdPenaltyBooking($idDoc);
 $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDoc);
+$countBookingsByUserId = $bookingDriving->getCountBookingsByUserId($idUser);
+$countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
+
+
 
 
 
@@ -136,9 +142,8 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                     <center><i><b> Publicador:</b> <?php echo $publisherName[0]; ?></i></center>
                 </p>
                 <?php
-                echo ($renovationsBookingByDocId[0]);
-                //Para cuando el documento es reservado por uno mismo y SÍ se puede renovar
-                if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] == 0) {
+                //-Cuando el documento es reservado por uno mismo y SÍ se puede renovar
+                if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] == 0 && $countPenaltysByUserId[0] == 0) {
                 ?>
                     <div>
                         <center>
@@ -150,7 +155,35 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                         </center>
                     </div>
                 <?php
-                    // Cuándo se tiene un libro y otro usuario ingresa  a la cola
+                //-Cuándo tiene una multa activa de cualquier libro
+                } else if ($countPenaltysByUserId[0] > 0 && count($userIdPenaltyBookingByDocumnetId) == 0) {
+                ?>
+                    <div>
+                        <center>
+                        <form action="<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php' ?>">
+
+                        <?php
+                            $btnIrAReservas =  "<button  type='submit' class='btn btn-danger'> <i type='span' class='fa fa-frown-o' aria-hidden='true'></i> &nbsp;Ver multa</button>";
+
+                            echo $btnIrAReservas; 
+                            ?>
+                            <p class="font-weight-light" style="color:darkred;margin:3%;"> Cuentas con <?php echo $countPenaltysByUserId[0]; ?> libro<?php if($countPenaltysByUserId[0] > 1)echo('s') ?> en penalidad activa.
+                                <br><b>Por favor realizar el pago lo más pronto posible.</b></p>
+                        </center>
+                        </form>
+                    </div>
+                <?php
+                //- Se ha cumplido el número máximo de renovaciones
+                } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] > $numRenovaciones && $queuesCount[0] == 0 && $countPenaltysByUserId[0] == 0) {
+                ?>
+                    <div>
+                        <center>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Tienes este libro en prestamo, ¡Has cumplido el límite de renovaciones ( <?php echo $numRenovaciones; ?> veces).
+                                <br><br> Recuerda reazlizar la devolución en el tiempo establecido</p>
+                        </center>
+                    </div>
+                <?php
+                    //Tiene el libro en préstamo y se unieron personas a la cola
                 } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] > 0) {
                 ?>
                     <div>
@@ -160,22 +193,23 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                         </center>
                     </div>
                     <?php
-                    // Para pagar una multa por una reserva con multa en curso
+                // Para pagar una multa por una reserva de x documento -- hay error en la cuenta de payPal
                 } else if ($documentoReservadoBool && count($userIdPenaltyBookingByDocumnetId) > 0) {
                     if ($userIdPenaltyBookingByDocumnetId[0] == $idUser) {
                     ?>
                         <div>
                             <center>
                                 <?php
-                                $btnReserva =  "<button  class='btn btn-danger '  onClick=payPenalty('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Pagar</button>";
+                                $btnReserva =  "<button  class='btn btn-danger '  onClick=payPenaltyBooking('" . $idDoc . "')>   <i type='span' class='fa fa-money' aria-hidden='true'></i> &nbsp;Pagar Multa Directo</button>";
                                 echo $btnReserva;
                                 ?>
-                                <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Se ha vencido el tiempo de préstamo, en este momento estás siendo multado. Procede a pagar y entregar el documento lo antes posible.</p>
+                                <p class="font-weight-light" style="color:indianred;margin:3%;"> ¡En este momento estás siendo multado por éste préstamo!, <b>Procede a pagar y entregar el libro lo antes posible.</b></p>
                             </center>
                         </div>
                     <?php
                     }
-                } else if (!$documentoReservadoBool) {
+                    //Para reservar en caso de que el documnento deje hacerlo
+                } else if (!$documentoReservadoBool && $countBookingsByUserId[0] < $numMaxPrestamos && $countPenaltysByUserId[0] == 0) {
                     ?>
 
                     <div>
@@ -189,7 +223,8 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                         </center>
                     </div>
                 <?php
-                } else if ($documentoReservadoBool && $queuesCount[0] == 0) {
+                    //Ingresar a la cola de Primero
+                } else if ($documentoReservadoBool && $queuesCount[0] == 0 && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $countPenaltysByUserId[0] == 0) {
                 ?>
                     <div>
                         <center>
@@ -201,7 +236,8 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                         </center>
                     </div>
                 <?php
-                } else if ($documentoReservadoBool && $queuesCount[0] > 0) {
+                    // Ingresar a la cola >1
+                } else if ($documentoReservadoBool && $queuesCount[0] > 0 && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones) {
                 ?>
                     <div>
                         <center>
@@ -218,7 +254,7 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                 ?>
                     <div>
                         <center>
-                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> El libro se encuentra en multado, en cuánto sea devuelto podrás reservarlo</p>
+                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Lo sentimos, el libro se encuentra en multa a otro usuario, en cuánto sea devuelto podrás reservarlo</p>
                         </center>
                     </div>
                 <?php

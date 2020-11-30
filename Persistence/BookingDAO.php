@@ -210,6 +210,124 @@ class BookingDAO implements DAO
         }
         return $data;
     }
+    // Retorna la cuenta de reservas activas de un usuario
+    // tan solo lo retorna cuándo el estado de la reserva es 'Reserved' o 'Retired'
+    public function getCountBookingsByUserId($pUserId)
+    {
+
+        $sql = "SELECT count(*) 
+        FROM
+        BOOKING, BOOKING_USERS
+        WHERE 
+        BOOKING_USERS.user_id = " . $pUserId . " AND
+        BOOKING.booking_id = BOOKING_USERS.booking_id   AND
+        BOOKING.status = 'Reserved' or BOOKING.status = 'Retired' ";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = $row['count'];
+            $data[] = $info;
+        }
+        return $data;
+    }
+    // Retorna la cuenta de las penalidades activas de un usuario
+    // tan solo lo retorna cuándo el estado de 'Pending'
+    public function getCountPenaltysByUserId($pUserId)
+    {
+
+        $sql = "SELECT count(*) FROM BOOKING, BOOKING_USERS , PENALTY_BOOKING, PENALTY
+        WHERE BOOKING_USERS.user_id = " . $pUserId . " AND
+        BOOKING.booking_id = BOOKING_USERS.booking_id AND
+        BOOKING.booking_id = PENALTY_BOOKING.booking_id AND
+        PENALTY_BOOKING.penalty_id = PENALTY.penalty_id  AND
+        PENALTY.status = 'Pending' ";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = $row['count'];
+            $data[] = $info;
+        }
+        return $data;
+    }
+    // Retorna los datos de una multa activas
+    // DATOS: booking_id, fecha de finalización dispuesta para la reserva, e-mail del usuario
+    // tan solo lo retorna cuándo el estado de 'Pending'
+    public function getPenaltyInfoByDocumentId($pDocumentId)
+    {
+
+        $sql = "SELECT
+        DOCUMENT_BOOKING.booking_id as book
+        FROM
+        BOOKING, DOCUMENT_BOOKING, PENALTY_BOOKING, PENALTY, BOOKING_USERS, USERS
+        WHERE
+        DOCUMENT_BOOKING.document_id =" . $pDocumentId . " AND
+        BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND
+        BOOKING.booking_id = PENALTY_BOOKING.booking_id AND
+        BOOKING.booking_id = BOOKING_USERS.booking_id AND
+        BOOKING_USERS.user_id = USERS.user_id AND
+        PENALTY_BOOKING.penalty_id = PENALTY.penalty_id AND
+        PENALTY.status = 'Pending' ;";
+
+        $result = pg_query($this->connection, $sql);
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+            $info = $row['book'];
+
+            $data[] = $info;
+        }
+        return $data;
+    }
+    // ingresar a la cola de reservas
+    public function joinQueue($pDocumentId, $userId, $numQueue)
+    {
+        $sql = "INSERT INTO QUEUE VALUES(DEFAULT, $userId, NOW(), $numQueue);";
+        $queueInsert = pg_query($this->connection, $sql);
+        if ($queueInsert) {
+            $sql = "SELECT queue_id 
+            FROM
+            QUEUE, DOCUMENT_QUEUE
+            WHERE  DOCUMENT_QUEUE.document_id = ". $pDocumentId ." AND
+            QUEUE.queue_id = DOCUMENT_QUEUE.queue_id
+            ORDER BY queue_id DESC LIMIT 1";
+            $rta = pg_query($this->connection, $sql);
+            $row = pg_fetch_object($rta);
+            $idQueue = $row->booking_id;
+            $sql = "INSERT INTO DOCUMENT_QUEUE VALUES(" . $pDocumentId . ", " . $idQueue . ");";
+            pg_query($this->connection, $sql);
+        }
+    }
+        // Genera el último número en la cola (turno)
+        public function queueTurn($pDocumentId)
+        {
+    
+            $sql = "SELECT num_queue
+            FROM
+            QUEUE, DOCUMENT_QUEUE
+            WHERE  DOCUMENT_QUEUE.document_id = ". $pDocumentId ." AND
+            QUEUE.queue_id = DOCUMENT_QUEUE.queue_id
+            ORDER BY queue_id DESC LIMIT 1";            
+    
+            $result = pg_query($this->connection, $sql);
+    
+            $data = array();
+    
+            while ($row = pg_fetch_array($result)) {
+                $info = $row['num_queue'];
+    
+                $data[] = $info;
+            }
+            return $data;
+        }
     // Retorna el código del usuario que realizó la reserva y tiene una MULTA ACTIVA de x documentoId
     // tan solo lo retorna cuándo el estado de la reserva es 'Penalty'
     public function getUserIdPenaltyBooking($pDocumentId)

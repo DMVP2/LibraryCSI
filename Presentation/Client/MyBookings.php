@@ -244,7 +244,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
 
                     <div style="margin: 2%;" class="row-md-12">
                         <p>- Apartir del momento cuenta con 3 días para seguir disfrutando de su libro. <br>
-                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán 2.500$  por día.</b></p>
+                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán 2.500$ por día.</b></p>
                     </div>
                 </div>
             </div>
@@ -252,6 +252,41 @@ $bookings = $bookingDriving->listBookingById($idUser);
     </div>
 </div>
 <!-- RenovateModalBookingInfo -->
+
+<!-- Enter Queue -->
+<div class="modal fade" id="modalEnterQueue" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="margin-top:15%">
+            <div id="modalBookingInfoContent">
+
+                <div class="modal-content">
+
+                    <div class="modal-header" id="topTileModal">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <b>
+                            <h3 style="margin: 1.5%;" class="modal-title" id="exampleModalLongTitle">
+                                <center>Has ingresado a la fila de espera</center>
+
+                            </h3>
+                        </b>
+                    </div>
+
+                    <div style="margin: 2%;" class="row-md-12">
+                        <p>- Tu lugar en la fila es el <?php
+                                                        if (isset($_GET['doc'])) {
+                                                            $doc = $_GET['doc'];
+                                                            echo $turnoCola[0] = $bookingDriving->queueTurn($doc);
+                                                        } ?><br>
+                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán 2.500$ por día.</b></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Enter Queue -->
 
 
 
@@ -304,6 +339,19 @@ if (isset($_GET['cod'])) {
 
 ?> <script>
             $("#modalRenovateBookingInfo").modal('show');
+        </script>
+<?php
+    }
+}
+?>
+
+<?php
+if (isset($_GET['cod'])) {
+    $cod = $_GET['cod'];
+    if ($cod == 4) {
+
+?> <script>
+            $("#modalEnterQueue").modal('show');
         </script>
 <?php
     }
