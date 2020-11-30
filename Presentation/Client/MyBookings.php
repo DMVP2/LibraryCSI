@@ -213,7 +213,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
                     <div style="margin: 2%;" class="row-md-12">
                         <p>- Apartir del momento cuenta con 3 días para retirar su libro y disfrutarlo.
                             <br><br>- Podrá renovarlo dos veces en caso de que ningún usuario entre a la cola de reserva. <br><br>
-                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán xxxxx$ por hora.</b></p>
+                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán 2.500$ COP por día.</b></p>
                     </div>
                 </div>
             </div>
@@ -244,7 +244,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
 
                     <div style="margin: 2%;" class="row-md-12">
                         <p>- Apartir del momento cuenta con 3 días para seguir disfrutando de su libro. <br>
-                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán xxxxx$ por hora.</b></p>
+                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán 2.500$  por día.</b></p>
                     </div>
                 </div>
             </div>

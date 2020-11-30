@@ -232,9 +232,6 @@ class BookingDAO implements DAO
 
         if (!$result = pg_query($this->connection, $sql)) die();
 
-        if (pg_num_rows($result) == 0)
-            return -1;
-
         $data = array();
 
         while ($row = pg_fetch_array($result)) {
@@ -252,28 +249,28 @@ class BookingDAO implements DAO
         FROM
         BOOKING, DOCUMENT_BOOKING
         WHERE 
-        BOOKING.booking_id = " . $pDocumentId . " AND
+        DOCUMENT_BOOKING.document_id = " . $pDocumentId . " AND
         BOOKING.booking_id = DOCUMENT_BOOKING.booking_id;";
 
-        if (!$result = pg_query($this->connection, $sql)) die();
+        $result = pg_query($this->connection, $sql);
 
         $data = array();
 
         while ($row = pg_fetch_array($result)) {
 
-            
-            $fecha = date_create();
-            $renovateDateEnd =date_add($fecha, date_interval_create_from_date_string($pDiasRenovacion. 'days'));
-            date_format($renovateDateEnd, 'Y-m-d');
-            
-            
-            $renovationsNow = $row['renovations']  + 1;
+            $info = $row['booking_id'];
+            $info = $row['renovations'];
+            $data[] = $info;
+
+
+            $renovationsNow = $row['renovations'] + 1;
             $sql = "UPDATE
-                BOOKING
-                SET
-                date_end = '" . $renovateDateEnd->format('Y-m-d') . "', renovations = " . $renovationsNow . "
-                WHERE
-                booking_id =" . $row['booking_id'];
+            BOOKING
+            SET
+            date_end=NOW()+interval '" . $pDiasRenovacion . " day', renovations= $renovationsNow  
+            WHERE
+            booking_id =" . $row['booking_id'];
+
             pg_query($this->connection, $sql);
         }
     }
@@ -395,17 +392,30 @@ class BookingDAO implements DAO
     }
     public function reserveDocument($pUserId, $pDocumentId, $pStatus)
     {
-
-        $sql = "INSERT INTO BOOKING VALUES(DEFAULT, NOW(), NOW() + interval '3 day', NOW(),0,'" . $pStatus . "')";
-        $reserva = pg_query($this->connection, $sql);
-        if ($reserva) {
-            $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
-            $rta = pg_query($this->connection, $sql);
-            $row = pg_fetch_object($rta);
-            $idBooking = $row->booking_id;
-            $sql = "INSERT INTO BOOKING_USERS VALUES(" . $idBooking . ", " . $pUserId . ");";
-            $sql .= "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ");";
-            pg_query($this->connection, $sql);
+        if ($pStatus == 'Reserved') {
+            $sql = "INSERT INTO BOOKING VALUES(DEFAULT, NOW(), NOW() + interval '3 day',null,0,'" . $pStatus . "')";
+            $reserva = pg_query($this->connection, $sql);
+            if ($reserva) {
+                $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
+                $rta = pg_query($this->connection, $sql);
+                $row = pg_fetch_object($rta);
+                $idBooking = $row->booking_id;
+                $sql = "INSERT INTO BOOKING_USERS VALUES(" . $idBooking . ", " . $pUserId . ");";
+                $sql .= "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ");";
+                pg_query($this->connection, $sql);
+            }
+        } else {
+            $sql = "INSERT INTO BOOKING VALUES(DEFAULT, NOW(), NOW() + interval '3 day', NOW(),0,'" . $pStatus . "')";
+            $reserva = pg_query($this->connection, $sql);
+            if ($reserva) {
+                $sql = "SELECT booking_id FROM BOOKING ORDER BY booking_id DESC LIMIT 1";
+                $rta = pg_query($this->connection, $sql);
+                $row = pg_fetch_object($rta);
+                $idBooking = $row->booking_id;
+                $sql = "INSERT INTO BOOKING_USERS VALUES(" . $idBooking . ", " . $pUserId . ");";
+                $sql .= "INSERT INTO DOCUMENT_BOOKING VALUES(" . $pDocumentId . ", " . $idBooking . ");";
+                pg_query($this->connection, $sql);
+            }
         }
     }
 

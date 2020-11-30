@@ -158,7 +158,7 @@ $rol = $userSession->getRol();
         });
         $("#modalMoreInfoDoc").modal('show');
     }
-    /*Función para ir a la ruta del procedimiento bookingDocument por POST, en caso de que sea correcto envía a MyBookings el cod=1 mediante GET*/
+    /*Función para ir a la ruta del procedimiento --bookingDocument-- por POST, en caso de que sea correcto envía a MyBookings el cod=1 mediante GET*/
     function bookingDocumentCarrusel(pIdDocument) {
         $.ajax({
             type: "POST",
@@ -174,17 +174,34 @@ $rol = $userSession->getRol();
             }
         });
     }
-    /*Función para ir a la ruta del procedimiento bookingDocument por POST, en caso de que sea correcto envía a MyBookings el cod=1 mediante GET*/
+    /*Función para ir a la ruta del procedimiento --renovateBooking-- por POST, en caso de que sea correcto envía a MyBookings el cod=2 mediante GET*/
     function renovateBooking(pIdDocument, pDiasRenovacion) {
         $.ajax({
             type: "POST",
             url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/renovateBooking.php" ?>',
             data: 'idDocument=' + pIdDocument + '&diasRenovacion=' + pDiasRenovacion,
             success: function(response) {
-                alert(response);
+                alert(pIdDocument);
                 var jsonData = JSON.parse(response);
                 if (jsonData.success == "1") {
                     window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=2'  ?>"; //enviar a reserva
+                } else {
+                    notifications.showNotificationWarning("Ha ocurrido un error");
+                }
+            }
+        });
+    }
+    /*Función para ir a la ruta del procedimiento --payPenalty-- por POST, en caso de que sea correcto envía a MyBookings el cod=3 mediante GET*/
+    function payPenalty(pIdDocument) {
+        $.ajax({
+            type: "POST",
+            url: '<?php echo ROOT_DIRECTORY . ROUTE_PROCEDURES . "Client/payPenaltyBooking.php" ?>',
+            data: 'idDocument=' + pIdDocument,
+            success: function(response) {
+                alert(response);
+                var jsonData = JSON.parse(response);
+                if (jsonData.success == "1") {
+                    window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=3'  ?>"; //enviar a reserva
                 } else {
                     notifications.showNotificationWarning("Ha ocurrido un error");
                 }

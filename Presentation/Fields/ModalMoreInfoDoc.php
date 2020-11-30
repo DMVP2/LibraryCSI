@@ -136,7 +136,8 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                     <center><i><b> Publicador:</b> <?php echo $publisherName[0]; ?></i></center>
                 </p>
                 <?php
-                //Para cuiándo el documento es reservado por uno mismo y SÍ se puede renovar
+                echo ($renovationsBookingByDocId[0]);
+                //Para cuando el documento es reservado por uno mismo y SÍ se puede renovar
                 if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] == 0) {
                 ?>
                     <div>
@@ -149,35 +150,33 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
                         </center>
                     </div>
                 <?php
-                
+                    // Cuándo se tiene un libro y otro usuario ingresa  a la cola
                 } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] > 0) {
-
                 ?>
-
                     <div>
                         <center>
                             <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Tienes este libro en prestamo, no puedes renovarlo debido a que otros usuarios entraron a la cola de préstamo.
                                 <br><br> Recuerda reazlizar la devolución en el tiempo establecido</p>
                         </center>
                     </div>
-                <?php
-                } else if ($documentoReservadoBool && $userIdPenaltyBookingByDocumnetId[0] == $idUser) {
-
-                ?>
-
-                    <div>
-                        <center>
-                            <?php
-
-                            $btnReserva =  "<button  class='btn btn-danger '  onClick=payPenalty('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Pagar</button>";
-                            echo $btnReserva;
-                            ?>
-                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Se ha vencido el tiempo de préstamo, en este momento estás siendo multado. Procede a pagar y entregar el documento lo antes posible.</p>
-                        </center>
-                    </div>
-                <?php
+                    <?php
+                    // Para pagar una multa por una reserva con multa en curso
+                } else if ($documentoReservadoBool && count($userIdPenaltyBookingByDocumnetId) > 0) {
+                    if ($userIdPenaltyBookingByDocumnetId[0] == $idUser) {
+                    ?>
+                        <div>
+                            <center>
+                                <?php
+                                $btnReserva =  "<button  class='btn btn-danger '  onClick=payPenalty('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Pagar</button>";
+                                echo $btnReserva;
+                                ?>
+                                <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> Se ha vencido el tiempo de préstamo, en este momento estás siendo multado. Procede a pagar y entregar el documento lo antes posible.</p>
+                            </center>
+                        </div>
+                    <?php
+                    }
                 } else if (!$documentoReservadoBool) {
-                ?>
+                    ?>
 
                     <div>
                         <center>
