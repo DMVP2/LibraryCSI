@@ -74,7 +74,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
 
     <div class="wrapper">
 
-        <div class="main-panel" style="width: 100%; height: 94%;">
+        <div class="main-panel" style="width: 100%; ">
 
             <!-- Navbar -->
             <?php
@@ -82,7 +82,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
             ?>
             <!-- Navbar -->
 
-            <div class="content">
+            <div class="content" style="padding-top: 80px;">
                 <div class="container-fluid ">
 
                     <br><br>

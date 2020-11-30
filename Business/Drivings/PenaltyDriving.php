@@ -53,4 +53,16 @@ class PenaltyDriving
         $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
         return $penaltyDAO->bookingIsPenalty($pIdBooking);
     }
+
+    public function getPenaltysActiveByUser($pIdUser)
+    {
+        $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
+        return $penaltyDAO->getPenaltysActiveByUser($pIdUser);
+    }
+
+    public function getIdBookingByPenalty($pIdPenalty)
+    {
+        $penaltyDAO = PenaltyDAO::getPenaltyDAO($this->connection);
+        return $penaltyDAO->getIdBookingByPenalty($pIdPenalty);
+    }
 }

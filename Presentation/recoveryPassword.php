@@ -39,7 +39,7 @@ include_once('../routes.php');
 
     <div class="wrapper">
 
-        <div class="main-panel" data="index">
+        <div class="main-panel" data="index" style="height: 100%;">
 
             <!-- Navbar -->
             <?php
@@ -48,91 +48,93 @@ include_once('../routes.php');
             <!-- Navbar -->
 
             <div class="content background-image-login"
-                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>');">
-                <div class="container-fluid ">
+                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>');padding-top: 100px;"">
+                <div class=" container-fluid ">
                     <br><br><br>
-                    <div class="row center-block">
-                        <div class="col-xs-offset-4 col-xs-4">
-                            <div class="card ">
-                                <div class="header ">
-                                    <center>
-                                        <br>
-                                        <h3 class="title">Recupear contraseña</h3>
-                                    </center>
-                                </div>
-                                <div class="content col-xs-offset-1 col-xs-postset-1">
-                                    <form id="formRecovery">
-                                        <div class="row ">
+                    <div class=" row center-block">
+                <div class="col-xs-offset-4 col-xs-4">
+                    <div class="card ">
+                        <div class="header ">
+                            <center>
+                                <br>
+                                <h3 class="title">Recupear contraseña</h3>
+                            </center>
+                        </div>
+                        <div class="content col-xs-offset-1 col-xs-postset-1">
+                            <form id="formRecovery">
+                                <div class="row ">
 
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label>Tipo de documento</label>
-                                                    <select name="typeDocument" id="typeDocument" class="form-control">
-                                                        <option value="C.C.">C.C.</option>
-                                                        <option value="C.E.">C.E.</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-7">
-                                                <div class="form-group">
-                                                    <label>Número de documento</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Número de documento" id="numberDocument"
-                                                        name="numberDocument">
-                                                </div>
-                                            </div>
-
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Tipo de documento</label>
+                                            <select name="typeDocument" id="typeDocument" class="form-control">
+                                                <option value="C.C.">C.C.</option>
+                                                <option value="C.E.">C.E.</option>
+                                                <option value="NIT">NIT</option>
+                                            </select>
                                         </div>
+                                    </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Correo</label>
-                                                    <input type="text" class="form-control" placeholder="Correo"
-                                                        id="mail" name="mail">
-                                                </div>
-                                            </div>
-
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label>Número de documento</label>
+                                            <input type="number" class="form-control" placeholder="Número de documento"
+                                                id="numberDocument" name="numberDocument" required>
                                         </div>
-
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-employee btn-fill"
-                                                    style="width: 30%;" id="btnSubmit">Recuperar</button>
-                                                <br>
-                                            </div>
-                                        </div>
-                                        <div class="row ">
-                                            <div class="col-md-12 text-center">
-                                                <br>
-                                                <a href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'login.php' ?>"
-                                                    class="title text-info">Regresar</a>
-                                                <br><br>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    <div class="clearfix"></div>
+                                    </div>
 
                                 </div>
-                            </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Correo</label>
+                                            <input type="text" class="form-control" placeholder="Correo" id="mail"
+                                                name="mail"
+                                                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                                                required>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button type="submit" class="btn btn-employee btn-fill" style="width: 30%;"
+                                            id="btnSubmit">Recuperar</button>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="row ">
+                                    <div class="col-md-12 text-center">
+                                        <br>
+                                        <a href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'login.php' ?>"
+                                            class="title text-info">Regresar</a>
+                                        <br><br>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="clearfix"></div>
+
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
+
+
+
         </div>
+    </div>
+    </div>
 
 
-        <!-- Footer -->
-        <?php
-        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-        ?>
-        <!-- Footer -->
+    <!-- Footer -->
+    <?php
+    include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
+    ?>
+    <!-- Footer -->
 
     </div>
 

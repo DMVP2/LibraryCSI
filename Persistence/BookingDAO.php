@@ -48,11 +48,11 @@ class BookingDAO implements DAO
     public function search($pIdBooking)
     {
         $sql = "SELECT 
-                    BOOKING.booking_id, date_start, date_end, date_delivery, renovations, BOOKING.status
+                    BOOKING.booking_id, BOOKING.date_start, BOOKING.date_end, BOOKING.date_delivery, BOOKING.renovations, BOOKING.status, DOCUMENT_BOOKING.document_id 
                 FROM 
-                    BOOKING
+                    BOOKING, DOCUMENT_BOOKING 
                 WHERE 
-                    booking_id = " . $pIdBooking;
+                    BOOKING.booking_id =" . $pIdBooking;
 
         $rta = pg_query($this->connection, $sql);
 
@@ -66,6 +66,7 @@ class BookingDAO implements DAO
             $bookingSearch->setDateOfCollection($row->date_end);
             $bookingSearch->setDeliveryDate($row->date_delivery);
             $bookingSearch->setRenovations($row->renovations);
+            $bookingSearch->setIdDocument($row->document_id);
         } else {
             return null;
         }

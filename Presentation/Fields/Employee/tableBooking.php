@@ -4,10 +4,12 @@ include_once('../../../routes.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'BookingDriving.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'DocumentDriving.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'PenaltyDriving.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'UserDriving.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Booking.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'Penalty.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_ENTITIES . 'User.php');
 
 
@@ -16,6 +18,7 @@ $connection = $c->connectBD();
 
 $bookingDriving = new BookingDriving($connection);
 $documentDriving = new DocumentDriving($connection);
+$penaltyDriving = new PenaltyDriving($connection);
 $userDriving = new UserDriving($connection);
 
 $typeDocument = $_REQUEST['typeId'];
@@ -24,6 +27,7 @@ $idUser = $_REQUEST['idUser'];
 $validate = $userDriving->userValidate($typeDocument, $idUser);
 if ($validate != 0) {
     $books = $bookingDriving->searchBookingActivesByUserId($idUser);
+    $penaltys = $penaltyDriving->getPenaltysActiveByUser($idUser);
 }
 
 ?>
@@ -97,6 +101,9 @@ if ($validate != 0) {
                                 echo "</tr>";
                             }
                         }
+
+
+
                         ?>
 
                     </tbody>
@@ -105,3 +112,70 @@ if ($validate != 0) {
         </div>
     </div>
 </div>
+
+<?php
+if ($validate != 0 and count($penaltys) > 0) {
+?>
+<div class="row centerLarge">
+    <div class="col-md-12 ">
+        <div class="card">
+            <div class="header">
+
+            </div>
+            <div class="content table-responsive table-full-width">
+
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <th>Documento</th>
+                        <th>Fecha de inicio</th>
+                        <th>Renovaciones</th>
+                        <th>Dias de retardo</th>
+                        <th>Valor</th>
+                        <th>Acciones</th>
+                    </thead>
+                    <tbody>
+                        <?php
+
+                            $fechaActual = new DateTime();
+
+                            foreach ($penaltys as $penalty) {
+
+                                $booking = $bookingDriving->search($penalty->getBookingId());
+                                $title = $documentDriving->getTitleDocumentById($book->getIdDocument());
+
+                                $fecha1 = new DateTime($booking->getDateOfCollection());
+                                $diff = $fecha1->diff($fechaActual);
+                                $daysR = $diff->days - 1;
+                                $valueFined = $daysR * $bookingDriving->getValueFined();
+
+                                echo "<tr>";
+                                echo "<td>" . $title . "</td>";
+                                echo "<td>" . $penalty->getDateStart() . "</td>";
+                                echo "<td>" . $booking->getRenovations() . "</td>";
+                                echo "<td>" . $daysR . "</td>";
+                                echo "<td>" . $valueFined . "</td>";
+
+                                echo "<td><button class='btn btn-admin btn-fill' onClick=updateModal('Fined'," . $penalty->getBookingId() . "," . $booking->getIdDocument() . ")>
+                                <i type='span' class='fa fa-money' style='font-size: 1.3em;'></i>
+                              </button></td>";
+
+
+                                echo "</tr>";
+                            }
+
+
+
+
+
+                            ?>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}
+
+?>

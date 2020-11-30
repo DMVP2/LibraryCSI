@@ -86,11 +86,7 @@ include_once('../../routes.php');
             </div>
 
 
-            <!-- Footer -->
-            <?php
-            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-            ?>
-            <!-- Footer -->
+
 
         </div>
     </div>
@@ -124,7 +120,7 @@ include_once('../../routes.php');
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Número de documento</label>
-                                        <input type="text" class="form-control" id="numberDocument"
+                                        <input type="number" class="form-control" id="numberDocument"
                                             name="numberDocument" placeholder="Número de documento" required>
                                     </div>
                                 </div>
@@ -136,14 +132,14 @@ include_once('../../routes.php');
                                     <div class="form-group">
                                         <label>Nombres</label>
                                         <input type="text" class="form-control" placeholder="Nombres" id="name"
-                                            name="name" required>
+                                            name="name" pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Apellidos</label>
                                         <input type="text" class="form-control" placeholder="Apellidos" id="lastName"
-                                            name="lastName" required>
+                                            name="lastName" pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" required>
                                     </div>
                                 </div>
                             </div>
@@ -153,13 +149,15 @@ include_once('../../routes.php');
                                     <div class="form-group">
                                         <label>Correo</label>
                                         <input type="text" class="form-control" placeholder="Correo" id="mail"
-                                            name="mail" required>
+                                            name="mail"
+                                            pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Celular</label>
-                                        <input type="text" class="form-control" placeholder="Celular" id="phone"
+                                        <input type="number" class="form-control" placeholder="Celular" id="phone"
                                             name="phone" required>
                                     </div>
                                 </div>

@@ -61,243 +61,253 @@ if ($typeUser == 1) {
             <!-- Navbar -->
 
             <div class="content background-image-login"
-                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>');">
-                <div class="container-fluid ">
-                    <div class="row center-block">
-                        <div class="<?php echo $classDiv ?>">
-                            <div class="card ">
-                                <div class="header ">
-                                    <center>
-                                        <br>
-                                        <h3 class="title">Registro <?php echo $nameUser ?></h3>
-                                    </center>
+                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>  ');padding-top: 102px;"">
+                <div class=" container-fluid ">
+                    <div class=" row center-block">
+                <div class="<?php echo $classDiv ?>">
+                    <div class="card ">
+                        <div class="header ">
+                            <center>
+                                <br>
+                                <h3 class="title">Registro <?php echo $nameUser ?></h3>
+                            </center>
+                        </div>
+                        <div class="content col-xs-offset-1 col-xs-postset-1">
+                            <form id="formRegister">
+                                <?php if ($typeUser == 1) { ?>
+                                <div class="row ">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Tipo de documento</label>
+                                            <select name="typeDocument" id="typeDocument" class="form-control">
+                                                <option value="C.C.">C.C.</option>
+                                                <option value="C.E.">C.E.</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Número de documento</label>
+                                            <input type="number" class="form-control" placeholder="Número de documento"
+                                                id="numberDocument" name="numberDocument" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Correo</label>
+                                            <input type="text" class="form-control" placeholder="Correo" id="mail"
+                                                name="mail"
+                                                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                                                required>
+                                        </div>
+                                    </div>
+
+
                                 </div>
-                                <div class="content col-xs-offset-1 col-xs-postset-1">
-                                    <form id="formRegister">
-                                        <?php if ($typeUser == 1) { ?>
-                                        <div class="row ">
 
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Tipo de documento</label>
-                                                    <select name="typeDocument" id="typeDocument" class="form-control">
-                                                        <option value="C.C.">C.C.</option>
-                                                        <option value="C.E.">C.E.</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Número de documento</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Número de documento" id="numberDocument"
-                                                        name="numberDocument">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label>Correo</label>
-                                                    <input type="text" class="form-control" placeholder="Correo"
-                                                        id="mail" name="mail">
-                                                </div>
-                                            </div>
-
-
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nombres</label>
+                                            <input type="text" class="form-control" placeholder="Nombres" id="name"
+                                                name="name" pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" required>
                                         </div>
+                                    </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Nombres</label>
-                                                    <input type="text" class="form-control" placeholder="Nombres"
-                                                        id="name" name="name">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Apellidos</label>
-                                                    <input type="text" class="form-control" placeholder="Apellidos"
-                                                        id="lastName" name="lastName">
-                                                </div>
-                                            </div>
-
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Apellidos</label>
+                                            <input type="text" class="form-control" placeholder="Apellidos"
+                                                id="lastName" name="lastName"
+                                                pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" required>
                                         </div>
+                                    </div>
 
-                                        <div class="row">
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Celular</label>
-                                                    <input type="text" class="form-control" placeholder="Celular"
-                                                        id="phone" name="phone">
-                                                </div>
-                                            </div>
+                                </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Contraseña</label>
-                                                    <input type="password" class="form-control" placeholder="Contraseña"
-                                                        id="password1" name="password1">
-                                                </div>
-                                            </div>
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Celular</label>
+                                            <input type="number" class="form-control" placeholder="Celular" id="phone"
+                                                name="phone" required>
                                         </div>
+                                    </div>
 
-                                        <div class="row">
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Confirmar contraseña</label>
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Confirmar contraseña" name="password2"
-                                                        id="password2">
-                                                </div>
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Contraseña</label>
+                                            <input type="password" class="form-control" placeholder="Contraseña"
+                                                id="password1" name="password1" required>
                                         </div>
+                                    </div>
+                                </div>
 
-                                        <?php } else { ?>
+                                <div class="row">
 
-                                        <div class="row ">
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Tipo de documento</label>
-                                                    <select name="typeDocument" id="typeDocument" class="form-control">
-                                                        <option value="C.C.">C.C.</option>
-                                                        <option value="C.E.">C.E.</option>
-                                                        <option value="NIT">NIT</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Número de identificación</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Número de identificación" id="numberDocument"
-                                                        name="numberDocument">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label>Nombre comercial</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Nombre comercial" id="comercialName"
-                                                        name="comercialName">
-                                                </div>
-                                            </div>
-
-
-
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Confirmar contraseña</label>
+                                            <input type="password" class="form-control"
+                                                placeholder="Confirmar contraseña" name="password2" id="password2"
+                                                required>
                                         </div>
+                                    </div>
+                                </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Correo</label>
-                                                    <input type="text" class="form-control" placeholder="Correo"
-                                                        id="mail" name="mail">
-                                                </div>
-                                            </div>
+                                <?php } else { ?>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Encargado</label>
-                                                    <input type="text" class="form-control" placeholder="Encargado"
-                                                        id="attendant" name="attendant">
-                                                </div>
-                                            </div>
+                                <div class="row ">
 
-
-
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Tipo de documento</label>
+                                            <select name="typeDocument" id="typeDocument" class="form-control">
+                                                <option value="C.C.">C.C.</option>
+                                                <option value="C.E.">C.E.</option>
+                                                <option value="NIT">NIT</option>
+                                            </select>
                                         </div>
+                                    </div>
 
-                                        <div class="row">
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Tipo de publicador</label>
-                                                    <select name="typePublisher" id="typePublisher"
-                                                        class="form-control">
-                                                        <option value="Editorial">Editorial</option>
-                                                        <option value="Independiente">Independiente</option>
-                                                        <option value="Otro">Otro</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Celular</label>
-                                                    <input type="text" class="form-control" placeholder="Celular"
-                                                        id="phone" name="phone">
-                                                </div>
-                                            </div>
-
-
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Número de identificación</label>
+                                            <input type="number" class="form-control"
+                                                placeholder="Número de identificación" id="numberDocument"
+                                                name="numberDocument" required>
                                         </div>
+                                    </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Contraseña</label>
-                                                    <input type="password" class="form-control" placeholder="Contraseña"
-                                                        id="password1" name="password1">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Confirmar contraseña</label>
-                                                    <input type="password" class="form-control"
-                                                        placeholder="Confirmar contraseña" name="password2"
-                                                        id="password2">
-                                                </div>
-                                            </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Nombre comercial</label>
+                                            <input type="text" class="form-control" placeholder="Nombre comercial"
+                                                id="comercialName" name="comercialName"
+                                                pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" required>
                                         </div>
+                                    </div>
 
-                                        <?php }  ?>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <?php echo "<button type='submit' style='width: 25%;'
+
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Correo</label>
+                                            <input type="text" class="form-control" placeholder="Correo" id="mail"
+                                                name="mail"
+                                                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+                                                required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Encargado</label>
+                                            <input type="text" class="form-control" placeholder="Encargado"
+                                                id="attendant" name="attendant"
+                                                pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" required>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Tipo de publicador</label>
+                                            <select name="typePublisher" id="typePublisher" class="form-control">
+                                                <option value="Editorial">Editorial</option>
+                                                <option value="Independiente">Independiente</option>
+                                                <option value="Otro">Otro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Celular</label>
+                                            <input type="number" class="form-control" placeholder="Celular" id="phone"
+                                                name="phone" required>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Contraseña</label>
+                                            <input type="password" class="form-control" placeholder="Contraseña"
+                                                id="password1" name="password1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Confirmar contraseña</label>
+                                            <input type="password" class="form-control"
+                                                placeholder="Confirmar contraseña" name="password2" id="password2"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <?php }  ?>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-xs-8">
+                                        <div class="registrationFormAlert text-center" id="CheckPasswordMatch">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <?php echo "<button type='submit' style='width: 25%;'
                                                     class='btn btn-" . $typeBtn . " btn-pull' id='btnSubmit'>Registrarme</button>"  ?>
-                                                <br>
-                                            </div>
-                                        </div>
-                                        <div class="row ">
-                                            <div class="col-md-12 text-center">
-                                                <br>
-                                                <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>"
-                                                    class="title text-info">Regresar</a>
-                                                <br><br>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    <div class="clearfix"></div>
-
+                                        <br>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row ">
+                                    <div class="col-md-12 text-center">
+                                        <br>
+                                        <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>"
+                                            class="title text-info">Regresar</a>
+                                        <br><br>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="clearfix"></div>
+
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
+
+
+
         </div>
+    </div>
+    </div>
 
 
-        <!-- Footer -->
-        <?php
-        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-        ?>
-        <!-- Footer -->
+    <!-- Footer -->
+    <?php
+    include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
+    ?>
+    <!-- Footer -->
 
     </div>
 
@@ -350,6 +360,41 @@ $(document).ready(function() {
             }
         });
     });
+});
+</script>
+
+<script>
+function validatePasswordMatch() {
+
+    var pass1 = $("#password1").val();
+    var pass2 = $("#password2").val();
+
+    if (pass1 == "" || pass2 == "") {
+        $("#CheckPasswordMatch").css('color', 'red');
+        $("#CheckPasswordMatch").html("Complete los campos.");
+        $('#btnSubmit').prop('disabled', true);
+
+    } else {
+        if (pass1 != pass2) {
+            $("#CheckPasswordMatch").css('color', 'red');
+            $("#CheckPasswordMatch").html("Las contraseñas no coinciden.");
+            $('#btnSubmit').prop('disabled', true);
+        } else {
+            if (pass1.length < 10) {
+                $("#CheckPasswordMatch").css('color', 'red');
+                $("#CheckPasswordMatch").html("La contraseña tiene menos de 10 caracteres.");
+                $('#btnSubmit').prop('disabled', true);
+            } else {
+                $("#CheckPasswordMatch").html("");
+                $('#btnSubmit').prop('disabled', false);
+            }
+        }
+    }
+
+}
+$(document).ready(function() {
+    $("#password1").keyup(validatePasswordMatch);
+    $("#password2").keyup(validatePasswordMatch);
 });
 </script>
 

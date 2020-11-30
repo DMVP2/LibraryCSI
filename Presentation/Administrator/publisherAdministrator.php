@@ -94,11 +94,7 @@ $usersPublishers = $userDriving->listUsersByRol(4);
             </div>
 
 
-            <!-- Footer -->
-            <?php
-            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-            ?>
-            <!-- Footer -->
+
 
         </div>
     </div>

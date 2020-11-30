@@ -48,96 +48,96 @@ include_once('../routes.php');
             <!-- Navbar -->
 
             <div class="content background-image-login"
-                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>');">
-                <div class="container-fluid ">
+                style=" background-image: url('<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . "img/bannerLogin.jpg";  ?>'); padding-top: 80px;"">
+                <div class=" container-fluid ">
 
                     <br><br><br>
-                    <div class="row center-block">
-                        <div class="col-xs-offset-4 col-xs-4">
-                            <div class="card">
+                    <div class=" row center-block">
+                <div class="col-xs-offset-4 col-xs-4">
+                    <div class="card">
+                        <br>
+                        <div class="header">
+                            <center>
+                                <h3 class="title">Iniciar sesión</h3>
+                            </center>
+                        </div>
+                        <div class="content">
+                            <br>
+                            <form method="POST"
+                                action="<?php echo ROOT_DIRECTORY . ROUTE_SESSION . 'startSession.php' ?>">
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-xs-8">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label>Usuario</label>
+                                                <input type="number" class="form-control" placeholder="Usuario"
+                                                    id="user" name="user" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-offset-2 col-xs-8">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label>Contraseña</label>
+                                                <input type="password" class="form-control" placeholder="Contraseña"
+                                                    id="password" name="password" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <br>
-                                <div class="header">
-                                    <center>
-                                        <h3 class="title">Iniciar sesión</h3>
-                                    </center>
+
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <a href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'recoveryPassword.php' ?>"
+                                            class="title text-danger">¿Olvidaste tu contraseña?</a>
+                                    </div>
                                 </div>
-                                <div class="content">
-                                    <br>
-                                    <form method="POST"
-                                        action="<?php echo ROOT_DIRECTORY . ROUTE_SESSION . 'startSession.php' ?>">
-                                        <div class="row">
-                                            <div class="col-md-offset-2 col-xs-8">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label>Usuario</label>
-                                                        <input type="text" class="form-control" placeholder="Usuario"
-                                                            id="user" name="user">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-md-offset-2 col-xs-8">
-                                                <div class="form-group">
-                                                    <div class="form-group">
-                                                        <label>Contraseña</label>
-                                                        <input type="password" class="form-control"
-                                                            placeholder="Contraseña" id="password" name="password">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <br>
 
-                                        <br>
-
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <a href="<?php echo ROOT_DIRECTORY . ROUTE_PRESENTATION . 'recoveryPassword.php' ?>"
-                                                    class="title text-danger">¿Olvidaste tu contraseña?</a>
-                                            </div>
-                                        </div>
-
-                                        <br>
-
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <button class="btn btn-primary btn-wd ">Iniciar sesión</button>
-                                            </div>
-                                        </div>
-
-                                        <br>
-
-                                        <div class="row ">
-                                            <div class="text-center">
-                                                <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>"
-                                                    class="title text-info">Regresar</a>
-                                            </div>
-                                        </div>
-
-                                        <br><br>
-
-                                    </form>
-
-                                    <div class="clearfix"></div>
-
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-primary btn-wd ">Iniciar sesión</button>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <br>
+
+                                <div class="row ">
+                                    <div class="text-center">
+                                        <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>"
+                                            class="title text-info">Regresar</a>
+                                    </div>
+                                </div>
+
+                                <br><br>
+
+                            </form>
+
+                            <div class="clearfix"></div>
+
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
+
+
+
         </div>
+    </div>
+    </div>
 
 
-        <!-- Footer -->
-        <?php
-        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-        ?>
-        <!-- Footer -->
+    <!-- Footer -->
+    <?php
+    include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
+    ?>
+    <!-- Footer -->
 
     </div>
 

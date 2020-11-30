@@ -37,7 +37,7 @@ $usersPublishers = $userDriving->listUsersByRol(4);
 
             if (strcasecmp($publisher->getStatus(), 'Pending') == 0) {
                 $btnAction = " 
-                                                    <button class='btn btn-red btn-fill' onclick='executeAction(1, " . $publisher->getDocument() . ")'>
+                                                    <button class='btn btn-warning btn-fill' onclick='executeAction(1, " . $publisher->getDocument() . ")'>
                                                         <i type='span' class='fa fa-check-circle' style='color: white'></i>
                                                     </button>
                                                     <button class='btn btn-red btn-fill' onclick='executeAction(0, " . $publisher->getDocument() . ")'>
@@ -45,12 +45,12 @@ $usersPublishers = $userDriving->listUsersByRol(4);
                                                     </button>";
             } else if (strcasecmp($publisher->getStatus(), 'Active') == 0) {
                 $btnAction = " 
-                                                    <button class='btn btn-red btn-fill' onclick='executeAction(0, " . $publisher->getDocument() . ")'>
+                                                    <button class='btn btn-orange btn-fill' onclick='executeAction(0, " . $publisher->getDocument() . ")'>
                                                         <i type='span' class='fa fa-times' style='color: white'></i>
                                                     </button>";
             } else {
                 $btnAction = "
-                                                    <button class='btn btn-red btn-fill' onclick='executeAction(1, " . $publisher->getDocument() . ")'>
+                                                    <button class='btn btn-success btn-fill' onclick='executeAction(1, " . $publisher->getDocument() . ")'>
                                                         <i type='span' class='fa fa-check' style='color: white'></i>
                                                     </button>";
             }

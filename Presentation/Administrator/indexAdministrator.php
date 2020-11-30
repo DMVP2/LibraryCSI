@@ -2,6 +2,19 @@
 
 include_once('../../routes.php');
 
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'BookingDriving.php');
+
+include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_PERSISTENCE . 'Connection.php');
+
+
+$c = Connection::getInstance();
+$connection = $c->connectBD();
+
+$bookingDriving = new BookingDriving($connection);
+
+
+$dataPoints = $bookingDriving->getReportBookingPerDay();
+
 ?>
 
 <!doctype html>
@@ -50,50 +63,13 @@ include_once('../../routes.php');
             <div class="content">
                 <div class="container-fluid ">
 
-
                     <div class="row centerLarge margin-top-1">
                         <div class="col-md-12 ">
                             <div class="card">
                                 <div class="header">
-                                    <h5 class="title">Cliente</h5>
                                 </div>
                                 <div class="content">
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Tipo de documento</label>
-                                                    <select name="" id="" class="form-control">
-                                                        <option value="C.C.">C.C.</option>
-                                                        <option value="C.E.">C.E.</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-5">
-                                                <div class="form-group">
-                                                    <label>Número de documento</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Número de documento">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-1">
-                                                <label>&nbsp;</label>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>&nbsp;</label>
-                                                    <input value="Realizar reserva" type="button"
-                                                        class="form-control btn btn-admin btn-fill pull-left"
-                                                        data-toggle="modal" data-target="#exampleModalCenter">
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </form>
+                                    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
 
                                 </div>
@@ -106,12 +82,6 @@ include_once('../../routes.php');
                 </div>
             </div>
 
-
-            <!-- Footer -->
-            <?php
-            include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_COMPONENTS . "footer.php";
-            ?>
-            <!-- Footer -->
 
         </div>
     </div>
@@ -136,6 +106,44 @@ include_once('../../routes.php');
 
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'js/demo.js' ?>"></script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script>
+window.onload = function() {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        theme: "light2", // "light1", "light2", "dark1", "dark2"
+        animationEnabled: true,
+        zoomEnabled: true,
+        title: {
+            text: "Reservas diarias"
+        },
+        axisX: {
+            valueFormatString: "DD MMM",
+            intervalType: "day"
+        },
+        data: [{
+            xValueType: "dateTime",
+            type: "column",
+            dataPoints: [
+                <?php
+
+                    foreach ($dataPoints as $point) {
+                        echo "{";
+                        echo " x: new Date(" . $point['year'] . ", " . $point['month'] . ", " . $point['day'] . "),";
+                        echo "y: " . $point['count'];
+                        echo "},";
+                    }
+
+                    ?>
+            ]
+        }]
+    });
+    chart.render();
+
+}
+</script>
 
 
 </html>
