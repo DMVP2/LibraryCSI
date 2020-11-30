@@ -186,6 +186,37 @@ class PenaltyDAO implements DAO
         return $data;
     }
 
+    public function getReportPenaltyPerYear($pYear)
+    {
+
+        $sql = "SELECT 
+                    SUM(value) as value, EXTRACT(MONTH FROM date_end) as month
+                FROM 
+                    PENALTY 
+                WHERE 
+                    EXTRACT(YEAR FROM date_end) = " . $pYear . "
+                    GROUP BY month 
+                    ORDER BY month ASC";
+
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        $rows = pg_fetch_all($result);
+        $aux = 0;
+
+        for ($i = 0; $i < 12; $i++) {
+            if (isset($rows[$aux]) == true and number_format($rows[$aux]['month']) == ($i + 1)) {
+                array_push($data, array("month" => $rows[$aux]['month'], "value" => $rows[$aux]['value']));
+                $aux = $aux + 1;
+            } else {
+                array_push($data, array("month" => ($i + 1), "value" => 0));
+            }
+        }
+        return $data;
+    }
+
     public static function getPenaltyDAO($connection)
     {
         if (self::$penaltyDAO == null) {

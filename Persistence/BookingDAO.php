@@ -262,12 +262,12 @@ class BookingDAO implements DAO
 
         while ($row = pg_fetch_array($result)) {
 
-            
+
             $fecha = date_create();
-            $renovateDateEnd =date_add($fecha, date_interval_create_from_date_string($pDiasRenovacion. 'days'));
+            $renovateDateEnd = date_add($fecha, date_interval_create_from_date_string($pDiasRenovacion . 'days'));
             date_format($renovateDateEnd, 'Y-m-d');
-            
-            
+
+
             $renovationsNow = $row['renovations']  + 1;
             $sql = "UPDATE
                 BOOKING
@@ -459,6 +459,37 @@ class BookingDAO implements DAO
             array_push($data, array("year" => $date->format('y'), "month" => $date->format('m') - 1, "day" => $date->format('d'), "count" => $row['fecha']));
         }
 
+        return $data;
+    }
+
+    public function getReportBookingsPerYear($pYear)
+    {
+
+        $sql = "SELECT 
+                    EXTRACT(MONTH FROM date_start) as month, count(booking_id) as count
+                FROM 
+                    BOOKING 
+                WHERE 
+                    EXTRACT(YEAR FROM date_start) = " . $pYear . "
+                    GROUP BY month 
+                    ORDER BY month ASC";
+
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        $rows = pg_fetch_all($result);
+        $aux = 0;
+
+        for ($i = 0; $i < 12; $i++) {
+            if (isset($rows[$aux]) == true and number_format($rows[$aux]['month']) == ($i + 1)) {
+                array_push($data, array("month" => $rows[$aux]['month'], "count" => $rows[$aux]['count']));
+                $aux = $aux + 1;
+            } else {
+                array_push($data, array("month" => ($i + 1), "count" => 0));
+            }
+        }
         return $data;
     }
 

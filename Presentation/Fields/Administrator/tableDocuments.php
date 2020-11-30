@@ -42,6 +42,15 @@ $documents = $documentDriving->listDocuments();
                 $btnAction = "";
             }
 
+            $state = "";
+            if (strcasecmp($document->getStatus(), 'Active') == 0) {
+                $state = "Activo";
+            } else if (strcasecmp($document->getStatus(), 'Inactive') == 0) {
+                $state = "Inactivo";
+            } else {
+                $state = "Bloqueado";
+            }
+
             echo "<tr>";
 
             echo "<td>" . $document->getCode() . "</td>";
@@ -49,7 +58,7 @@ $documents = $documentDriving->listDocuments();
             echo "<td>" . $document->getEditorial() . "</td>";
             echo "<td>" . $document->getDateOfPublication() . "</td>";
             echo "<td>" . $document->getType() . "</td>";
-            echo "<td>" . $document->getStatus() . "</td>";
+            echo "<td>" . $state . "</td>";
             echo "<td>" . $btnAction . "</td>";
 
 
