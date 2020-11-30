@@ -55,13 +55,22 @@ $usersPublishers = $userDriving->listUsersByRol(4);
                                                     </button>";
             }
 
+            $state = "";
+            if (strcasecmp($publisher->getStatus(), 'Active') == 0) {
+                $state = "Activo";
+            } else if (strcasecmp($publisher->getStatus(), 'Inactive') == 0) {
+                $state = "Inactivo";
+            } else {
+                $state = "Pendiente";
+            }
+
             echo "<tr>";
 
             echo "<td>" . $userPub->getTypeDocument() . " " . $userPub->getUserId() . "</td>";
             echo "<td>" . $publisher->getType() . "</td>";
             echo "<td>" . $userPub->getName() . " " . $userPub->getLastName() . "</td>";
             echo "<td>" . $publisher->getBusinessName() . "</td>";
-            echo "<td>" . $publisher->getStatus() . "</td>";
+            echo "<td>" . $state . "</td>";
             echo "<td>" . $btnAction . "</td>";
 
             echo "</tr>";

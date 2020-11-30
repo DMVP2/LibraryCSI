@@ -36,7 +36,7 @@ $admins = $userDriving->listUsersByRol(2);
             echo "<td>" . $owner->getTypeDocument() . "</td>";
             echo "<td>" . $owner->getName() . "</td>";
             echo "<td>" . $owner->getLastName() . "</td>";
-            echo "<td>" . $owner->getStatus() . "</td>";
+            echo "<td>(Owner)</td>";
             echo "<td></td>";
 
 
@@ -57,6 +57,14 @@ $admins = $userDriving->listUsersByRol(2);
             } else {
                 $btnAction = "";
             }
+            $state = "";
+            if (strcasecmp($admin->getStatus(), 'Active') == 0) {
+                $state = "Activo";
+            } else if (strcasecmp($admin->getStatus(), 'Inactive') == 0) {
+                $state = "Inactivo";
+            } else {
+                $state = "Bloqueado";
+            }
 
             echo "<tr>";
 
@@ -64,7 +72,7 @@ $admins = $userDriving->listUsersByRol(2);
             echo "<td>" . $admin->getTypeDocument() . "</td>";
             echo "<td>" . $admin->getName() . "</td>";
             echo "<td>" . $admin->getLastName() . "</td>";
-            echo "<td>" . $admin->getStatus() . "</td>";
+            echo "<td>" . $state . "</td>";
             echo "<td>" . $btnAction . "</td>";
 
             echo "</tr>";

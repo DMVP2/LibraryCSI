@@ -103,4 +103,11 @@ class DocumentDriving
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         $documentDAO->inactiveDocument($pIdDocument);
     }
+
+
+    public function getDownloadsPerYear($pYear)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getDownloadsPerYear($pYear);
+    }
 }
