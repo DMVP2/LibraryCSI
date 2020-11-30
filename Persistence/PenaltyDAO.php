@@ -125,6 +125,20 @@ class PenaltyDAO implements DAO
         return $row->booking_id;
     }
 
+    public function getIdBookingByPenalty($pIdPenalty)
+    {
+        $sql = "SELECT 
+                    BOOKING.booking_id 
+                FROM 
+                    BOOKING, PENALTy_BOOKING 
+                WHERE 
+                    BOOKING.booking_id = PENALTY_BOOKING.booking_id AND 
+                    PENALTY_BOOKING.penalty_id = " . $pIdPenalty;
+        $rta = pg_query($this->connection, $sql);
+        $row = pg_fetch_object($rta);
+        return $row->booking_id;
+    }
+
     public function bookingIsPenalty($pIdBooking)
     {
         $sql = "SELECT penalty_id FROM PENALTY_BOOKING WHERE booking_id= " . $pIdBooking;
@@ -136,6 +150,40 @@ class PenaltyDAO implements DAO
         } else {
             return null;
         }
+    }
+
+    public function getPenaltysActiveByUser($pIdUser)
+    {
+        $sql = "SELECT 
+                    PENALTY.penalty_id, PENALTY.date_start, PENALTY.date_end, PENALTY.value, PENALTY.status, BOOKING.booking_id
+                FROM 
+                    PENALTY, PENALTY_BOOKING, BOOKING, BOOKING_USERS
+                WHERE 
+                    PENALTY.penalty_id = PENALTY_BOOKING.penalty_id AND 
+                    PENALTY_BOOKING.booking_id = BOOKING.booking_id AND 
+                    BOOKING.booking_id = BOOKING_USERS.booking_id AND
+                    BOOKING.status = 'Completed' AND 
+                    PENALTY.status='Active' AND 
+                    BOOKING_USERS.user_id = " . $pIdUser;
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = new Penalty();
+
+            $info->setId($row['penalty_id']);
+            $info->setDateStart($row['date_start']);
+            $info->setDateEnd($row['date_end']);
+            $info->setValue($row['value']);
+            $info->setStatus($row['status']);
+            $info->setBookingId($row['booking_id']);
+
+            $data[] = $info;
+        }
+        return $data;
     }
 
     public static function getPenaltyDAO($connection)

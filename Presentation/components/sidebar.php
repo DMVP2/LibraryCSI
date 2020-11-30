@@ -92,7 +92,7 @@ $nameFile = basename($_SERVER['PHP_SELF'], '.php');
             <li <?php echo strcasecmp($nameFile, 'a') == 0 ? "class='active'" : "" ?>>
                 <a href="#">
                     <i class="fa fa-bar-chart"></i>
-                    <p>Graficas</p>
+                    <p>Reportes</p>
                 </a>
             </li>
             <li <?php echo strcasecmp($nameFile, 'auditAdministrator') == 0 ? "class='active'" : "" ?>>

@@ -64,9 +64,9 @@ $usSesion = $userDriving->searchUserById($us->getUserId());
 
 <body>
 
-    <div class="wrapper">
+    <div class="wrapper" style="height: 100%;">
 
-        <div class="main-panel" style="width: 100%; height: 94%;">
+        <div class="main-panel" style="width: 100%; height: 100%; ">
 
             <!-- Navbar -->
             <?php
@@ -74,7 +74,7 @@ $usSesion = $userDriving->searchUserById($us->getUserId());
             ?>
             <!-- Navbar -->
 
-            <div class="content">
+            <div class="content" style="padding-top: 110px;">
                 <div class="container-fluid ">
                     <div class="row center-block">
                         <div class="col-xs-offset-2 col-xs-8">
@@ -207,7 +207,7 @@ $usSesion = $userDriving->searchUserById($us->getUserId());
 
                 </div>
             </div>
-
+            <br><br><br><br>
 
             <!-- Footer -->
             <?php
