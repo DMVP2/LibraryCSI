@@ -19,7 +19,7 @@ $bookingDriving = new BookingDriving($connection);
 if (isset($_POST['action'])) {
 
     $codeDocument = $_POST['code'];
-    $documentsCode = $documentDriving->searchByCode($codeDocument, "Físico");
+    $documentsCode = $documentDriving->searchByCode($codeDocument, "Fisico");
 
     if ($documentsCode == null) {
         echo json_encode(array('success' => "No existe", 'code' => -1));

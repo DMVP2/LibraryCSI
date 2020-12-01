@@ -25,9 +25,9 @@ class Connection
     {
 
 
-        $server = "software-ueb-2020.postgres.database.azure.com";
-        $user = "SoftwareUEB@software-ueb-2020";
-        $pass = "ContraseñaSuperSegura!";
+        $server = "book-bosque-ueb.postgres.database.azure.com";
+        $user = "UEB@book-bosque-ueb";
+        $pass = "ContraseñaSegura!";
         $bd = "book_bosque";
         $port = "5432";
 
