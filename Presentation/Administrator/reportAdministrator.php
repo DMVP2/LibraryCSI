@@ -10,6 +10,7 @@ include_once('../../routes.php');
 
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="icon" type="image/png" href="<?php echo ROOT_DIRECTORY . ROUTE_ASSETS . 'img/iconApp.png' ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
