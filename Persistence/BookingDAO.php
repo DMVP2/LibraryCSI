@@ -296,7 +296,7 @@ class BookingDAO implements DAO
             $sql = "SELECT queue_id 
             FROM
             QUEUE, DOCUMENT_QUEUE
-            WHERE  DOCUMENT_QUEUE.document_id = ". $pDocumentId ." AND
+            WHERE  DOCUMENT_QUEUE.document_id = " . $pDocumentId . " AND
             QUEUE.queue_id = DOCUMENT_QUEUE.queue_id
             ORDER BY queue_id DESC LIMIT 1";
             $rta = pg_query($this->connection, $sql);
@@ -306,28 +306,28 @@ class BookingDAO implements DAO
             pg_query($this->connection, $sql);
         }
     }
-        // Genera el último número en la cola (turno)
-        public function queueTurn($pDocumentId)
-        {
-    
-            $sql = "SELECT num_queue
+    // Genera el último número en la cola (turno)
+    public function queueTurn($pDocumentId)
+    {
+
+        $sql = "SELECT num_queue
             FROM
             QUEUE, DOCUMENT_QUEUE
-            WHERE  DOCUMENT_QUEUE.document_id = ". $pDocumentId ." AND
+            WHERE  DOCUMENT_QUEUE.document_id = " . $pDocumentId . " AND
             QUEUE.queue_id = DOCUMENT_QUEUE.queue_id
-            ORDER BY queue_id DESC LIMIT 1";            
-    
-            $result = pg_query($this->connection, $sql);
-    
-            $data = array();
-    
-            while ($row = pg_fetch_array($result)) {
-                $info = $row['num_queue'];
-    
-                $data[] = $info;
-            }
-            return $data;
+            ORDER BY queue_id DESC LIMIT 1";
+
+        $result = pg_query($this->connection, $sql);
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+            $info = $row['num_queue'];
+
+            $data[] = $info;
         }
+        return $data;
+    }
     // Retorna el código del usuario que realizó la reserva y tiene una MULTA ACTIVA de x documentoId
     // tan solo lo retorna cuándo el estado de la reserva es 'Penalty'
     public function getUserIdPenaltyBooking($pDocumentId)
@@ -538,37 +538,6 @@ class BookingDAO implements DAO
         }
     }
 
-    public function serachBookingFined($pDocumentId)
-    {
-        $sql = "SELECT 
-                    BOOKING.booking_id, date_start, date_end, date_delivery, renovations, BOOKING.status, DOCUMENT_BOOKING.document_id 
-                FROM 
-                    BOOKING, DOCUMENT_BOOKING 
-                WHERE 
-                    status='Fined' AND 
-                    BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND 
-                    document_id=" . $pDocumentId;
-
-        $rta = pg_query($this->connection, $sql);
-
-        if (pg_num_rows($rta) > 0) {
-            $row = pg_fetch_object($rta);
-            $bookingSearch = new Booking();
-
-            $bookingSearch->setId($row->document_id);
-            $bookingSearch->setIdDocument($pDocumentId);
-            $bookingSearch->setBookingStatus($row->status);
-            $bookingSearch->setBookingDate($row->date_start);
-            $bookingSearch->setDateOfCollection($row->date_end);
-            $bookingSearch->setDeliveryDate($row->date_delivery);
-            $bookingSearch->setRenovations($row->renovations);
-        } else {
-            return null;
-        }
-
-        return $bookingSearch;
-    }
-
 
     public function getReportBookingPerDay()
     {
@@ -589,6 +558,38 @@ class BookingDAO implements DAO
 
         return $data;
     }
+    public function getReportBookingsPerYear($pYear)
+    {
+
+        $sql = "SELECT 
+                    EXTRACT(MONTH FROM date_start) as month, count(booking_id) as count
+                FROM 
+                    BOOKING 
+                WHERE 
+                    EXTRACT(YEAR FROM date_start) = " . $pYear . "
+                    GROUP BY month 
+                    ORDER BY month ASC";
+
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        $rows = pg_fetch_all($result);
+        $aux = 0;
+
+        for ($i = 0; $i < 12; $i++) {
+            if (isset($rows[$aux]) == true and number_format($rows[$aux]['month']) == ($i + 1)) {
+                array_push($data, array("month" => $rows[$aux]['month'], "count" => $rows[$aux]['count']));
+                $aux = $aux + 1;
+            } else {
+                array_push($data, array("month" => ($i + 1), "count" => 0));
+            }
+        }
+        return $data;
+    }
+
+
 
     public function getValueFined()
     {
