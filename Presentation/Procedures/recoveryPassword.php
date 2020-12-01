@@ -34,7 +34,7 @@ $user->setStatus("Inactive");
 $userDriving->changePassword($user);
 
 $sendMail = new MailSend();
-$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Recovey", "Desde recovery se restablecio su contraseña. Contraseña nueva: " . $passwordDefault);
+$sendMail->prepareMail($mail, "Restablecimiento de contraseña", "Tu contraseña se ha restablecido por una contraseña aleatoria, tu contraseña temporal es: " . $passwordDefault);
 $rta = $sendMail->sendMail();
 
 
