@@ -27,8 +27,11 @@ if (isset($consultUser) and strcasecmp($consultUser->getPassword(), md5($_POST['
     } else if (strcasecmp($consultUser->getStatus(), 'Inactive') == 0) {
         header("Location: " . ROOT_DIRECTORY . ROUTE_PRESENTATION . 'changePassword.php');
     } else {
-        if (strcasecmp($rol, "Client") == 0 || strcasecmp($rol, "Publisher") == 0) {
+        if (strcasecmp($rol, "Client") == 0) {
             $userSession->setRol("Client");
+            header("Location: " . ROOT_DIRECTORY);
+        } else if (strcasecmp($rol, "Publisher") == 0) {
+            $userSession->setRol("Publisher");      
             header("Location: " . ROOT_DIRECTORY);
         } else if (strcasecmp($rol, "Employee") == 0) {
             $userSession->setRol("Employee");

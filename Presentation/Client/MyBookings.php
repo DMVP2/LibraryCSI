@@ -274,12 +274,7 @@ $bookings = $bookingDriving->listBookingById($idUser);
                     </div>
 
                     <div style="margin: 2%;" class="row-md-12">
-                        <p>- Tu lugar en la fila es el <?php
-                                                        if (isset($_GET['doc'])) {
-                                                            $doc = $_GET['doc'];
-                                                            echo $turnoCola[0] = $bookingDriving->queueTurn($doc);
-                                                        } ?><br>
-                            <b style="color:darkred">- De no realizar la devolución en el tiempo dado, se cobrarán 2.500$ por día.</b></p>
+                        <p>Te estaremos informando en cuánto puedas realizar la reserva </p>
                     </div>
                 </div>
             </div>

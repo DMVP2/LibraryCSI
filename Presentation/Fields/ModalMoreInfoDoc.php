@@ -45,10 +45,6 @@ $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDo
 $countBookingsByUserId = $bookingDriving->getCountBookingsByUserId($idUser);
 $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
 
-
-
-
-
 ?>
 <div class="modal-content">
 
@@ -95,7 +91,7 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                     <b> No. Páginas:</b> <?php echo $document->getNumOfPages(); ?>
                 </p>
                 <p class="font-weight-light">
-                    <b>Lugar de Publicación: </b><br><?php echo $cityCountry[0];  ?> — <?php echo $cityCountry[1];  ?>
+                    <b>Lugar de Publicación: </b><br><?php if(count($cityCountry) > 0){ echo $cityCountry[0];  ?> — <?php echo $cityCountry[1]; }else{echo("Ingrese Ciudad y País");}?>
                 </p>
                 <p class="font-weight-light">
                     <b>Fecha: </b><?php echo $document->getDateOfPublication();  ?><b style="font-size:xx-small;"> (AAAA-MM-DD)</b>
@@ -116,22 +112,6 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                 <p class="font-weight-light">
                     <b> Descripción:</b> <?php echo $document->getDescription(); ?>
                 </p>
-
-                <?php if ($queuesCount[0] > 0) { ?>
-                    <p class="font-weight-light" style="color:darkcyan ;">
-                        <b> ¡Este libro se encuentra en préstamo! </b> <br>
-                        El número de lectores en cola es <b><?php echo $queuesCount[0]; ?> </b>, tardará máximo <b><?php echo (($queuesCount[0] + 1) * $numDiasMaxPrestamo); ?> días.</b>
-                    </p>
-                <?php } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] != $idUser) {
-                ?><p class="font-weight-light" style="color:darkcyan ;">
-                        <b> ¡Este libro se encuentra en préstamo! </b> <br>
-                        Nadie ha ingresado a la cola, se el primero en hacerlo para acceder al libro en <b>máximo 3 días. </b>
-                    </p>
-                <?php
-                }
-                ?>
-
-
             </div>
         </div>
         <div class="col-md-6 float-right">
@@ -141,7 +121,9 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                 <p class="font-weight-light">
                     <center><i><b> Publicador:</b> <?php echo $publisherName[0]; ?></i></center>
                 </p>
+
                 <?php
+
                 //-Cuando el documento es reservado por uno mismo y SÍ se puede renovar
                 if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] == 0 && $countPenaltysByUserId[0] == 0) {
                 ?>
@@ -155,26 +137,26 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                         </center>
                     </div>
                 <?php
-                //-Cuándo tiene una multa activa de cualquier libro
+                    //-Cuándo tiene una multa activa de cualquier libro
                 } else if ($countPenaltysByUserId[0] > 0 && count($userIdPenaltyBookingByDocumnetId) == 0) {
                 ?>
                     <div>
                         <center>
-                        <form action="<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php' ?>">
+                            <form action="<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php' ?>">
 
-                        <?php
-                            $btnIrAReservas =  "<button  type='submit' class='btn btn-danger'> <i type='span' class='fa fa-frown-o' aria-hidden='true'></i> &nbsp;Ver multa</button>";
+                                <?php
+                                $btnIrAReservas =  "<button  type='submit' class='btn btn-danger'> <i type='span' class='fa fa-frown-o' aria-hidden='true'></i> &nbsp;Ver multa</button>";
 
-                            echo $btnIrAReservas; 
-                            ?>
-                            <p class="font-weight-light" style="color:darkred;margin:3%;"> Cuentas con <?php echo $countPenaltysByUserId[0]; ?> libro<?php if($countPenaltysByUserId[0] > 1)echo('s') ?> en penalidad activa.
-                                <br><b>Por favor realizar el pago lo más pronto posible.</b></p>
+                                echo $btnIrAReservas;
+                                ?>
+                                <p class="font-weight-light" style="color:darkred;margin:3%;"> Cuentas con <?php echo $countPenaltysByUserId[0]; ?> libro<?php if ($countPenaltysByUserId[0] > 1) echo ('s') ?> en penalidad activa.
+                                    <br><b>Por favor realizar el pago lo más pronto posible.</b></p>
                         </center>
                         </form>
                     </div>
                 <?php
-                //- Se ha cumplido el número máximo de renovaciones
-                } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] > $numRenovaciones && $queuesCount[0] == 0 && $countPenaltysByUserId[0] == 0) {
+                    //- Se ha cumplido el número máximo de renovaciones
+                } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] > $numRenovaciones && $queuesCount[0] == 0 && $countPenaltysByUserId[0] == 0 && $digiFisi == 'Fisico') {
                 ?>
                     <div>
                         <center>
@@ -184,7 +166,7 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                     </div>
                 <?php
                     //Tiene el libro en préstamo y se unieron personas a la cola
-                } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] > 0) {
+                } else if ($documentoReservadoBool && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $queuesCount[0] > 0 && $digiFisi == 'Fisico') {
                 ?>
                     <div>
                         <center>
@@ -193,8 +175,8 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                         </center>
                     </div>
                     <?php
-                // Para pagar una multa por una reserva de x documento -- hay error en la cuenta de payPal
-                } else if ($documentoReservadoBool && count($userIdPenaltyBookingByDocumnetId) > 0) {
+                    // Para pagar una multa por una reserva de x documento -- hay error en la cuenta de payPal
+                } else if ($documentoReservadoBool && count($userIdPenaltyBookingByDocumnetId) > 0 && $digiFisi == 'Fisico') {
                     if ($userIdPenaltyBookingByDocumnetId[0] == $idUser) {
                     ?>
                         <div>
@@ -209,7 +191,7 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                     <?php
                     }
                     //Para reservar en caso de que el documnento deje hacerlo
-                } else if (!$documentoReservadoBool && $countBookingsByUserId[0] < $numMaxPrestamos && $countPenaltysByUserId[0] == 0) {
+                } else if (!$documentoReservadoBool && $countBookingsByUserId[0] < $numMaxPrestamos && $countPenaltysByUserId[0] == 0 && $digiFisi == 'Fisico') {
                     ?>
 
                     <div>
@@ -224,33 +206,33 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                     </div>
                 <?php
                     //Ingresar a la cola de Primero
-                } else if ($documentoReservadoBool && $queuesCount[0] == 0 && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones && $countPenaltysByUserId[0] == 0) {
+                } else if ($documentoReservadoBool && $queuesCount[0] == 0 && $userIdBookingByDocumnetId[0] != $idUser && $digiFisi == 'Fisico') {
                 ?>
                     <div>
                         <center>
                             <?php
-                            $btnReserva =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Ingresar</button>";
+                            $btnReserva =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-share' aria-hidden='true'></i> &nbsp;Ingresar</button>";
                             echo $btnReserva;
                             ?>
-                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> El libro se encuentra en préstamo, ¡Ingresa a la cola de préstramo de primero!</p>
+                            <p class="font-weight-light" style="color:#154360;margin:3%;"> El libro se encuentra en préstamo, ¡Ingresa a la cola de préstramo de primero!</p>
                         </center>
                     </div>
                 <?php
                     // Ingresar a la cola >1
-                } else if ($documentoReservadoBool && $queuesCount[0] > 0 && $userIdBookingByDocumnetId[0] == $idUser && $renovationsBookingByDocId[0] <= $numRenovaciones) {
+                } else if ($documentoReservadoBool && $queuesCount[0] > 0 && $userIdBookingByDocumnetId[0] != $idUser && $digiFisi == 'Fisico' ) {
                 ?>
                     <div>
                         <center>
                             <?php
 
-                            $btnReserva =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-suitcase' aria-hidden='true'></i> &nbsp;Ingresar</button>";
+                            $btnReserva =  "<button  class='btn btn-secondary '  onClick=joinQueue('" . $idDoc . "')>   <i type='span' class='fa fa-share' aria-hidden='true'></i> &nbsp;Ingresar</button>";
                             echo $btnReserva;
                             ?>
-                            <p class="font-weight-light" style="color:#1D62F0;margin:3%;"> El libro se encuentra en préstamo, ingresa a la cola en la posición No. <?php ($queuesCount[0] + 1) ?></p>
+                            <p class="font-weight-light" style="color:#154360;margin:3%;"> El libro se encuentra en préstamo, ingresa a la cola en la posición No. <?php ($queuesCount[0] + 1) ?></p>
                         </center>
                     </div>
                 <?php
-                } else if ($documentoReservadoBool && $bookingState[0] == 'Penalty') {
+                } else if ($documentoReservadoBool && $bookingState[0] == 'Penalty' && $digiFisi == 'Fisico') {
                 ?>
                     <div>
                         <center>
@@ -258,7 +240,20 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                         </center>
                     </div>
                 <?php
-                }
+                }else if ($digiFisi == 'Digital') {
+                    ?>
+                        <div>
+                        <center>
+                            <?php
+
+                            $btnReserva =  "<button  class='btn btn-secondary '  onClick=()  <i type='span' class='fa fa-download' aria-hidden='true'></i> &nbsp;Descargar</button>";
+                            echo $btnReserva;
+                            ?>
+                            <p class="font-weight-light" style="color:#154360;margin:3%;"> Descarga este documento totalmenta gratis</p>
+                        </center>
+                        </div>
+                    <?php
+                    } else{echo('');}
                 ?>
 
             </div>

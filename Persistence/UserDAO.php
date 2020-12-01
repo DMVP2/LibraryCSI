@@ -121,9 +121,15 @@ class UserDAO implements DAO
     public function searchRolByDocument($pDocument)
     {
         $sql = "SELECT rol FROM ROL, USERS_ROL where ROL.rol_id = USERS_ROL.rol_id AND USERS_ROL.user_id = " . $pDocument;
-        $rta = pg_query($this->connection, $sql);
-        $row = pg_fetch_object($rta);
-        return $row->rol;
+        $result = pg_query($this->connection, $sql);
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+            $info = $row['rol'];
+            $data[] = $info;
+        }
+        return $data;
     }
 
 

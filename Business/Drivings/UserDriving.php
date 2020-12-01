@@ -65,6 +65,11 @@ class UserDriving
         $userDAO = UserDAO::getUserDAO($this->connection);
         return $userDAO->userValidate($pTypeId, $pId);
     }
+    public function searchRolByDocument($pDocumentId)
+    {
+        $userDAO = UserDAO::getUserDAO($this->connection);
+        return $userDAO->searchRolByDocument($pDocumentId);
+    }
 
     public function activeUser($pIdUser)
     {

@@ -1,9 +1,7 @@
 <?php
-
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
 
 $userSession = UserSession::getUserSession();
-
 $rol = $userSession->getRol();
 
 ?>
@@ -39,10 +37,53 @@ $rol = $userSession->getRol();
                             Cerrar sesión
                         </a>
                     </li>
+
+            </div>
+
+        <?php }
+        else if (strcasecmp($rol, 'Publisher') == 0) { ?>
+            <!-- PUBLISHER -->
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-left" style="font-size:21px;color:gray;margin:1%">
+                    <li>
+                        <a href="<?php echo ROOT_DIRECTORY . '/index.php' ?>">
+                            <div style="font-size:21px;color:gray"> <?php echo NAME_PROJECT;
+                                                                    echo " "; ?> <i type='span' class='fa fa-book' aria-hidden='true' style="font-size:21px;color:gray"></i><i  style="font-size:13.5px;color:gray">- Publisher Version - </i></div>
+                        </a>
+                    </li>
                 </ul>
+
+                <ul class="nav navbar-nav navbar-right" style="font-size:19px;color:gray;margin:1%">
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#myModalSubirDoc">
+                            Subir Documento
+                        </a>
+                    </li><!-- 
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#myModal1">
+                            Mis Documentos
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyProfile.php' ?>">
+                            Mi perfil
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php' ?>">
+                            Mis reservas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo ROOT_DIRECTORY . ROUTE_SESSION . 'closeSession.php' ?>">
+                            Cerrar sesión
+                        </a>
+                    </li>
+
             </div>
 
         <?php } else { ?>
+            </ul>
 
             <!-- NO LOGUEADO -->
 

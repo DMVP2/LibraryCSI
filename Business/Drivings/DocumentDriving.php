@@ -49,10 +49,25 @@ class DocumentDriving
         return $documentDAO->getTitleDocumentById($pIdDocument);
     }
 
+    public function getCitys()
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getCitys();
+    }
+    public function getAuthors()
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->getAuthors();
+    }
     public function getAuthorsByDocumentId($pIdDocument)
     {
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         return $documentDAO->getAuthorsByDocumentId($pIdDocument);
+    }
+    public function completeCreateDocument($pPublisherId, $pCityId, $pAuthorId)
+    {
+        $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
+        return $documentDAO->completeCreateDocument($pPublisherId, $pCityId, $pAuthorId);
     }
     public function getPublisherByDocumentId($pIdDocument)
     {

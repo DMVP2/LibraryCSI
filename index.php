@@ -52,7 +52,7 @@ $rol = $userSession->getRol();
             <div class="content">
                 <div class="container-fluid ">
 
-                    <?php if (strcasecmp($rol, 'client') == 0) { ?>
+                    <?php if (strcasecmp($rol, 'client') == 0 || strcasecmp($rol, 'publisher') == 0) { ?>
 
                         <div class="row">
                             <div class="col-md-1 col-md-offset-1">
@@ -92,11 +92,22 @@ $rol = $userSession->getRol();
         ?>
         <!-- Footer -->
     </div>
-    <!-- ModalRegister -->
-    <?php
-    include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalRegister.php";
-    ?>
-    <!-- ModalRegister -->
+    <div>
+        <!-- ModalRegister -->
+        <?php
+        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalRegister.php";
+        ?>
+    </div>
+    <div>
+        <!-- ModalRegister -->
+        <!-- MyModalSubirDoc -->
+        <?php
+        include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "MyModalSubirDoc.php";
+        ?>
+    </div>
+    <!-- MyModalSubirDoc -->
+
+
     <!-- ModalMoreInfoDoc include $_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php";   ?> -->
     <!-- ModalMoreInfoDoc -->
     <div class="modal fade" id="modalMoreInfoDoc" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -154,7 +165,7 @@ $rol = $userSession->getRol();
     function updateModalMoreInfo(pIdDocument, pDigitalFisico) {
         $('#modalMoreInfoDocContent').load("<?php echo ROOT_DIRECTORY . ROUTE_FIELDS . "ModalMoreInfoDoc.php" ?>", {
             'idDocument': pIdDocument,
-            'digitalFisico': pDigitalFisico
+            'digitalFisico': pDigitalFisico,
         });
         $("#modalMoreInfoDoc").modal('show');
     }
@@ -214,12 +225,13 @@ $rol = $userSession->getRol();
             data: 'idDocument=' + pIdDocument,
             success: function(response) {
                 var jsonData = JSON.parse(response);
-                if (jsonData.success == pIdDocument) {
-                    window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=4&doc=' ?>".pIdDocument; //enviar a reserva
+                if (jsonData.success == "1") {
+                    window.location.href = "<?php echo ROOT_DIRECTORY . ROUTE_CLIENT . 'MyBookings.php?cod=4' ?>"; //enviar a reserva
                 } else {
                     notifications.showNotificationWarning("Ha ocurrido un error");
                 }
             }
+
         });
     }
 </script>

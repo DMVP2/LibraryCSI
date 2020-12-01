@@ -1,5 +1,5 @@
 <?php
-include_once('../../../routes.php');
+include_once('../../../Routes.php');
 
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_SESSION . 'UserSession.php');
 include_once($_SERVER['DOCUMENT_ROOT'] . ROOT_DIRECTORY . ROUTE_DRIVINGS . 'BookingDriving.php');
@@ -22,7 +22,17 @@ $bookingDriving = new BookingDriving($connection);
 $idDocument = $_POST['idDocument'];
 
 $turnoCola = $bookingDriving->queueTurn($idDocument);
-$numQueue = $turnoCola[0] +1;
+if(count($turnoCola) > 0){
+$numQueue = $turnoCola[0] + 1;
+}else{
+    $numQueue = 1;
+}
 
 $bookingDriving->joinQueue($idDocument, $idUser, $numQueue);
-echo json_encode(array('success' => $idDocument)); 
+if($bookingDriving = 1){
+echo json_encode(array('success' => '1')); 
+}
+else{
+echo json_encode(array('success' => '0')); 
+
+}

@@ -44,10 +44,28 @@ class DocumentDAO implements DAO
      */
     public function create($pDocument)
     {
-        $sql = "INSERT INTO DOCUMENT VALUES(";
+        $sql = "INSERT INTO DOCUMENT VALUES('" . $pDocument->getDocumentId() . "','" . $pDocument->getCode() . "','" . $pDocument->getTitle() . "','" . $pDocument->getDateOfPublication() . "','" . $pDocument->getEditorial() . "','" . $pDocument->getLanguage() . "','" . $pDocument->getNumOfPages() . "','" . $pDocument->getType() . "','" . $pDocument->getCongress() . "','" . $pDocument->getCategory() . "','" . $pDocument->getStatus() . "','" . $pDocument->getImage() . "','" . $pDocument->getDescription() . "')";
         pg_query($this->connection, $sql);
     }
+    // Completa las relaciones del documeto
+    public function completeCreateDocument($pPublisherId, $pCityId, $pAuthorId)
+    {
+        $sql = "SELECT DOCUMENT.document_id 
+        FROM
+        DOCUMENT
+        ORDER BY DOCUMENT.document_id DESC LIMIT 1";
 
+        $rta = pg_query($this->connection, $sql);
+        while ($row = pg_fetch_array($rta)) {
+            $info = $row['document_id'];
+            $data[] = $info;
+            $sql = "INSERT INTO DOCUMENT_CITY VALUES(" . $data[0] . ", " . $pCityId . ");";
+            $sql .= "INSERT INTO DOCUMENT_AUTHOR VALUES(" . $data[0] . ", " . $pAuthorId . ");";
+            $sql .= "INSERT INTO PUBLISHER_DOCUMENT VALUES(" . $data[0]  . ", " . $pPublisherId . ");";
+
+            pg_query($this->connection, $sql);
+        }
+    }
     /**
      * 
      */
@@ -86,6 +104,55 @@ class DocumentDAO implements DAO
 
         return $documentSearch;
     }
+
+    public function getCitys()
+    {
+
+        $sql = "SELECT
+                    * 
+                FROM 
+                    CITY;";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) == 0)
+            return -1;
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = $row[0];
+            $info = $row[1];
+
+            $data[] = $info;
+        }
+        return $data;
+    }
+    public function getAuthors()
+    {
+
+        $sql = "SELECT
+                    * 
+                FROM 
+                    AUTHOR;";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        if (pg_num_rows($result) == 0)
+            return -1;
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+
+            $info = $row[0];
+            $info = $row[1];
+            $data[] = $info;
+        }
+        return $data;
+    }
+
 
     public function searchByCode($pCode, $pType)
     {
@@ -323,6 +390,11 @@ class DocumentDAO implements DAO
 
         return $data;
     }
+
+
+
+
+
     //Obtiene arreglo con las reservas x documento -- No está en el Driving
     public function getBookingsByDocumentId($pDocumentId)
     {
@@ -368,7 +440,7 @@ class DocumentDAO implements DAO
 
         return $data;
     }
-    
+
     //Regresa el número de usuarios que se encuentra en cola (queue) en un documento 
     public function getQueuesCountByDocumentId($pDocumentId)
     {

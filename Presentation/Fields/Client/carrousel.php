@@ -20,9 +20,12 @@ $documentDriving = new DocumentDriving($connection);
 $bookingDriving = new BookingDriving($connection);
 
 $userSession = UserSession::getUserSession();
-$userSession->verifySession();
 $usSesion = $userSession->getCurrentUser();
-$idUser = $usSesion->getUserId();
+
+
+if ($usSesion != null) {
+    $idUser = $usSesion->getUserId();
+}
 
 $rol = $userSession->getRol();
 
@@ -122,16 +125,17 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
                         for ($j = 0; $j < 5; $j++) {
                             if (isset($fisicos[$aux])) {
+                                $documentoReservadoBool = $documentDriving->stateReservedDocument($fisicos[$aux]->getDocumentId());
+                                $iconState = "";
 
-                                if ($documentDriving->stateReservedDocument($fisicos[$aux]->getDocumentId()) == true) {
-                                    $idDoc =$fisicos[$aux]->getDocumentId();
+                                if ($usSesion != null && $documentoReservadoBool == true) {
 
-                                    $userIdBookingByDocumnetId = $bookingDriving->getUserIdBooking($idDoc);
 
-                                    $userIdPenaltyBookingByDocumnetId = $bookingDriving->getUserIdPenaltyBooking($idDoc);
+                                    $userIdBookingByDocumnetId = $bookingDriving->getUserIdBooking($fisicos[$aux]->getDocumentId());
 
+                                    $userIdPenaltyBookingByDocumnetId = $bookingDriving->getUserIdPenaltyBooking($fisicos[$aux]->getDocumentId());
+                                    //
                                     if (count($userIdPenaltyBookingByDocumnetId) > 0) {
-
                                         if ($userIdPenaltyBookingByDocumnetId[0] == $idUser) {
                                             $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='¡Tienes penalidad en este documento!' style='color:darkred;margin-left:-12%'></i>";
                                         }
@@ -139,9 +143,10 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
                                         if ($userIdBookingByDocumnetId[0] == $idUser) {
                                             $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Tu tienes este documento en reserva actualmente' style='color:#58D68D ;margin-left:-12%'></i>";
+                                        } else {
+
+                                            $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Este documento se encuentra reservado' style='color:skyblue;margin-left:-12%'></i>";
                                         }
-                                    } else {
-                                        $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Este documento se encuentra reservado' style='color:skyblue;margin-left:-12%'></i>";
                                     }
                                 } else {
                                     $iconState = "";
@@ -149,7 +154,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
                                 echo "<div class='col-md-2'>";
                                 echo "<div class='card col-md-12'";
-                                if (strcasecmp($rol, 'client') == 0) {
+                                if (strcasecmp($rol, 'client') == 0 || strcasecmp($rol, 'publisher') == 0) {
                                     echo "style='height: 367px' > ";
                                 } else {
                                     echo "style='height: 310px' >";
@@ -165,16 +170,16 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                             style='width: 50%; height: auto;'></center>";
                                 echo "<br>";
                                 echo "<p><b>" . recortarNombreLibro($fisicos[$aux]->getTitle()) . "</b><p>";
-                                $authorsNames = $documentDriving->getAuthorsByDocumentId($idDoc);
+                                $authorsNames = $documentDriving->getAuthorsByDocumentId($fisicos[$aux]->getDocumentId());
                                 echo "<p style='font-size:13px' class='card-category'>" .  $authorsNames[0] . "</p>";
                                 echo "<p style='font-size:13px' class='card-category'> Año: " . substr($fisicos[$aux]->getDateOfPublication(), 0, 4) . "</p>";
 
-                                if (strcasecmp($rol, 'client') == 0) {
+                                if (strcasecmp($rol, 'client') == 0 || strcasecmp($rol, 'publisher') == 0) {
                                     /*                                     echo "<input value='Ver más' type='button' class='btn btn-admin btn-fill'>";
                                                                         echo "<br><br>"; */
 
                                     $digitalFisic = "Fisico";
-                                    $btnMoreInfoPdf =  "<button  style='bottom:4%;position:absolute;right:19%' class='btn btn-admin btn-fill'  onClick=updateModalMoreInfo('" . $idDoc . "','" . $digitalFisic . "')>   <i type='span' class='fa fa-book' aria-hidden='true'></i> Ver más </button>";
+                                    $btnMoreInfoPdf =  "<button  style='bottom:4%;position:absolute;right:19%' class='btn btn-admin btn-fill'  onClick=updateModalMoreInfo('" . $fisicos[$aux]->getDocumentId() . "','" . $digitalFisic . "')>   <i type='span' class='fa fa-book' aria-hidden='true'></i> Ver más </button>";
                                     echo $btnMoreInfoPdf;
                                     echo "<br>";
                                     echo "<br>";
@@ -279,7 +284,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
                                         echo "<div class='col-md-2'>";
                                         echo "<div class='card col-md-12'";
-                                        if (strcasecmp($rol, 'client') == 0) {
+                                        if (strcasecmp($rol, 'client') == 0 || strcasecmp($rol, 'publisher') == 0) {
                                             echo "style='height: 367px' > ";
                                         } else {
                                             echo "style='height: 310px' >";
@@ -297,7 +302,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                         echo "<p style='font-size:13px' class='card-category'>" .  $authorsNames[0] . "</p>";
                                         echo "<p style='font-size:13px' class='card-category'> Año: " . substr($virtuales[$aux]->getDateOfPublication(), 0, 4) . "</p>";
 
-                                        if (strcasecmp($rol, 'client') == 0) {
+                                        if (strcasecmp($rol, 'client') == 0 || strcasecmp($rol, 'publisher') == 0) {
                                             $digitalFisico = "Digital";
                                             $btnMoreInfoDoc =  "<button  style='bottom:4%;position:absolute;right:19%' class='btn btn-admin btn-fill'  onClick=updateModalMoreInfo('" . $virtuales[$aux]->getDocumentId() . "','" . $digitalFisico . "')>   <i type='span' class='fa fa-tablet' aria-hidden='true'></i> Ver más </button>";
                                             echo $btnMoreInfoDoc;

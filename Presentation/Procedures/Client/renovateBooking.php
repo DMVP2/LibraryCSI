@@ -13,7 +13,6 @@ $c = Connection::getInstance();
 $connection = $c->connectBD();
 
 $userSession = UserSession::getUserSession();
-$userSession->verifySession();
 
 $usSesion = $userSession->getCurrentUser();
 $idUser = $usSesion->getUserId();

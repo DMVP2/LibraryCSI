@@ -82,6 +82,11 @@ class BookingDriving
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);
         return $bookingDAO->getCountPenaltysByUserId($pUserId);
     }
+    public function getRolNameByUserId($pUserId)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->getRolNameByUserId($pUserId);
+    }
     public function renovateBooking($pIdDocument, $pDiasRenovacion)
     {
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);
