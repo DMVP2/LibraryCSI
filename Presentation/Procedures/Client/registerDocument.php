@@ -55,10 +55,9 @@ $nuevoDoc->setCongress("");
 $nuevoDoc->setCategory($category);
 $nuevoDoc->setStatus("Active");
 $nuevoDoc->setImage("");
-$nuevoDoc->setDescription("Active");
-
+$nuevoDoc->setDescription($description);
 
 $documentDriving->createDocument($nuevoDoc);
-$documentDriving->completeCreateDocument($idUser, $nuevoDoc, $author_id);
+$documentDriving->completeCreateDocument($idUser, $city_id, $author_id);
 
 echo json_encode(array('success' => $rta));

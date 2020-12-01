@@ -44,7 +44,7 @@ class DocumentDAO implements DAO
      */
     public function create($pDocument)
     {
-        $sql = "INSERT INTO DOCUMENT VALUES('" . $pDocument->getDocumentId() . "','" . $pDocument->getCode() . "','" . $pDocument->getTitle() . "','" . $pDocument->getDateOfPublication() . "','" . $pDocument->getEditorial() . "','" . $pDocument->getLanguage() . "','" . $pDocument->getNumOfPages() . "','" . $pDocument->getType() . "','" . $pDocument->getCongress() . "','" . $pDocument->getCategory() . "','" . $pDocument->getStatus() . "','" . $pDocument->getImage() . "','" . $pDocument->getDescription() . "')";
+        $sql = "INSERT INTO DOCUMENT VALUES(" . $pDocument->getDocumentId() . ",'" . $pDocument->getCode() . "','" . $pDocument->getTitle() . "','" . $pDocument->getDateOfPublication() . "','" . $pDocument->getEditorial() . "','" . $pDocument->getLanguage() . "','" . $pDocument->getNumOfPages() . "','" . $pDocument->getType() . "','" . $pDocument->getCongress() . "','" . $pDocument->getCategory() . "','" . $pDocument->getStatus() . "','" . $pDocument->getImage() . "','" . $pDocument->getDescription() . "')";
         pg_query($this->connection, $sql);
     }
     // Completa las relaciones del documeto
@@ -122,8 +122,8 @@ class DocumentDAO implements DAO
 
         while ($row = pg_fetch_array($result)) {
 
-            $info = $row[0];
-            $info = $row[1];
+            $info[0] = $row[0];
+            $info[1] = $row[1];
 
             $data[] = $info;
         }
@@ -146,8 +146,8 @@ class DocumentDAO implements DAO
 
         while ($row = pg_fetch_array($result)) {
 
-            $info = $row[0];
-            $info = $row[1];
+            $info[0] = $row[0];
+            $info[1] = $row[1];
             $data[] = $info;
         }
         return $data;

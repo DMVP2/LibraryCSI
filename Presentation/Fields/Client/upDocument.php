@@ -29,8 +29,6 @@ if ($typeDoc == 1) {
     $typeBtn = "success";
     $classDiv = "col-xs-offset-1 col-xs-10";
 }
-
-
 ?>
 
 <!doctype html>
@@ -193,14 +191,16 @@ if ($typeDoc == 1) {
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Seleccione la ciudad de publicación</label>
+                                                
+                                                <label>Seleccione la ciudad de publicación</label                                                >
                                                 <select name="city_id" id="city_id" class="form-control">
                                                     <option value="" selected style="color:gray">Seleccione una...</option>
                                                     <?php
+                                                    
                                                     $cantidadCiudades = count($ciudades);
                                                     if ($cantidadCiudades > 1) {
                                                         echo '<b>Autores: </b><br><ul>';
-                                                        foreach ($ciudades as &$name) {
+                                                        foreach ($ciudades as $name) {
                                                             echo '<option value=' . $name[0] . ' >' . $name[1]  . '</option>';
                                                         }
                                                         echo '</ul>';
@@ -219,7 +219,7 @@ if ($typeDoc == 1) {
                                                     $cantidadAutores = count($autores);
                                                     if ($cantidadAutores > 1) {
                                                         echo '<b>Autores: </b><br><ul>';
-                                                        foreach ($autores as &$name) {
+                                                        foreach ($autores as $name) {
                                                             echo '<option value=' . $name[0] . ' >' . $name[1]  . '</option>';
                                                         }
                                                         echo '</ul>';
