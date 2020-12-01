@@ -117,7 +117,8 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
         <div class="col-md-6 float-right">
             <div class="row-md-12 float-right">
 
-                <?php echo "<img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/100anos.jpg" . "' style='width: 95%; height: 90%; margin-top:6%;'>"; ?>
+                <?php echo "<img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/".$idDoc.".jpg" . "' style='width: 95%; height: 90%; margin-top:6%;'>"; ?>
+                
                 <p class="font-weight-light">
                     <center><i><b> Publicador:</b> <?php echo $publisherName[0]; ?></i></center>
                 </p>

@@ -167,9 +167,8 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                     echo "<b><p class='card-category'>TOP " . ($aux + 1) . "</b></p>";
                                 }
 
-                                echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/100anos.jpg" . "'
-                            style='width: 50%; height: auto;'></center>";
-                                echo "<br>";
+                                echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/".$fisicos[$aux]->getDocumentId().".jpg" . "'
+                            style='width: 95px; height: 135px;margin-bottom'></center>";
                                 echo "<p><b>" . recortarNombreLibro($fisicos[$aux]->getTitle()) . "</b><p>";
                                 $authorsNames = $documentDriving->getAuthorsByDocumentId($fisicos[$aux]->getDocumentId());
                                 echo "<p style='font-size:13px' class='card-category'>" .  $authorsNames[0] . "</p>";
@@ -297,8 +296,8 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                         if ($search == false) {
                                             echo "<b><p class='card-category'>TOP " . ($aux + 1) . "</b></p>";
                                         }
-                                        echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/100anos.jpg" . "'
-                                                   style='width: 50%; height: auto;'></center>";
+                                        echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/".$fisicos[$aux]->getDocumentId().".jpg" . "'
+                                        style='width: 95px; height: 135px;margin-bottom'></center>";
                                         echo "<br>";
                                         echo "<p><b>" . recortarNombreLibro($fisicos[$aux]->getTitle()) . "</b><p>";
                                         $authorsNames = $documentDriving->getAuthorsByDocumentId($virtuales[$aux]->getDocumentId());
