@@ -355,7 +355,6 @@ class BookingDAO implements DAO
         }
         return -1;
     }
-       
     // Genera el último número en la cola (turno)
     public function queueTurn($pDocumentId)
     {
@@ -587,37 +586,6 @@ class BookingDAO implements DAO
         }
     }
 
-    public function serachBookingFined($pDocumentId)
-    {
-        $sql = "SELECT 
-                    BOOKING.booking_id, date_start, date_end, date_delivery, renovations, BOOKING.status, DOCUMENT_BOOKING.document_id 
-                FROM 
-                    BOOKING, DOCUMENT_BOOKING 
-                WHERE 
-                    status='Fined' AND 
-                    BOOKING.booking_id = DOCUMENT_BOOKING.booking_id AND 
-                    document_id=" . $pDocumentId;
-
-        $rta = pg_query($this->connection, $sql);
-
-        if (pg_num_rows($rta) > 0) {
-            $row = pg_fetch_object($rta);
-            $bookingSearch = new Booking();
-
-            $bookingSearch->setId($row->document_id);
-            $bookingSearch->setIdDocument($pDocumentId);
-            $bookingSearch->setBookingStatus($row->status);
-            $bookingSearch->setBookingDate($row->date_start);
-            $bookingSearch->setDateOfCollection($row->date_end);
-            $bookingSearch->setDeliveryDate($row->date_delivery);
-            $bookingSearch->setRenovations($row->renovations);
-        } else {
-            return null;
-        }
-
-        return $bookingSearch;
-    }
-
 
     public function getReportBookingPerDay()
     {
@@ -638,6 +606,38 @@ class BookingDAO implements DAO
 
         return $data;
     }
+    public function getReportBookingsPerYear($pYear)
+    {
+
+        $sql = "SELECT 
+                    EXTRACT(MONTH FROM date_start) as month, count(booking_id) as count
+                FROM 
+                    BOOKING 
+                WHERE 
+                    EXTRACT(YEAR FROM date_start) = " . $pYear . "
+                    GROUP BY month 
+                    ORDER BY month ASC";
+
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        $rows = pg_fetch_all($result);
+        $aux = 0;
+
+        for ($i = 0; $i < 12; $i++) {
+            if (isset($rows[$aux]) == true and number_format($rows[$aux]['month']) == ($i + 1)) {
+                array_push($data, array("month" => $rows[$aux]['month'], "count" => $rows[$aux]['count']));
+                $aux = $aux + 1;
+            } else {
+                array_push($data, array("month" => ($i + 1), "count" => 0));
+            }
+        }
+        return $data;
+    }
+
+
 
     public function getValueFined()
     {

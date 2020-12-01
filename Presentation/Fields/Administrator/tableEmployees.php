@@ -44,13 +44,20 @@ $empleados = $userDriving->listUsersByRol(3);
                 $btnAction = "";
             }
 
+            $state = "";
+            if (strcasecmp($empleado->getStatus(), 'Active') == 0) {
+                $state = "Activo";
+            } else {
+                $state = "Bloqueado";
+            }
+
             echo "<tr>";
 
             echo "<td>" . $empleado->getUserId() . "</td>";
             echo "<td>" . $empleado->getTypeDocument() . "</td>";
             echo "<td>" . $empleado->getName() . "</td>";
             echo "<td>" . $empleado->getLastName() . "</td>";
-            echo "<td>" . $empleado->getStatus() . "</td>";
+            echo "<td>" . $state . "</td>";
             echo "<td>" . $btnAction . "</td>";
 
             echo "</tr>";

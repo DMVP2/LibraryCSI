@@ -43,7 +43,7 @@ $nuevoUser->setStatus("Inactive");
 $userDriving->createUser($nuevoUser);
 
 $sendMail = new MailSend();
-$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Admin", "Desde admin, Su contraseña es: " . $passwordDefault);
+$sendMail->prepareMail($mail, "Nuevo empleado", "Bienvenido, ahora eres un empleado de Book Bosque, se te ha asignado una contraseña por defecto.\nTu contraseña por defecto es: " . $passwordDefault);
 $rta = $sendMail->sendMail();
 
 

@@ -45,13 +45,20 @@ $clients = $userDriving->listUsersByRol(5);
                 $btnAction = "";
             }
 
+            $state = "";
+            if (strcasecmp($client->getStatus(), 'Active') == 0) {
+                $state = "Activo";
+            } else {
+                $state = "Bloqueado";
+            }
+
             echo "<tr>";
 
             echo "<td>" . $client->getUserId() . "</td>";
             echo "<td>" . $client->getTypeDocument() . "</td>";
             echo "<td>" . $client->getName() . "</td>";
             echo "<td>" . $client->getLastName() . "</td>";
-            echo "<td>" . $client->getStatus() . "</td>";
+            echo "<td>" . $state . "</td>";
             echo "<td>" . $btnAction . "</td>";
 
             echo "</tr>";

@@ -89,8 +89,8 @@ $nameFile = basename($_SERVER['PHP_SELF'], '.php');
                     <p>Documentos</p>
                 </a>
             </li>
-            <li <?php echo strcasecmp($nameFile, 'a') == 0 ? "class='active'" : "" ?>>
-                <a href="#">
+            <li <?php echo strcasecmp($nameFile, 'reportAdministrator') == 0 ? "class='active'" : "" ?>>
+                <a href="<?php echo ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . 'reportAdministrator.php' ?>">
                     <i class="fa fa-bar-chart"></i>
                     <p>Reportes</p>
                 </a>

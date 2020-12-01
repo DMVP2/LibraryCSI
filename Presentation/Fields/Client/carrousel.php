@@ -128,7 +128,8 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                 $documentoReservadoBool = $documentDriving->stateReservedDocument($fisicos[$aux]->getDocumentId());
                                 $iconState = "";
 
-                                if ($usSesion != null && $documentoReservadoBool == true) {
+                                if ($documentDriving->stateReservedDocument($fisicos[$aux]->getDocumentId()) == true && $usSesion != null && $documentoReservadoBool == true) {
+                                    $idDoc = $fisicos[$aux]->getDocumentId();
 
 
                                     $userIdBookingByDocumnetId = $bookingDriving->getUserIdBooking($fisicos[$aux]->getDocumentId());
@@ -214,8 +215,10 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
             </div>
 
             <!-- Carousel Buttons Next/Prev -->
-            <a data-slide="prev" href="#quote-carousel2" class="left carousel-control"><i class="fa fa-chevron-left" style="color:#F4D03F"></i></a>
-            <a data-slide="next" href="#quote-carousel2" class="right carousel-control"><i class="fa fa-chevron-right" style="color:#F4D03F"></i></a>
+            <a data-slide="prev" href="#quote-carousel2" class="left carousel-control"><i class="fa fa-chevron-left"
+                    style="color:#F4D03F"></i></a>
+            <a data-slide="next" href="#quote-carousel2" class="right carousel-control"><i class="fa fa-chevron-right"
+                    style="color:#F4D03F"></i></a>
         </div>
     </div>
 
@@ -339,5 +342,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
 
                     <!-- Carousel Buttons Next/Prev -->
-                    <a data-slide="prev" href="#quote-carousel3" class="left carousel-control"><i class="fa fa-chevron-left" style="color:skyblue"></i></a>
-                    <a data-slide="next" href="#quote-carousel3" class="right carousel-control"><i class="fa fa-chevron-right" style="color:skyblue"></i></a>
+                    <a data-slide="prev" href="#quote-carousel3" class="left carousel-control"><i
+                            class="fa fa-chevron-left" style="color:skyblue"></i></a>
+                    <a data-slide="next" href="#quote-carousel3" class="right carousel-control"><i
+                            class="fa fa-chevron-right" style="color:skyblue"></i></a>

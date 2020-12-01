@@ -89,7 +89,7 @@ if (!isset($_POST['typePublisher'])) {
 }
 
 $sendMail = new MailSend();
-$sendMail->prepareMail($mail, "ASUNTO PRUEBA - Register", "Desde register, Se ha registrado correctamente");
+$sendMail->prepareMail($mail, "Te has registrado en Book Bosque", "Bienvenido a Book Bosque, te has registrado con éxito.");
 $rta = $sendMail->sendMail();
 
 
