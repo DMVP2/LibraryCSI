@@ -39,6 +39,7 @@ $digiFisi = $_REQUEST['digitalFisico'];
 
 $documentoReservadoBool = $documentDriving->stateReservedDocument($idDoc);
 $bookingState = $bookingDriving->searchBookingStateByDocumentId($idDoc);
+$bookingDateEnd = $bookingDriving->getDateEndBooking($idDoc);
 $userIdBookingByDocumnetId = $bookingDriving->getUserIdBooking($idDoc);
 $userIdPenaltyBookingByDocumnetId = $bookingDriving->getUserIdPenaltyBooking($idDoc);
 $renovationsBookingByDocId = $bookingDriving->getRenovationsBookingByDocId($idDoc);
@@ -182,9 +183,29 @@ $countPenaltysByUserId = $bookingDriving->getCountPenaltysByUserId($idUser);
                     ?>
                         <div>
                             <center>
-                                <?php
+                                <!-- <?php
+                                
                                 $btnReserva =  "<button  class='btn btn-danger '  onClick=payPenaltyBooking('" . $idDoc . "')>   <i type='span' class='fa fa-money' aria-hidden='true'></i> &nbsp;Pagar Multa Directo</button>";
                                 echo $btnReserva;
+                                ?> -->
+                                 <?php
+                                  $fecha1 = new DateTime($bookingDateEnd[0]);
+                                  $fecha2 = new DateTime();
+                                  $diff = $fecha1->diff($fecha2);
+                                  $daysR = $diff->days;
+                                  $valueFined = $daysR * $bookingDriving->getValueFined();
+
+                                  $status = 'Multado sin pagar (' . number_format($valueFined) . ' COP)';
+                                  $btnAction =
+                                      "<form method='POST' action='" . ROOT_DIRECTORY . ROUTE_PROCEDURES . "client/payPenalty.php'>
+                                      <input type='hidden' id='valuePenalty' name='valuePenalty' value='" . $valueFined . "' >
+                                      <input type='hidden' id='idPenalty' name='idPenalty' value='" . $idDoc . "' >
+                                      <input type='hidden' id='mailUser' name='mailUser' value='" . $usSesion->getMail() . "' >
+
+                                      <button  class='btn btn-danger ' type='submit'>   <i type='span' class='fa fa-money' aria-hidden='true'></i> &nbsp;Pagar Multa Directo</button>
+                                      </button>
+                                  </form>";
+                                   echo $btnAction;
                                 ?>
                                 <p class="font-weight-light" style="color:indianred;margin:3%;"> ¡En este momento estás siendo multado por éste préstamo!, <b>Procede a pagar y entregar el libro lo antes posible.</b></p>
                             </center>

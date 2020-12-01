@@ -407,6 +407,24 @@ class BookingDAO implements DAO
         }
         return $data;
     }
+    public function getDateEndBooking($pDocumentId)
+    {
+
+        $sql = "SELECT date_end 
+        FROM BOOKING, DOCUMENT_BOOKING 
+        WHERE DOCUMENT_BOOKING.document_id =  " . $pDocumentId . " AND 
+        BOOKING.booking_id = DOCUMENT_BOOKING.booking_id; ";
+
+        if (!$result = pg_query($this->connection, $sql)) die();
+
+        $data = array();
+
+        while ($row = pg_fetch_array($result)) {
+            $info = $row['date_end'];
+            $data[] = $info;
+        }
+        return $data;
+    }
     // Realiza la renovación de una reserva, busca la fecha y el id de la reserva
     // actualiza Booking sumando los X días de la reserva
     public function renovateBooking($pDocumentId, $pDiasRenovacion)

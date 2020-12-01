@@ -92,6 +92,11 @@ class BookingDriving
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);
         return $bookingDAO->renovateBooking($pIdDocument, $pDiasRenovacion);
     }
+    public function getDateEndBooking($pIdDocument)
+    {
+        $bookingDAO = BookingDAO::getBookingDAO($this->connection);
+        return $bookingDAO->getDateEndBooking($pIdDocument);
+    }
     public function getNameBookingByDocument($pIdDocument)
     {
         $bookingDAO = BookingDAO::getBookingDAO($this->connection);

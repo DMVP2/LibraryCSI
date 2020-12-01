@@ -112,7 +112,6 @@ class DocumentDriving
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);
         $documentDAO->activeDocument($pIdDocument);
     }
-
     public function inactiveDocument($pIdDocument)
     {
         $documentDAO = DocumentDAO::getDocumentDAO($this->connection);

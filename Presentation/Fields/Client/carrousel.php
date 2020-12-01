@@ -140,6 +140,10 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                         if ($userIdPenaltyBookingByDocumnetId[0] == $idUser) {
                                             $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='¡Tienes penalidad en este documento!' style='color:darkred;margin-left:-12%'></i>";
                                         }
+                                        else{
+                                            $iconState = "<i class='fa fa-2x fa-clock-o pull-right' title='Disculpe, el documento se encuentra bajo penalidad de otro usuario' style='color:gray;margin-left:-12%'></i>";
+
+                                        }
                                     } else if (count($userIdBookingByDocumnetId) > 0) {
 
                                         if ($userIdBookingByDocumnetId[0] == $idUser) {
@@ -167,7 +171,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                     echo "<b><p class='card-category'>TOP " . ($aux + 1) . "</b></p>";
                                 }
 
-                                echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/".$fisicos[$aux]->getDocumentId().".jpg" . "'
+                                echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/" . $fisicos[$aux]->getDocumentId() . ".jpg" . "'
                             style='width: 95px; height: 135px;margin-bottom'></center>";
                                 echo "<p><b>" . recortarNombreLibro($fisicos[$aux]->getTitle()) . "</b><p>";
                                 $authorsNames = $documentDriving->getAuthorsByDocumentId($fisicos[$aux]->getDocumentId());
@@ -214,10 +218,8 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
             </div>
 
             <!-- Carousel Buttons Next/Prev -->
-            <a data-slide="prev" href="#quote-carousel2" class="left carousel-control"><i class="fa fa-chevron-left"
-                    style="color:#F4D03F"></i></a>
-            <a data-slide="next" href="#quote-carousel2" class="right carousel-control"><i class="fa fa-chevron-right"
-                    style="color:#F4D03F"></i></a>
+            <a data-slide="prev" href="#quote-carousel2" class="left carousel-control"><i class="fa fa-chevron-left" style="color:#F4D03F"></i></a>
+            <a data-slide="next" href="#quote-carousel2" class="right carousel-control"><i class="fa fa-chevron-right" style="color:#F4D03F"></i></a>
         </div>
     </div>
 
@@ -296,7 +298,7 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
                                         if ($search == false) {
                                             echo "<b><p class='card-category'>TOP " . ($aux + 1) . "</b></p>";
                                         }
-                                        echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/".$fisicos[$aux]->getDocumentId().".jpg" . "'
+                                        echo " <center><img src='" . ROOT_DIRECTORY . ROUTE_IMAGES . "documents/" . $fisicos[$aux]->getDocumentId() . ".jpg" . "'
                                         style='width: 95px; height: 135px;margin-bottom'></center>";
                                         echo "<br>";
                                         echo "<p><b>" . recortarNombreLibro($fisicos[$aux]->getTitle()) . "</b><p>";
@@ -341,7 +343,5 @@ if (empty($_REQUEST['title']) and empty($_REQUEST['category'])) {
 
 
                     <!-- Carousel Buttons Next/Prev -->
-                    <a data-slide="prev" href="#quote-carousel3" class="left carousel-control"><i
-                            class="fa fa-chevron-left" style="color:skyblue"></i></a>
-                    <a data-slide="next" href="#quote-carousel3" class="right carousel-control"><i
-                            class="fa fa-chevron-right" style="color:skyblue"></i></a>
+                    <a data-slide="prev" href="#quote-carousel3" class="left carousel-control"><i class="fa fa-chevron-left" style="color:skyblue"></i></a>
+                    <a data-slide="next" href="#quote-carousel3" class="right carousel-control"><i class="fa fa-chevron-right" style="color:skyblue"></i></a>
