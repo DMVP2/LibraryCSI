@@ -29,19 +29,19 @@ if (isset($consultUser) and strcasecmp($consultUser->getPassword(), md5($_POST['
     } else {
         if (strcasecmp($rol, "Client") == 0) {
             $userSession->setRol("Client");
-            header("Location: " . ROOT_DIRECTORY);
+            echo "<script>window.location.replace('../index.php');</script>";
         } else if (strcasecmp($rol, "Publisher") == 0) {
-            $userSession->setRol("Publisher");      
-            header("Location: " . ROOT_DIRECTORY);
+            $userSession->setRol("Publisher");
+            echo "<script>window.location.replace('../index.php');</script>";
         } else if (strcasecmp($rol, "Employee") == 0) {
             $userSession->setRol("Employee");
-            header("Location: " . ROOT_DIRECTORY . ROUTE_EMPLOYEE . "indexEmployee.php");
+            echo "<script>window.location.replace('" . ROOT_DIRECTORY . ROUTE_EMPLOYEE . "indexEmployee.php" . "');</script>";
         } else if (strcasecmp($rol, "Admin") == 0) {
             $userSession->setRol("Admin");
-            header("Location: " . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdministrator.php");
+            echo "<script>window.location.replace('" . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdministrator.php" . "');</script>";
         } else if (strcasecmp($rol, "Owner") == 0) {
             $userSession->setRol("Owner");
-            header("Location: " . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdministrator.php");
+            echo "<script>window.location.replace('" . ROOT_DIRECTORY . ROUTE_ADMINISTRATOR . "indexAdministrator.php" . "');</script>";
         }
     }
 } else {
